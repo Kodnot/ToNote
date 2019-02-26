@@ -21,7 +21,7 @@ namespace ToNote.Views
             this.Loaded += (s, e) =>
             {
                 var note = ((EditNoteDialogViewModel)this.DataContext).Note;
-                var file = $"{note.Name.ToLower()}.rtf";
+                var file = note.FileNames[0];
 
                 if (File.Exists(file))
                 {
