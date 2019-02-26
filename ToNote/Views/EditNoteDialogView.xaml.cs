@@ -1,4 +1,7 @@
-﻿namespace ToNote.Views
+﻿using Newtonsoft.Json;
+using ToNote.Models;
+
+namespace ToNote.Views
 {
     using System.IO;
     using System.Windows;
@@ -40,6 +43,12 @@
                     var text = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
                     text.Save(stream, DataFormats.Rtf);
                 }
+
+                note.Description = "Test description";
+                note.FileNames.Add(file);
+                var serializedNote = JsonConvert.SerializeObject(note);
+                var metadataFileName = $"{note.Name.ToLower()}Metadata.txt";
+                File.WriteAllText(metadataFileName, serializedNote);
             };
         }
     }
