@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:ToNote.Controls"
              xmlns:local="clr-namespace:ToNote.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -16,13 +17,13 @@
             <DockPanel Grid.Row="0">
                 <TextBlock Text="{Binding Name}" Style="{StaticResource NoteNameStyle}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="button_addrtb" Content="Add RTB"/>
-                    <Button x:Name="button_save" Content="Save"/>
+                    <Button x:Name="button_addrtb" Command="{Binding ElementName=rtbpanel, Path=AddRichTextBoxCommand}" CommandParameter="{Binding ElementName=rtbpanel}" Content="Add RTB"/>
+                    <Button x:Name="button_save" Command="{Binding ElementName=rtbpanel, Path=SaveContentsToFilesCommand}" CommandParameter="{Binding ElementName=rtbpanel}"  Content="Save"/>
                 </StackPanel>
             </DockPanel>
 
-            <ItemsControl x:Name="notespanel" Grid.Row="1">
-            </ItemsControl>
+            <Controls:NoteRichTextBoxPanel Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
+            </Controls:NoteRichTextBoxPanel>
         </Grid>
     </Border>
 </UserControl>

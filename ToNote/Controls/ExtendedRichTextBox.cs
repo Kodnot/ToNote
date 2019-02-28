@@ -1,5 +1,6 @@
 ﻿namespace ToNote.Controls
 {
+    using System.IO;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
@@ -8,6 +9,7 @@
     {
         public ExtendedRichTextBox()
         {
+            // Checks if backspace was pressed when the textbox was empty and raises an event. Used for convenient empty textbox removal
             this.PreviewKeyDown += (s, e) =>
             {
                 if (e.Key == System.Windows.Input.Key.Back)
@@ -17,8 +19,26 @@
                         BackspacePressedWhileEmpty?.Invoke(this, new RoutedEventArgs());
                 }
             };
+
         }
 
         public RoutedEventHandler BackspacePressedWhileEmpty;
+
+        public string Current_File { get; private set; }
+
+        public void ReadFromFile(string file)
+        {
+            if (File.Exists(file))
+            {
+                var text = new TextRange(this.Document.ContentStart, this.Document.ContentEnd);
+                if (file != null)
+                    using (var stream = new FileStream(file, FileMode.Open))
+                    {
+                        text.Load(stream, DataFormats.Rtf);
+                    }
+
+                Current_File = file;
+            }
+        }
     }
 }

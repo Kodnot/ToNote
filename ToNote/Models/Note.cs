@@ -62,5 +62,14 @@ namespace ToNote.Models
                 }
             }
         }
+
+        public void DeleteFile(string file)
+        {
+            if (File.Exists(file))
+                File.Delete(file);
+
+            if (this.FileNames.Contains(file))
+                this.FileNames.Remove(file);
+        }
     }
 }
