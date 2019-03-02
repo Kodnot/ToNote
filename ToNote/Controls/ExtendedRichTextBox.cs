@@ -24,21 +24,20 @@
 
         public RoutedEventHandler BackspacePressedWhileEmpty;
 
-        public string Current_File { get; private set; }
+        public string CurrentFile { get; private set; }
 
         public void ReadFromFile(string file)
         {
-            if (File.Exists(file))
-            {
-                var text = new TextRange(this.Document.ContentStart, this.Document.ContentEnd);
-                if (file != null)
-                    using (var stream = new FileStream(file, FileMode.Open))
-                    {
-                        text.Load(stream, DataFormats.Rtf);
-                    }
+            if (!File.Exists(file)) return;
 
-                Current_File = file;
-            }
+            var text = new TextRange(this.Document.ContentStart, this.Document.ContentEnd);
+            if (file != null)
+                using (var stream = new FileStream(file, FileMode.Open))
+                {
+                    text.Load(stream, DataFormats.Rtf);
+                }
+
+            CurrentFile = file;
         }
     }
 }

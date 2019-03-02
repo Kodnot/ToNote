@@ -22,7 +22,7 @@
                 </StackPanel>
             </DockPanel>
 
-            <Controls:NoteRichTextBoxPanel Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
+            <Controls:NoteRichTextBoxPanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
             </Controls:NoteRichTextBoxPanel>
         </Grid>
     </Border>

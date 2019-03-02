@@ -14,8 +14,7 @@
     {
         public NoteRichTextBoxPanel()
         {
-            // CTRL + Arrow Up or CTRL + Arrow Down navigates to a textbox that is above or below currently focused one, respectively. Need to figure out how to place the caret at the end though.
-            // Tried a few solutions, none worked.
+            // CTRL + Arrow Up or CTRL + Arrow Down navigates to a textbox that is above or below currently focused one, respectively.
             this.PreviewKeyDown += (s, e) =>
             {
                 if (e.Key == Key.Up && Keyboard.Modifiers == ModifierKeys.Control)
@@ -28,12 +27,13 @@
             // Tracks if new items have been added to the panel. If they were ExtendedRichTextBoxes, sets up appropriate events.
             ((INotifyCollectionChanged)this.Items).CollectionChanged += (s, e) =>
             {
-                if (e.NewItems != null)
-                    foreach (var item in e.NewItems)
-                    {
-                        if (item is ExtendedRichTextBox rtb)
-                            ConfigureRichTextBoxEvents(rtb);
-                    }
+                if (e.NewItems == null) return;
+
+                foreach (var item in e.NewItems)
+                {
+                    if (item is ExtendedRichTextBox rtb)
+                        ConfigureRichTextBoxEvents(rtb);
+                }
             };
         }
 
@@ -47,24 +47,26 @@
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note",
            typeof(Note), typeof(NoteRichTextBoxPanel), new FrameworkPropertyMetadata(null) { PropertyChangedCallback = (s, e) =>
            {
-               if (e.NewValue != null)
+               if (!(e.NewValue is Note NewNoteValue) || NewNoteValue == null) return;
+
+               var panel = (NoteRichTextBoxPanel)s;
+
+               panel.Items.Clear();
+
+               if (NewNoteValue != null)
                {
-                   var panel = (NoteRichTextBoxPanel)s;
+                   foreach (var file in (NewNoteValue.FileNames))
+                   {
+                       var rtb = new ExtendedRichTextBox()
+                       { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style };
 
-                   panel.Items.Clear();
+                       rtb.ReadFromFile(file);
 
-                   if ((Note)e.NewValue != null)
-                       foreach (var file in ((Note)e.NewValue).FileNames)
-                       {
-                           var rtb = new ExtendedRichTextBox()
-                           { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style };
-
-                           rtb.ReadFromFile(file);
-
-                           panel.Items.Add(rtb);
-                       }
+                       panel.Items.Add(rtb);
+                   }
                }
-           }});
+           }
+           });
 
         //Command to add a new TextBox. Implemented so the command can be invoked from XAML instead of back-end;
         public ICommand AddRichTextBoxCommand
@@ -91,41 +93,42 @@
            {
                var note = panel?.Note;
 
+               if (panel == null || note == null) return;
+
                var index = 0;
-               
+
                var directory = ".\\Notes";
 
                if (!Directory.Exists(directory))
                    Directory.CreateDirectory(directory);
 
-               if (panel != null && note != null)
-                   foreach (var child in panel.Items)
+               foreach (var child in panel.Items)
+               {
+                   if (child is ExtendedRichTextBox rtb)
                    {
-                       if (child is ExtendedRichTextBox rtb)
+                       string file;
+                       bool newfile = false;
+
+                       if (note.FileNames.Count > index && note.FileNames[index] != null)
+                           file = note.FileNames[index];
+                       else
                        {
-                           string file;
-                           bool newfile = false;
-
-                           if (note.FileNames.Count > index && note.FileNames[index] != null)
-                               file = note.FileNames[index];
-                           else
-                           {
-                               file = $"{directory}\\{note.Name.ToLower()}_{index}";
-                               newfile = true;
-                           }
-
-                           using (var stream = new FileStream(file, FileMode.OpenOrCreate))
-                           {
-                               var text = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                               text.Save(stream, DataFormats.Rtf);
-                           }
-
-                           if (newfile)
-                               note.FileNames.Add(file);
-
-                           index += 1;
+                           file = $"{directory}\\{note.Name.ToLower()}_{index}";
+                           newfile = true;
                        }
+
+                       using (var stream = new FileStream(file, FileMode.OpenOrCreate))
+                       {
+                           var text = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                           text.Save(stream, DataFormats.Rtf);
+                       }
+
+                       if (newfile)
+                           note.FileNames.Add(file);
+
+                       index += 1;
                    }
+               }
 
                var serializedNote = JsonConvert.SerializeObject(note);
                var metadataFileName = $"{note.Name.ToLower()}Metadata.txt";
@@ -147,7 +150,7 @@
                 if (this.Items.Contains(rtb))
                     this.Items.Remove(rtb);
 
-                Note?.DeleteFile(rtb.Current_File);
+                Note?.DeleteFile(rtb.CurrentFile);
             };
         }
 

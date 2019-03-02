@@ -18,13 +18,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel IsItemsHost="True"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+            <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
         <Button Grid.Row="1" Content="Add note" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10" Margin="5" Command="{Binding AddNoteCommand}"/>
     </Grid>
 </Window>

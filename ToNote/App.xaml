@@ -14,10 +14,6 @@
                 <Views:AddNoteDialogView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type ViewModels:EditNoteDialogViewModel}">
-                <Views:EditNoteDialogView/>
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type Models:Note}">
                 <Views:NoteView/>
             </DataTemplate>
