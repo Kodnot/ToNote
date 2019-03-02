@@ -47,23 +47,20 @@
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note",
            typeof(Note), typeof(NoteRichTextBoxPanel), new FrameworkPropertyMetadata(null) { PropertyChangedCallback = (s, e) =>
            {
-               if (!(e.NewValue is Note NewNoteValue) || NewNoteValue == null) return;
+               if (!(e.NewValue is Note newNoteValue) || newNoteValue == null) return;
 
                var panel = (NoteRichTextBoxPanel)s;
 
                panel.Items.Clear();
 
-               if (NewNoteValue != null)
+               foreach (var file in (newNoteValue.FileNames))
                {
-                   foreach (var file in (NewNoteValue.FileNames))
-                   {
-                       var rtb = new ExtendedRichTextBox()
-                       { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style };
+                   var rtb = new ExtendedRichTextBox()
+                   { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style };
 
-                       rtb.ReadFromFile(file);
+                   rtb.ReadFromFile(file);
 
-                       panel.Items.Add(rtb);
-                   }
+                   panel.Items.Add(rtb);
                }
            }
            });
@@ -81,7 +78,7 @@
                panel.Items.Add(new ExtendedRichTextBox() { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style });
            })));
 
-        //Command to save each ExtendedRichTextBox control's content's to a respective .rtf file
+        //Command to save each ExtendedRichTextBox control's contents to a respective .rtf file
         public ICommand SaveContentsToFilesCommand
         {
             get { return (ICommand)GetValue(SaveContentsToFilesCommandProperty); }
@@ -93,7 +90,7 @@
            {
                var note = panel?.Note;
 
-               if (panel == null || note == null) return;
+               if (note == null) return;
 
                var index = 0;
 
@@ -104,30 +101,29 @@
 
                foreach (var child in panel.Items)
                {
-                   if (child is ExtendedRichTextBox rtb)
+                   if (!(child is ExtendedRichTextBox rtb)) continue;
+
+                   string file;
+                   bool newfile = false;
+
+                   if (note.FileNames.Count > index && note.FileNames[index] != null)
+                       file = note.FileNames[index];
+                   else
                    {
-                       string file;
-                       bool newfile = false;
-
-                       if (note.FileNames.Count > index && note.FileNames[index] != null)
-                           file = note.FileNames[index];
-                       else
-                       {
-                           file = $"{directory}\\{note.Name.ToLower()}_{index}";
-                           newfile = true;
-                       }
-
-                       using (var stream = new FileStream(file, FileMode.OpenOrCreate))
-                       {
-                           var text = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                           text.Save(stream, DataFormats.Rtf);
-                       }
-
-                       if (newfile)
-                           note.FileNames.Add(file);
-
-                       index += 1;
+                       file = $"{directory}\\{note.Name.ToLower()}_{index}";
+                       newfile = true;
                    }
+
+                   using (var stream = new FileStream(file, FileMode.OpenOrCreate))
+                   {
+                       var text = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                       text.Save(stream, DataFormats.Rtf);
+                   }
+
+                   if (newfile)
+                       note.FileNames.Add(file);
+
+                   index += 1;
                }
 
                var serializedNote = JsonConvert.SerializeObject(note);
@@ -162,23 +158,23 @@
         private void SwitchKeyboardFocusToNextRTB(int index, bool up = true)
         {
             if (up)
+            {
                 for (int i = index - 1; i >= 0; i--)
                 {
-                    if (this.Items[i] is ExtendedRichTextBox rtb)
-                    {
-                        Keyboard.Focus(rtb);
-                        break;
-                    }
+                    if (!(this.Items[i] is ExtendedRichTextBox rtb)) continue;
+
+                    Keyboard.Focus(rtb);
+                    break;
                 }
+            }
             else
             {
                 for (int i = index + 1; i <= this.Items.Count - 1; i++)
                 {
-                    if (this.Items[i] is ExtendedRichTextBox rtb)
-                    {
-                        Keyboard.Focus(rtb);
-                        break;
-                    }
+                    if (!(this.Items[i] is ExtendedRichTextBox rtb)) continue;
+
+                    Keyboard.Focus(rtb);
+                    break;
                 }
             }
         }

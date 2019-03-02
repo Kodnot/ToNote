@@ -31,11 +31,11 @@
             if (!File.Exists(file)) return;
 
             var text = new TextRange(this.Document.ContentStart, this.Document.ContentEnd);
-            if (file != null)
-                using (var stream = new FileStream(file, FileMode.Open))
-                {
-                    text.Load(stream, DataFormats.Rtf);
-                }
+
+            using (var stream = new FileStream(file, FileMode.Open))
+            {
+                text.Load(stream, DataFormats.Rtf);
+            }
 
             CurrentFile = file;
         }
