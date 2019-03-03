@@ -18,45 +18,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type Models:Note}">
-                    <Border Background="Transparent" CornerRadius="3" BorderBrush="Black" BorderThickness="1">
-                        <Border.InputBindings>
-                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.EditNoteCommand}" CommandParameter="{Binding}"/>
-                        </Border.InputBindings>
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Setter Property="Padding" Value="5"/>
-                                <Setter Property="Margin" Value="8"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Trigger.EnterActions>
-                                            <BeginStoryboard x:Name="sb">
-                                                <Storyboard>
-                                                    <ThicknessAnimation Storyboard.TargetProperty="Padding" To="10" Duration="0:0:.1"/>
-                                                    <ThicknessAnimation Storyboard.TargetProperty="Margin" To="3" Duration="0:0:.1"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </Trigger.EnterActions>
-                                        <Trigger.ExitActions>
-                                            <StopStoryboard BeginStoryboardName="sb"/>
-                                        </Trigger.ExitActions>
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+            <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
         <Button Grid.Row="1" Content="Add note" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10" Margin="5" Command="{Binding AddNoteCommand}"/>
     </Grid>
 </Window>
