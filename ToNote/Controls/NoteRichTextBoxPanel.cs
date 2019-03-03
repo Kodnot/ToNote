@@ -3,6 +3,7 @@
     using Newtonsoft.Json;
     using System.Collections.Specialized;
     using System.IO;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
@@ -29,14 +30,11 @@
             {
                 if (e.NewItems == null) return;
 
-                foreach (var item in e.NewItems)
-                {
-                    if (item is ExtendedRichTextBox rtb)
-                        ConfigureRichTextBoxEvents(rtb);
-                }
+                foreach (var item in e.NewItems.OfType<ExtendedRichTextBox>())
+                    ConfigureRichTextBoxEvents(item);
             };
         }
-
+            
         public Note Note
         {
             get { return (Note)GetValue(NoteProperty); }
@@ -159,23 +157,17 @@
         {
             if (up)
             {
-                for (int i = index - 1; i >= 0; i--)
-                {
-                    if (!(this.Items[i] is ExtendedRichTextBox rtb)) continue;
+                var rtb = Items.Cast<object>().Take(index).OfType<ExtendedRichTextBox>().LastOrDefault();
 
+                if (rtb != null)
                     Keyboard.Focus(rtb);
-                    break;
-                }
             }
             else
             {
-                for (int i = index + 1; i <= this.Items.Count - 1; i++)
-                {
-                    if (!(this.Items[i] is ExtendedRichTextBox rtb)) continue;
+                var rtb = Items.Cast<object>().Skip(index + 1).OfType<ExtendedRichTextBox>().FirstOrDefault();
 
+                if (rtb != null)
                     Keyboard.Focus(rtb);
-                    break;
-                }
             }
         }
     }

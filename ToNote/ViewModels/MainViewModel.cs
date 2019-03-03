@@ -13,7 +13,7 @@
     {
         public MainViewModel()
         {
-            foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()).Where(x => Path.GetFileName(x).Contains("Metadata.txt")).ToList())
+            foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()).Where(x => Path.GetFileName(x).Contains("Metadata.txt")))
             {
                 using (var reader = new StreamReader(file))
                     Notes.Add(JsonConvert.DeserializeObject<Note>(reader.ReadToEnd()));
