@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="ToNote.Views.AboutPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ToNote.Views"
+             mc:Ignorable="d" 
+             Height="500" Width="600">
+    <Grid Background="AliceBlue" Grid.Row="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Developers: " HorizontalAlignment="Center" Margin="0,10,0,0" DockPanel.Dock="Top" FontWeight="Bold" />
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Image Height="100" Width="100" HorizontalAlignment="Left" Margin="140,0,0,0" Stretch="UniformToFill" Source="https://media.npr.org/assets/img/2016/01/07/macaca_nigra_self-portrait_custom-a8e13582c9ca6f71f5cd62815b8bb5d6ff112dc2-s800-c85.jpg"/>
+            <TextBlock Text="Arijus Treinys" HorizontalAlignment="Left" Margin="140,0,00,0" DockPanel.Dock="Top" VerticalAlignment="Bottom" />
+            <Image Height="100" Width="100" HorizontalAlignment="Right" Margin="0,0,140,0" Stretch="UniformToFill" Source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrAzB3dynTfZ4CioA56_XksdHsXMZUZgv4HfSb5O9js5BBjEix" />
+            <TextBlock Text="Audrius Liuberskis" HorizontalAlignment="Right" Margin="00,00,140,0" DockPanel.Dock="Top" VerticalAlignment="Bottom" />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Image Height="100" Width="100" HorizontalAlignment="Left" Margin="40,0,0,0" Stretch="UniformToFill" Source="https://www.kontrowersje.net/sites/default/files/chimpanzee-photo-640x511.jpg" />
+            <TextBlock Text="Donatas Kuprys" HorizontalAlignment="Left" Margin="40,00,00,0" VerticalAlignment="Bottom" />
+            <Image Height="100" Width="100" HorizontalAlignment="Center" Margin="0,0,00,0" Stretch="Fill" Source="https://s3.amazonaws.com/spectrumnews-web-assets/wp-content/uploads/2018/11/13154625/20181112-SHANK3monkey-844.jpg"/>
+            <TextBlock Text="Eligijus Jocius" HorizontalAlignment="Center" Margin="00,00,00,0" VerticalAlignment="Bottom" />
+            <Image Height="100" Width="100" HorizontalAlignment="Right" Margin="0,0,40,0" Stretch="Fill" Source="https://www.wildfutures.org/wp/wp-content/uploads/2009/09/BANJO-LM3.jpg"/>
+            <TextBlock Text="Rokas Gulbinas" HorizontalAlignment="Right" Margin="00,00,40,0" VerticalAlignment="Bottom" />
+
+        </Grid>
+
+
+    </Grid>
+</UserControl>
