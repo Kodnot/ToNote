@@ -18,10 +18,32 @@
                 <Views:NoteView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type Models:ToDo}">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="checker" IsChecked="{Binding IsChecked, Mode=TwoWay}" />
+                    <TextBox Text="{Binding Value, Mode=TwoWay}">
+                        <TextBox.Style>
+                            <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
+                                <Setter Property="Foreground" Value="Black">
+                                </Setter>
+                                <Setter Property="TextDecorations" Value="None"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=checker, Path=IsChecked}" Value="True">
+                                        <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </StackPanel>
+            </DataTemplate>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/RichTextBoxStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
+            
 
         </ResourceDictionary>
         

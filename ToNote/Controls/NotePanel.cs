@@ -11,9 +11,9 @@
     using ToNote.Logic;
     using ToNote.Models;
 
-    public class NoteRichTextBoxPanel : ItemsControl
+    public class NotePanel : ItemsControl
     {
-        public NoteRichTextBoxPanel()
+        public NotePanel()
         {
             // CTRL + Arrow Up or CTRL + Arrow Down navigates to a textbox that is above or below currently focused one, respectively.
             this.PreviewKeyDown += (s, e) =>
@@ -34,6 +34,8 @@
                     ConfigureRichTextBoxEvents(item);
             };
         }
+
+        private ExtendedRichTextBox lastFocused;
             
         public Note Note
         {
@@ -43,11 +45,11 @@
 
         // On a new value bound to Note, generates textboxes for each file the note has and fills them with their respective content.
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note",
-           typeof(Note), typeof(NoteRichTextBoxPanel), new FrameworkPropertyMetadata(null) { PropertyChangedCallback = (s, e) =>
+           typeof(Note), typeof(NotePanel), new FrameworkPropertyMetadata(null) { PropertyChangedCallback = (s, e) =>
            {
                if (!(e.NewValue is Note newNoteValue) || newNoteValue == null) return;
 
-               var panel = (NoteRichTextBoxPanel)s;
+               var panel = (NotePanel)s;
 
                panel.Items.Clear();
 
@@ -71,7 +73,7 @@
         }
 
         public static readonly DependencyProperty AddRichTextBoxCommandProperty = DependencyProperty.Register("AddRichTextBoxCommand",
-           typeof(ICommand), typeof(NoteRichTextBoxPanel), new FrameworkPropertyMetadata(new RelayCommand<NoteRichTextBoxPanel>((panel) => 
+           typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) => 
            {
                panel.Items.Add(new ExtendedRichTextBox() { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style });
            })));
@@ -84,7 +86,7 @@
         }
 
         public static readonly DependencyProperty SaveContentsToFilesCommandProperty = DependencyProperty.Register("SaveContentsToFilesCommand",
-           typeof(ICommand), typeof(NoteRichTextBoxPanel), new FrameworkPropertyMetadata(new RelayCommand<NoteRichTextBoxPanel>((panel) =>
+           typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) =>
            {
                var note = panel?.Note;
 
@@ -129,6 +131,25 @@
                File.WriteAllText(metadataFileName, serializedNote);
            })));
 
+        public ICommand AddTodoNoteCommand
+        {
+            get { return (ICommand)GetValue(AddTodoNoteCommandProperty); }
+            set { SetValue(AddTodoNoteCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty AddTodoNoteCommandProperty = DependencyProperty.Register("AddTodoNoteCommand",
+           typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) =>
+           {
+               
+               if (panel.lastFocused != null)
+               {
+                   var index = panel.Items.IndexOf(panel.lastFocused) + 1;
+                   panel.Items.Insert(index, new ToDo());
+               }
+               
+               panel.Items.Add(new ToDo() { });
+           })));
+
         /// <summary>
         /// Applies appropriate events to the provided ExtendedRichTextBox control
         /// </summary>
@@ -145,6 +166,11 @@
                     this.Items.Remove(rtb);
 
                 Note?.DeleteFile(rtb.CurrentFile);
+            };
+
+            rtb.GotKeyboardFocus += (s, e) =>
+            {
+                lastFocused = (ExtendedRichTextBox)s;
             };
         }
 
