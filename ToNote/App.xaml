@@ -18,7 +18,7 @@
                 <Views:NoteView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type Models:ToDo}">
+            <DataTemplate DataType="{x:Type Models:TodoNote}">
                 <StackPanel Orientation="Horizontal">
                     <CheckBox x:Name="checker" IsChecked="{Binding IsChecked, Mode=TwoWay}" />
                     <TextBox Text="{Binding Value, Mode=TwoWay}">

@@ -139,15 +139,14 @@
 
         public static readonly DependencyProperty AddTodoNoteCommandProperty = DependencyProperty.Register("AddTodoNoteCommand",
            typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) =>
-           {
-               
+           {               
                if (panel.lastFocused != null)
                {
                    var index = panel.Items.IndexOf(panel.lastFocused) + 1;
-                   panel.Items.Insert(index, new ToDo());
+                   panel.Items.Insert(index, new TodoNote());
                }
-               
-               panel.Items.Add(new ToDo() { });
+               else
+                   panel.Items.Add(new TodoNote() { });
            })));
 
         /// <summary>

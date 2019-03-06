@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ToNote.Models
 {
-    class ToDo : BaseModel
+    class TodoNote : BaseModel
     {
         
-        public ToDo()
+        public TodoNote()
         {
             
         }
 
-        string _toDoText;
+        string _todoText;
 
         private bool _isChecked = false;
 
@@ -34,16 +34,16 @@ namespace ToNote.Models
             }
         }
 
-        public string ToDoText
+        public string TodoText
         {
             get
             {
-                return _toDoText;
+                return _todoText;
             }
             set
             {
-                _toDoText = value;
-                RaisePropertyChanged(nameof(ToDoText));
+                _todoText = value;
+                RaisePropertyChanged(nameof(TodoText));
             }
         }
     }
