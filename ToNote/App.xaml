@@ -18,6 +18,10 @@
                 <Views:NoteView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type ViewModels:AboutPageViewModel}">
+                <Views:AboutPageView/>
+            </DataTemplate>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/RichTextBoxStyles.xaml"/>
