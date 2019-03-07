@@ -82,8 +82,7 @@
                 return _OpenAboutPageCommand ?? (_OpenAboutPageCommand = new RelayCommand(() =>
                 {
                     var dialog = new AboutPageViewModel();
-
-                    var result = DialogService.OpenDialog(dialog);
+                    DialogService.OpenDialog(dialog);
                     
                 }));
             }
