@@ -14,6 +14,6 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="Name: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBox Text="{Binding Name, Mode=TwoWay}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="3" Grid.Column="1" Margin="5"/>
-        <Button Command="{Binding AddNoteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Content="Add" Padding="2" Margin="5" Grid.Column="2"/>
+        <Button Command="{Binding AddNoteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Content="Add" Grid.Column="2"/>
     </Grid>
 </UserControl>

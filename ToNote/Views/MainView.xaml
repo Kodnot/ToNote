@@ -28,8 +28,8 @@
             </ItemsControl>
         </ScrollViewer>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Button  Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10" Margin="5" Command="{Binding OpenAboutPageCommand}"/>
-            <Button  Content="Add note" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10" Margin="5" Command="{Binding AddNoteCommand}"/>
+            <Button  Content="About asd" Command="{Binding OpenAboutPageCommand}"/>
+            <Button  Content="Add note" Command="{Binding AddNoteCommand}"/>
         </StackPanel>
         
     </Grid>
