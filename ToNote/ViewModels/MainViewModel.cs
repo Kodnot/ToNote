@@ -72,5 +72,20 @@
                 }));
             }
         }
+
+        private ICommand _OpenAboutPageCommand;
+
+        public ICommand OpenAboutPageCommand
+        {
+            get
+            {
+                return _OpenAboutPageCommand ?? (_OpenAboutPageCommand = new RelayCommand(() =>
+                {
+                    var dialog = new AboutPageViewModel();
+                    DialogService.OpenDialog(dialog);
+                    
+                }));
+            }
+        }
     }
 }

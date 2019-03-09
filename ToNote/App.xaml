@@ -18,7 +18,7 @@
             <DataTemplate DataType="{x:Type Models:Note}">
                 <Views:NoteView/>
             </DataTemplate>
-
+          
             <Style TargetType="{x:Type Controls:TodoControl}">
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
@@ -37,10 +37,16 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+          
+            <DataTemplate DataType="{x:Type ViewModels:AboutPageViewModel}">
+                <Views:AboutPageView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/Colors.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/RichTextBoxStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ButtonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
             
