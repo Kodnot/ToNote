@@ -4,15 +4,17 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
+    using System.Windows.Input;
+    using ToNote.Interfaces;
 
-    public class ExtendedRichTextBox : RichTextBox
+    public class ExtendedRichTextBox : RichTextBox, IExtendedTextBoxControl
     {
         public ExtendedRichTextBox()
         {
             // Checks if backspace was pressed when the textbox was empty and raises an event. Used for convenient empty textbox removal
             this.PreviewKeyDown += (s, e) =>
             {
-                if (e.Key == System.Windows.Input.Key.Back)
+                if (e.Key == Key.Back)
                 {
                     var range = new TextRange(Document.ContentStart, Document.ContentEnd);
                     if (string.IsNullOrWhiteSpace(range.Text))
@@ -22,7 +24,7 @@
 
         }
 
-        public RoutedEventHandler BackspacePressedWhileEmpty;
+        public event RoutedEventHandler BackspacePressedWhileEmpty;
 
         public string CurrentFile { get; private set; }
 
@@ -38,6 +40,11 @@
             }
 
             CurrentFile = file;
+        }
+
+        public void SetKeyboardFocus()
+        {
+            Keyboard.Focus(this);
         }
     }
 }

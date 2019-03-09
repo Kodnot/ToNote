@@ -8,6 +8,7 @@
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Input;
+    using ToNote.Interfaces;
     using ToNote.Logic;
     using ToNote.Models;
 
@@ -15,14 +16,14 @@
     {
         public NotePanel()
         {
-            // CTRL + Arrow Up or CTRL + Arrow Down navigates to a textbox that is above or below currently focused one, respectively.
+            // CTRL + Arrow Up or CTRL + Arrow Down navigates to an item that is above or below currently focused one, respectively.
             this.PreviewKeyDown += (s, e) =>
             {
                 if (e.Key == Key.Up && Keyboard.Modifiers == ModifierKeys.Control)
-                    SwitchKeyboardFocusToNextRTB(this.Items.IndexOf(Keyboard.FocusedElement));
+                    SwitchKeyboardFocusToNextRTB(this.Items.IndexOf(lastFocused));
 
                 if (e.Key == Key.Down && Keyboard.Modifiers == ModifierKeys.Control)
-                    SwitchKeyboardFocusToNextRTB(this.Items.IndexOf(Keyboard.FocusedElement), false);
+                    SwitchKeyboardFocusToNextRTB(this.Items.IndexOf(lastFocused), false);
             };
 
             // Tracks if new items have been added to the panel. If they were ExtendedRichTextBoxes or TodoControls, sets up appropriate events.
@@ -30,21 +31,18 @@
             {
                 if (e.NewItems == null) return;
 
-                foreach (var item in e.NewItems.OfType<ExtendedRichTextBox>())
+                foreach (var item in e.NewItems.OfType<IExtendedTextBoxControl>())
                     ConfigureRichTextBoxEvents(item);
-
-                foreach (var item in e.NewItems.OfType<TodoControl>())
-                    ConfigureTodoControlEvents(item);
 
             };
         }
 
-        private ExtendedRichTextBox lastFocused;
+        private IExtendedTextBoxControl lastFocused;
             
         public Note Note
         {
-            get { return (Note)GetValue(NoteProperty); }
-            set { SetValue(NoteProperty, value); }
+            get => (Note)GetValue(NoteProperty);
+            set => SetValue(NoteProperty, value);
         }
 
         // On a new value bound to Note, generates textboxes for each file the note has and fills them with their respective content.
@@ -72,21 +70,23 @@
         //Command to add a new TextBox. Implemented so the command can be invoked from XAML instead of back-end;
         public ICommand AddRichTextBoxCommand
         {
-            get { return (ICommand)GetValue(AddRichTextBoxCommandProperty); }
-            set { SetValue(AddRichTextBoxCommandProperty, value); }
+            get => (ICommand)GetValue(AddRichTextBoxCommandProperty);
+            set => SetValue(AddRichTextBoxCommandProperty, value);
         }
 
         public static readonly DependencyProperty AddRichTextBoxCommandProperty = DependencyProperty.Register("AddRichTextBoxCommand",
            typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) => 
            {
-               panel.Items.Add(new ExtendedRichTextBox() { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style });
+               var rtb = new ExtendedRichTextBox() { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style };
+               panel.Items.Add(rtb);
+               Keyboard.Focus(rtb);
            })));
 
         //Command to save each ExtendedRichTextBox control's contents to a respective .rtf file
         public ICommand SaveContentsToFilesCommand
         {
-            get { return (ICommand)GetValue(SaveContentsToFilesCommandProperty); }
-            set { SetValue(SaveContentsToFilesCommandProperty, value); }
+            get => (ICommand)GetValue(SaveContentsToFilesCommandProperty);
+            set => SetValue(SaveContentsToFilesCommandProperty, value);
         }
 
         public static readonly DependencyProperty SaveContentsToFilesCommandProperty = DependencyProperty.Register("SaveContentsToFilesCommand",
@@ -137,56 +137,47 @@
 
         public ICommand AddTodoNoteCommand
         {
-            get { return (ICommand)GetValue(AddTodoNoteCommandProperty); }
-            set { SetValue(AddTodoNoteCommandProperty, value); }
+            get => (ICommand)GetValue(AddTodoControlCommandProperty);
+            set => SetValue(AddTodoControlCommandProperty, value);
         }
 
-        public static readonly DependencyProperty AddTodoNoteCommandProperty = DependencyProperty.Register("AddTodoNoteCommand",
+        public static readonly DependencyProperty AddTodoControlCommandProperty = DependencyProperty.Register("AddTodoControlCommand",
            typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) =>
-           {               
+           {
+               var todoControl = new TodoControl(new Todo()).SetKeyboardFocusAfterLoaded();
+
                if (panel.lastFocused != null)
                {
                    var index = panel.Items.IndexOf(panel.lastFocused) + 1;
-                   panel.Items.Insert(index, new TodoControl(new Todo()));
+                   panel.Items.Insert(index, todoControl);
                }
                else
-                   panel.Items.Add(new TodoControl(new Todo()));
+                   panel.Items.Add(todoControl);
            })));
 
         /// <summary>
         /// Applies appropriate events to the provided ExtendedRichTextBox control
         /// </summary>
         /// <param name="rtb"></param>
-        private void ConfigureRichTextBoxEvents(ExtendedRichTextBox rtb)
+        private void ConfigureRichTextBoxEvents(IExtendedTextBoxControl rtb)
         {
             rtb.BackspacePressedWhileEmpty += (s, e) =>
             {
-                var index = this.Items.IndexOf(Keyboard.FocusedElement);
+                var index = this.Items.IndexOf(lastFocused);
 
                 SwitchKeyboardFocusToNextRTB(index);
 
                 if (this.Items.Contains(rtb))
                     this.Items.Remove(rtb);
 
-                Note?.DeleteFile(rtb.CurrentFile);
+                //Only check for ExtendedRichTextBox because TODOs lack serialization
+                if (rtb is ExtendedRichTextBox ertb)
+                    Note?.DeleteFile(ertb.CurrentFile);
             };
 
             rtb.GotKeyboardFocus += (s, e) =>
             {
-                lastFocused = (ExtendedRichTextBox)s;
-            };
-        }
-
-        /// <summary>
-        /// Applies appropriate events to the provided TodoControl
-        /// </summary>
-        /// <param name="todoControl"></param>
-        private void ConfigureTodoControlEvents(TodoControl todoControl)
-        {
-            todoControl.BackspacePressedWhileEmpty += (s, e) =>
-            {
-                if (this.Items.Contains(todoControl))
-                    this.Items.Remove(todoControl);
+                lastFocused = (IExtendedTextBoxControl)s;
             };
         }
 
@@ -199,17 +190,17 @@
         {
             if (up)
             {
-                var rtb = Items.Cast<object>().Take(index).OfType<ExtendedRichTextBox>().LastOrDefault();
+                var rtb = Items.Cast<object>().Take(index).OfType<IExtendedTextBoxControl>().LastOrDefault();
 
                 if (rtb != null)
-                    Keyboard.Focus(rtb);
+                    rtb.SetKeyboardFocus();
             }
             else
             {
-                var rtb = Items.Cast<object>().Skip(index + 1).OfType<ExtendedRichTextBox>().FirstOrDefault();
+                var rtb = Items.Cast<object>().Skip(index + 1).OfType<IExtendedTextBoxControl>().FirstOrDefault();
 
                 if (rtb != null)
-                    Keyboard.Focus(rtb);
+                    rtb.SetKeyboardFocus();
             }
         }
     }

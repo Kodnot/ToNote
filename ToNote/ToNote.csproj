@@ -59,6 +59,7 @@
     <Compile Include="Controls\ExtendedRichTextBox.cs" />
     <Compile Include="Controls\NotePanel.cs" />
     <Compile Include="Controls\TodoControl.cs" />
+    <Compile Include="Interfaces\IExtendedTextBoxControl.cs" />
     <Compile Include="Models\Todo.cs" />
     <Compile Include="ViewModels\AboutPageViewModel.cs" />
     <Compile Include="Views\AboutPageView.xaml.cs">
