@@ -25,48 +25,52 @@
 
             this.TextChanged += (s, e) =>
             {
-                // -3, because text ending has \r\n chars
-                var offset = range.Text.Length - 3;
-                var lastchar = offset >= 0 ? range.Text[offset] : ' ';
-
-                if (_tracking)
+                //Prevents start of tracking while initializing.
+                if (this.IsLoaded)
                 {
-                    //Stops tracking after 10 text changes without a '/' being the last character.
-                    if (_trackingCounter++ > 10)
-                    {
-                        _tracking = false;
-                    }
+                    // -3, because text ending has \r\n chars
+                    var offset = range.Text.Length - 3;
+                    var lastchar = offset >= 0 ? range.Text[offset] : ' ';
 
-                    //If text is deleted beyond '/', stops tracking
-                    if (offset - _slashIndex < 0)
+                    if (_tracking)
                     {
-                        _tracking = false;
-                        return;
-                    }
-
-                    var keyword = range.Text.Substring(_slashIndex + 1, offset - _slashIndex);
-
-                    foreach (var keywordaction in _trackedKeywords)
-                    {
-                        if (keyword == keywordaction.Keyword)
+                        //Stops tracking after 10 text changes without a '/' being the last character.
+                        if (_trackingCounter++ > 10)
                         {
                             _tracking = false;
+                        }
 
-                            //Trims the '/' + keyword from the end of the text
-                            range.Text = range.Text.Remove(offset - keyword.Length, keyword.Length + 1);
-
-                            keywordaction.Action.Invoke();
-
+                        //If text is deleted beyond '/', stops tracking
+                        if (offset - _slashIndex < 0)
+                        {
+                            _tracking = false;
                             return;
                         }
-                    }
-                }
 
-                if (lastchar == '/')
-                {
-                    _tracking = true;
-                    _slashIndex = offset;
-                    _trackingCounter = 0;
+                        var keyword = range.Text.Substring(_slashIndex + 1, offset - _slashIndex);
+
+                        foreach (var keywordaction in _trackedKeywords)
+                        {
+                            if (keyword == keywordaction.Keyword)
+                            {
+                                _tracking = false;
+
+                                //Trims the '/' + keyword from the end of the text
+                                range.Text = range.Text.Remove(offset - keyword.Length, keyword.Length + 1);
+
+                                keywordaction.Action.Invoke();
+
+                                return;
+                            }
+                        }
+                    }
+
+                    if (lastchar == '/')
+                    {
+                        _tracking = true;
+                        _slashIndex = offset;
+                        _trackingCounter = 0;
+                    }
                 }
             };
         }
@@ -76,7 +80,7 @@
         private List<KeywordAction> _trackedKeywords { get; set; } = new List<KeywordAction>();
 
         private bool _tracking = false;
-        private int _slashIndex;
+        private int _slashIndex = 0;
         private int _trackingCounter = 0;
 
         public string CurrentFile { get; private set; }
