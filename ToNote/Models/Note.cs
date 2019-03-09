@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows.Documents;
-using Newtonsoft.Json;
-
-namespace ToNote.Models
+﻿namespace ToNote.Models
 {
+    using System.Collections.Generic;
     using System.IO;
 
     public class Note : BaseModel
@@ -12,7 +9,6 @@ namespace ToNote.Models
         {
             Name = name;
             Description = description;
-            FileNames = new List<string>();
         }
 
         private string _Name;
@@ -51,7 +47,7 @@ namespace ToNote.Models
 
         public List<string> FileNames
         {
-            get => _FileNames;
+            get => _FileNames ?? (_FileNames = new List<string>());
             set
             {
                 if (_FileNames != value)

@@ -58,7 +58,8 @@
     </ApplicationDefinition>
     <Compile Include="Controls\ExtendedRichTextBox.cs" />
     <Compile Include="Controls\NotePanel.cs" />
-    <Compile Include="Models\ToDo.cs" />
+    <Compile Include="Controls\TodoControl.cs" />
+    <Compile Include="Models\Todo.cs" />
     <Compile Include="Views\NoteView.xaml.cs">
       <DependentUpon>NoteView.xaml</DependentUpon>
     </Compile>

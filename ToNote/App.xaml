@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ToNote"
              xmlns:Models="clr-namespace:ToNote.Models"
+             xmlns:Controls="clr-namespace:ToNote.Controls"
              xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
              xmlns:Views="clr-namespace:ToNote.Views"
              StartupUri="Views/MainView.xaml">
@@ -18,25 +19,24 @@
                 <Views:NoteView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type Models:TodoNote}">
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox x:Name="checker" IsChecked="{Binding IsChecked, Mode=TwoWay}" />
-                    <TextBox Text="{Binding Value, Mode=TwoWay}">
-                        <TextBox.Style>
-                            <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
-                                <Setter Property="Foreground" Value="Black">
-                                </Setter>
-                                <Setter Property="TextDecorations" Value="None"></Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=checker, Path=IsChecked}" Value="True">
-                                        <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                </StackPanel>
-            </DataTemplate>
+            <Style TargetType="{x:Type Controls:TodoControl}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate DataType="{x:Type Models:Todo}">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="checker" IsChecked="{Binding IsChecked, Mode=TwoWay}" />
+                                <Controls:ExtendedRichTextBox x:Name="rtb" Width="400">
+                                    <Controls:ExtendedRichTextBox.Style>
+                                        <Style BasedOn="{StaticResource NoteContentRichTextBoxStyle}" TargetType="Controls:ExtendedRichTextBox">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Style>
+                                    </Controls:ExtendedRichTextBox.Style>
+                                </Controls:ExtendedRichTextBox>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextStyles.xaml"/>

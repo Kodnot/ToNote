@@ -1,49 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ToNote.Models
+﻿namespace ToNote.Models
 {
-    class TodoNote : BaseModel
+    public class Todo : BaseModel
     {
-        
-        public TodoNote()
+        public Todo()
         {
             
         }
 
-        string _todoText;
-
-        private bool _isChecked = false;
+        private bool _IsChecked = false;
 
         public bool IsChecked
         {
-            get
-            {
-                return _isChecked;
-            }
+            get => _IsChecked;
             set
             {
-                if (_isChecked != value)
+                if (_IsChecked != value)
                 {
-                    _isChecked = value;
+                    _IsChecked = value;
+
                     RaisePropertyChanged(nameof(IsChecked));
                 }
-            }
-        }
-
-        public string TodoText
-        {
-            get
-            {
-                return _todoText;
-            }
-            set
-            {
-                _todoText = value;
-                RaisePropertyChanged(nameof(TodoText));
             }
         }
     }

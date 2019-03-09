@@ -25,13 +25,17 @@
                     SwitchKeyboardFocusToNextRTB(this.Items.IndexOf(Keyboard.FocusedElement), false);
             };
 
-            // Tracks if new items have been added to the panel. If they were ExtendedRichTextBoxes, sets up appropriate events.
+            // Tracks if new items have been added to the panel. If they were ExtendedRichTextBoxes or TodoControls, sets up appropriate events.
             ((INotifyCollectionChanged)this.Items).CollectionChanged += (s, e) =>
             {
                 if (e.NewItems == null) return;
 
                 foreach (var item in e.NewItems.OfType<ExtendedRichTextBox>())
                     ConfigureRichTextBoxEvents(item);
+
+                foreach (var item in e.NewItems.OfType<TodoControl>())
+                    ConfigureTodoControlEvents(item);
+
             };
         }
 
@@ -143,10 +147,10 @@
                if (panel.lastFocused != null)
                {
                    var index = panel.Items.IndexOf(panel.lastFocused) + 1;
-                   panel.Items.Insert(index, new TodoNote());
+                   panel.Items.Insert(index, new TodoControl(new Todo()));
                }
                else
-                   panel.Items.Add(new TodoNote() { });
+                   panel.Items.Add(new TodoControl(new Todo()));
            })));
 
         /// <summary>
@@ -170,6 +174,19 @@
             rtb.GotKeyboardFocus += (s, e) =>
             {
                 lastFocused = (ExtendedRichTextBox)s;
+            };
+        }
+
+        /// <summary>
+        /// Applies appropriate events to the provided TodoControl
+        /// </summary>
+        /// <param name="todoControl"></param>
+        private void ConfigureTodoControlEvents(TodoControl todoControl)
+        {
+            todoControl.BackspacePressedWhileEmpty += (s, e) =>
+            {
+                if (this.Items.Contains(todoControl))
+                    this.Items.Remove(todoControl);
             };
         }
 
