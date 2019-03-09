@@ -11,19 +11,7 @@
         public BaseDialogWindow()
         {
             InitializeComponent();
-            this.InvalidateVisual();
-        }
 
-        protected void Minimize_Window(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Minimized;
-        }
-
-        protected void Maximize_Window(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Maximized;
         }
 
         protected void Close_Window(object sender, RoutedEventArgs e)
