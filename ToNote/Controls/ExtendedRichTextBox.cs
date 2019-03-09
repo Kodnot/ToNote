@@ -30,7 +30,8 @@
                 {
                     // -3, because text ending has \r\n chars
                     var offset = range.Text.Length - 3;
-                    var lastchar = offset >= 0 ? range.Text[offset] : ' ';
+                    var secondToLastChar = offset - 1 >= 0 ? range.Text[offset - 1] : ' ';
+                    var lastChar = offset >= 0 ? range.Text[offset] : ' ';
 
                     if (_tracking)
                     {
@@ -51,21 +52,20 @@
 
                         foreach (var keywordaction in _trackedKeywords)
                         {
-                            if (keyword == keywordaction.Keyword)
-                            {
-                                _tracking = false;
+                            if (keyword != keywordaction.Keyword + ' ') return;
 
-                                //Trims the '/' + keyword from the end of the text
-                                range.Text = range.Text.Remove(offset - keyword.Length, keyword.Length + 1);
+                            _tracking = false;
 
-                                keywordaction.Action.Invoke();
+                            //Trims the '/' + keyword from the end of the text
+                            range.Text = range.Text.Remove(offset - keyword.Length, keyword.Length + 1);
 
-                                return;
-                            }
+                            keywordaction.Action.Invoke();
+
+                            return;
                         }
                     }
 
-                    if (lastchar == '/')
+                    if (lastChar == '/' && secondToLastChar == ' ')
                     {
                         _tracking = true;
                         _slashIndex = offset;
