@@ -100,9 +100,9 @@
 
         public void TrackKeyword(string keyword, Action action)
         {
-            var keywordaction = new KeywordAction() { Keyword = keyword, Action = action };
+            var keywordAction = new KeywordAction() { Keyword = keyword, Action = action };
 
-            _trackedKeywords.Add(keywordaction);
+            _trackedKeywords.Add(keywordAction);
         }
 
         private struct KeywordAction
