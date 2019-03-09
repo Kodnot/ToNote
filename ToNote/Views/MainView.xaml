@@ -7,18 +7,42 @@
         xmlns:Models="clr-namespace:ToNote.Models"
         xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
         mc:Ignorable="d"
-        Title="ToNote" Height="450" Width="800">
+        Title="ToNote" Height="450" Width="800"
+        WindowStyle="None">
 
     <Window.DataContext>
         <ViewModels:MainViewModel/>
     </Window.DataContext>
-    
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" />
+    </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <DockPanel VerticalAlignment="Center" Grid.Row="0">
+            <TextBox Text="ToNote" Height="30"  HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Foreground="#eeeeee"/>
+            <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Click="Minimize_Window" Style="{StaticResource EmptyButtonStyle}">
+                    <Button.Content>
+                        <Image Source="https://i.imgur.com/SOg0urb.png" />
+                    </Button.Content>
+                </Button>
+                <Button Click="Maximize_Window" Style="{StaticResource EmptyButtonStyle}">
+                    <Button.Content>
+                        <Image Source="https://i.imgur.com/IMNLXKP.png?1" />
+                    </Button.Content>
+                </Button>
+                <Button Click="Close_Window"  Style="{StaticResource EmptyButtonStyle}">
+                    <Button.Content>
+                        <Image Source="https://i.imgur.com/I11UYRS.png?1" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="1">
             <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -27,7 +51,7 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </ScrollViewer>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button  Content="About" Command="{Binding OpenAboutPageCommand}"/>
             <Button  Content="Add note" Command="{Binding AddNoteCommand}"/>
         </StackPanel>

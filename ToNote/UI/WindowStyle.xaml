@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ToNote.UI"
+                    xmlns:App="clr-namespace:ToNote"
+                    xmlns:Views="clr-namespace:ToNote.Views">
+    <Style TargetType="{x:Type App:MainView}" BasedOn="{StaticResource {x:Type Window}}">
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="Background" Value="{StaticResource DefaultWindowBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource DefaultWindowForegroundBrush}" />
+    </Style>
+    
+    <Style TargetType="{x:Type Views:BaseDialogWindow }" BasedOn="{StaticResource {x:Type Window}}">
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="Background" Value="{StaticResource DefaultWindowBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource DefaultWindowForegroundBrush}" />
+    </Style>
+</ResourceDictionary>

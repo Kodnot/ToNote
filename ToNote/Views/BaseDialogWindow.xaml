@@ -7,6 +7,37 @@
         SizeToContent="WidthAndHeight"
         Title="{Binding Title}" Height="200" Width="500"
         WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
         >
-    <ContentControl x:Name="ContentPresenter" Content="{Binding}"/>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" />
+    </WindowChrome.WindowChrome>
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+            <DockPanel VerticalAlignment="Center" Grid.Row="0">
+                <TextBox Text="ToNote" Height="30"  HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Foreground="#eeeeee"/>
+                <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+                    <Button Click="Minimize_Window" Style="{StaticResource EmptyButtonStyle}">
+                        <Button.Content>
+                            <Image Source="https://i.imgur.com/SOg0urb.png" />
+                        </Button.Content>
+                    </Button>
+                    <Button Click="Maximize_Window" Style="{StaticResource EmptyButtonStyle}">
+                        <Button.Content>
+                            <Image Source="https://i.imgur.com/IMNLXKP.png?1" />
+                        </Button.Content>
+                    </Button>
+                    <Button Click="Close_Window"  Style="{StaticResource EmptyButtonStyle}">
+                        <Button.Content>
+                            <Image Source="https://i.imgur.com/I11UYRS.png?1" />
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+            <ContentControl x:Name="ContentPresenter" Content="{Binding}" Grid.Row="1"/>
+    </Grid>
+    
 </Window>

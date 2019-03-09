@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ToNote.Views"
              mc:Ignorable="d" 
              Width="400" Height="40">
-    <Grid Background="White">
+    <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>

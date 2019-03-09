@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ToNote.Views"
              mc:Ignorable="d" 
              Height="500" Width="600">
-    <Grid Background="AliceBlue" Grid.Row="3">
+    <Grid Background="Transparent" Grid.Row="3">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="4*"/>
