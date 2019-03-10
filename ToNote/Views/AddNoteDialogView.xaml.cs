@@ -24,5 +24,7 @@ namespace ToNote.Views
         {
             InitializeComponent();
         }
+
+
     }
 }

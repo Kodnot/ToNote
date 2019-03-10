@@ -49,6 +49,8 @@
                 {
                     var dialog = new AddNoteDialogViewModel();
 
+                    dialog.Title = "Add a note";
+
                     var result = DialogService.OpenDialog(dialog);
 
                     if (result != null)
@@ -82,8 +84,10 @@
                 return _OpenAboutPageCommand ?? (_OpenAboutPageCommand = new RelayCommand(() =>
                 {
                     var dialog = new AboutPageViewModel();
+
+                    dialog.Title = "About";
+
                     DialogService.OpenDialog(dialog);
-                    
                 }));
             }
         }

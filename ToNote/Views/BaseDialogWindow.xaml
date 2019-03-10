@@ -5,8 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="{Binding Title}" Height="200" Width="500"
+        Title="{Binding Title}"
         WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         >
-    <ContentControl x:Name="ContentPresenter" Content="{Binding}"/>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" />
+    </WindowChrome.WindowChrome>
+    <Border Padding="5">
+        <Grid Background="{StaticResource DefaultWindowBackgroundBrush}">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="10" Color="Black" RenderingBias="Quality" ShadowDepth="1"/>
+            </Grid.Effect>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <DockPanel VerticalAlignment="Center" Grid.Row="0">
+                <TextBox Text="{Binding Title}" FontSize="18" Margin="10, 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" BorderThickness="0" Background="Transparent" Foreground="#eeeeee"/>
+                <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Width="24" Height="24" x:Name="btn_CloseWindow" Style="{StaticResource PathButton}">
+                        <Button.Content>
+                            <Grid>
+                                <Path Data="M 5 5 L 19 19" Style="{StaticResource ButtonPathStyle}"/>
+                                <Path Data="M 19 5 L 5 19" Style="{StaticResource ButtonPathStyle}"/>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+            <ContentControl x:Name="ContentPresenter" Content="{Binding}" Grid.Row="1"/>
+        </Grid>
+    </Border>
+    
 </Window>
