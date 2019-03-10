@@ -11,6 +11,12 @@
         public BaseDialogWindow()
         {
             InitializeComponent();
+
+            btn_CloseWindow.Click += (s, e) =>
+            {
+                if (e.Source != null)
+                    this.Close();
+            };
         }
     }
 }

@@ -13,4 +13,16 @@
 
     <Color x:Key="DefaultButtonHoverForegroundColor">#262228</Color>
     <SolidColorBrush x:Key="DefaultButtonHoverForegroundBrush" Color="{StaticResource DefaultButtonHoverForegroundColor}"/>
+
+    <Color x:Key="DefaultWindowBackgroundColor">#222831</Color>
+    <SolidColorBrush x:Key="DefaultWindowBackgroundBrush" Color="{StaticResource DefaultWindowBackgroundColor}"/>
+
+    <Color x:Key="DefaultWindowForegroundColor">#eeeeee</Color>
+    <SolidColorBrush x:Key="DefaultWindowForegroundBrush" Color="{StaticResource DefaultWindowForegroundColor}"/>
+
+    <Color x:Key="DefaultPathColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultPathBrush" Color="{StaticResource DefaultPathColor}"/>
+
+    <Color x:Key="DefaultPathHoverColor">#262228</Color>
+    <SolidColorBrush x:Key="DefaultPathHoverBrush" Color="{StaticResource DefaultPathHoverColor}"/>
 </ResourceDictionary>
