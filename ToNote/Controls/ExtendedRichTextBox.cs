@@ -60,8 +60,6 @@
                         range.Text = range.Text.Remove(offset - keyword.Length, keyword.Length + 1);
 
                         keywordAction.Action.Invoke();
-
-                        return;
                     }
                 }
 
