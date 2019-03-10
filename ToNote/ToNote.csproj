@@ -59,12 +59,16 @@
     <Compile Include="Controls\ExtendedRichTextBox.cs" />
     <Compile Include="Controls\NotePanel.cs" />
     <Compile Include="Controls\TodoControl.cs" />
+<<<<<<< HEAD
     <Compile Include="Interfaces\IExtendedTextBoxControl.cs" />
     <Compile Include="Models\Todo.cs" />
     <Compile Include="ViewModels\AboutPageViewModel.cs" />
     <Compile Include="Views\AboutPageView.xaml.cs">
       <DependentUpon>AboutPageView.xaml</DependentUpon>
     </Compile>
+=======
+    <Compile Include="Models\Todo.cs" />
+>>>>>>> Wrap the Todo object in a TodoControl. Replace Todo TextBox with an ExtendedRichTextBox. Add Todo deletion on backspace.
     <Compile Include="Views\NoteView.xaml.cs">
       <DependentUpon>NoteView.xaml</DependentUpon>
     </Compile>
