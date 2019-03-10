@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;
     using ToNote.Interfaces;
@@ -11,6 +12,7 @@
     {
         public TodoControl(Todo todo)
         {
+            this.Todo = todo;
             this.Content = todo;
 
             this.Loaded += (s, e) =>
@@ -35,13 +37,24 @@
             };
         }
 
+        public Todo Todo { get; private set; }
+
         public event RoutedEventHandler BackspacePressedWhileEmpty;
 
         private ExtendedRichTextBox extendedRTB;
 
-        public string CurrentFile
+        public string CurrentFile => extendedRTB?.CurrentFile;
+
+        public TextRange TextRange => extendedRTB?.TextRange;
+
+        public void ReadFromFile(string file)
         {
-            get => extendedRTB?.CurrentFile;
+            if (!this.IsLoaded)
+            {
+                this.Loaded += (s, e) => extendedRTB?.ReadFromFile(file);
+            }
+            else
+                extendedRTB?.ReadFromFile(file);
         }
 
         public void SetKeyboardFocus()
@@ -55,9 +68,7 @@
         {
             this.Loaded += (s, e) =>
             {
-                if (extendedRTB == null) return;
-
-                Keyboard.Focus(extendedRTB);
+                this.SetKeyboardFocus();
             };
 
             return this;

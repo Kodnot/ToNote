@@ -28,6 +28,8 @@
 
         public string CurrentFile { get; private set; }
 
+        public TextRange TextRange => new TextRange(Document.ContentStart, Document.ContentEnd);
+
         public void ReadFromFile(string file)
         {
             if (!File.Exists(file)) return;

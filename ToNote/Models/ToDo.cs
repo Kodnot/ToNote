@@ -7,6 +7,8 @@
             
         }
 
+        public string FileName { get; set; }
+
         private bool _IsChecked = false;
 
         public bool IsChecked
@@ -19,6 +21,22 @@
                     _IsChecked = value;
 
                     RaisePropertyChanged(nameof(IsChecked));
+                }
+            }
+        }
+
+        private int _Index;
+
+        public int Index
+        {
+            get => _Index;
+            set
+            {
+                if (_Index != value)
+                {
+                    _Index = value;
+
+                    RaisePropertyChanged(nameof(Index));
                 }
             }
         }

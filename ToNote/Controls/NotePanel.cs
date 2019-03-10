@@ -20,19 +20,19 @@
             this.PreviewKeyDown += (s, e) =>
             {
                 if (e.Key == Key.Up && Keyboard.Modifiers == ModifierKeys.Control)
-                    SwitchKeyboardFocusToNextRTB(this.Items.IndexOf(lastFocused));
+                    SwitchKeyboardFocusToNextETBC(this.Items.IndexOf(lastFocused));
 
                 if (e.Key == Key.Down && Keyboard.Modifiers == ModifierKeys.Control)
-                    SwitchKeyboardFocusToNextRTB(this.Items.IndexOf(lastFocused), false);
+                    SwitchKeyboardFocusToNextETBC(this.Items.IndexOf(lastFocused), false);
             };
 
-            // Tracks if new items have been added to the panel. If they were ExtendedRichTextBoxes or TodoControls, sets up appropriate events.
+            // Tracks if new items have been added to the panel. If they were IExtendedTextBoxControls, sets up appropriate events.
             ((INotifyCollectionChanged)this.Items).CollectionChanged += (s, e) =>
             {
                 if (e.NewItems == null) return;
 
                 foreach (var item in e.NewItems.OfType<IExtendedTextBoxControl>())
-                    ConfigureRichTextBoxEvents(item);
+                    ConfigureExtendedTextBoxControlEvents(item);
 
             };
         }
@@ -45,7 +45,7 @@
             set => SetValue(NoteProperty, value);
         }
 
-        // On a new value bound to Note, generates textboxes for each file the note has and fills them with their respective content.
+        // On a new value bound to Note, generates textboxes for each file or Todo the note has and fills them with their respective contents.
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note",
            typeof(Note), typeof(NotePanel), new FrameworkPropertyMetadata(null) { PropertyChangedCallback = (s, e) =>
            {
@@ -63,6 +63,15 @@
                    rtb.ReadFromFile(file);
 
                    panel.Items.Add(rtb);
+               }
+
+               foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
+               {
+                   var todoControl = new TodoControl(todo);
+
+                   todoControl.ReadFromFile(todo.FileName);
+
+                   panel.Items.Insert(todo.Index, todoControl);
                }
            }
            });
@@ -82,7 +91,7 @@
                Keyboard.Focus(rtb);
            })));
 
-        //Command to save each ExtendedRichTextBox control's contents to a respective .rtf file
+        //Command to save each IExtendedTextBoxControl's contents to a respective .rtf file
         public ICommand SaveContentsToFilesCommand
         {
             get => (ICommand)GetValue(SaveContentsToFilesCommandProperty);
@@ -96,38 +105,60 @@
 
                if (note == null) return;
 
-               var index = 0;
+               var todoIndex = 0;
+               var fileIndex = 0;
 
-               var directory = ".\\Notes";
+               var directory = ".\\Data";
 
                if (!Directory.Exists(directory))
                    Directory.CreateDirectory(directory);
 
                foreach (var child in panel.Items)
                {
-                   if (!(child is ExtendedRichTextBox rtb)) continue;
+                   if (!(child is IExtendedTextBoxControl extendedTextBoxControl)) continue;
 
-                   string file;
-                   bool newfile = false;
-
-                   if (note.FileNames.Count > index && note.FileNames[index] != null)
-                       file = note.FileNames[index];
-                   else
+                   string file = null;
+                   TextRange range = null;
+                  
+                   if (extendedTextBoxControl is TodoControl todoControl)
                    {
-                       file = $"{directory}\\{note.Name.ToLower()}_{index}";
-                       newfile = true;
+                       file = $"{directory}\\{todoIndex}_{note.Name.ToLower()}_TODO";
+
+                       todoControl.Todo.FileName = file;
+
+                       todoControl.Todo.Index = panel.Items.IndexOf(todoControl);
+
+                       if (!note.Todos.Contains(todoControl.Todo))
+                           note.Todos.Add(todoControl.Todo);
+
+                       range = todoControl.TextRange;
+
+                       todoIndex += 1;
+                   }
+
+                   if (extendedTextBoxControl is ExtendedRichTextBox rtb)
+                   {
+                       range = rtb.TextRange;
+                       bool newfile = false;
+
+                       if (note.FileNames.Count > fileIndex && note.FileNames[fileIndex] != null)
+                           file = note.FileNames[fileIndex];
+                       else
+                       {
+                           file = $"{directory}\\{fileIndex}_{note.Name.ToLower()}";
+                           newfile = true;
+                       }
+
+                       if (newfile)
+                           note.FileNames.Add(file);
+
+                       fileIndex += 1;
                    }
 
                    using (var stream = new FileStream(file, FileMode.OpenOrCreate))
                    {
-                       var text = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                       text.Save(stream, DataFormats.Rtf);
+                       range?.Save(stream, DataFormats.Rtf);
                    }
-
-                   if (newfile)
-                       note.FileNames.Add(file);
-
-                   index += 1;
                }
 
                var serializedNote = JsonConvert.SerializeObject(note);
@@ -135,7 +166,7 @@
                File.WriteAllText(metadataFileName, serializedNote);
            })));
 
-        public ICommand AddTodoNoteCommand
+        public ICommand AddTodoControlCommand
         {
             get => (ICommand)GetValue(AddTodoControlCommandProperty);
             set => SetValue(AddTodoControlCommandProperty, value);
@@ -152,55 +183,59 @@
                    panel.Items.Insert(index, todoControl);
                }
                else
+               {
                    panel.Items.Add(todoControl);
+               }
            })));
 
         /// <summary>
         /// Applies appropriate events to the provided ExtendedRichTextBox control
         /// </summary>
-        /// <param name="rtb"></param>
-        private void ConfigureRichTextBoxEvents(IExtendedTextBoxControl rtb)
+        /// <param name="extendedTextBoxControl"></param>
+        private void ConfigureExtendedTextBoxControlEvents(IExtendedTextBoxControl extendedTextBoxControl)
         {
-            rtb.BackspacePressedWhileEmpty += (s, e) =>
+            extendedTextBoxControl.BackspacePressedWhileEmpty += (s, e) =>
             {
                 var index = this.Items.IndexOf(lastFocused);
 
-                SwitchKeyboardFocusToNextRTB(index);
+                SwitchKeyboardFocusToNextETBC(index);
 
-                if (this.Items.Contains(rtb))
-                    this.Items.Remove(rtb);
+                if (this.Items.Contains(extendedTextBoxControl))
+                    this.Items.Remove(extendedTextBoxControl);
 
-                //Only check for ExtendedRichTextBox because TODOs lack serialization
-                if (rtb is ExtendedRichTextBox ertb)
+                if (extendedTextBoxControl is ExtendedRichTextBox ertb)
                     Note?.DeleteFile(ertb.CurrentFile);
+
+                if (extendedTextBoxControl is TodoControl todoControl)
+                    Note?.RemoveTodo(todoControl.Todo);
             };
 
-            rtb.GotKeyboardFocus += (s, e) =>
+            extendedTextBoxControl.GotKeyboardFocus += (s, e) =>
             {
                 lastFocused = (IExtendedTextBoxControl)s;
             };
         }
 
         /// <summary>
-        /// Gives a neighbour ExtendedRichTextBox control the focus.
+        /// Gives a neighbour IExtendedTextBoxControl keyboard focus.
         /// </summary>
-        /// <param name="index">Index of current RTB in the Items Array</param>
+        /// <param name="index">Index of current IExtendedTextBoxControl in the Items Array</param>
         /// <param name="up">Whether to navigate up the list.</param>
-        private void SwitchKeyboardFocusToNextRTB(int index, bool up = true)
+        private void SwitchKeyboardFocusToNextETBC(int index, bool up = true)
         {
             if (up)
             {
-                var rtb = Items.Cast<object>().Take(index).OfType<IExtendedTextBoxControl>().LastOrDefault();
+                var etbc = Items.Cast<object>().Take(index).OfType<IExtendedTextBoxControl>().LastOrDefault();
 
-                if (rtb != null)
-                    rtb.SetKeyboardFocus();
+                if (etbc != null)
+                    etbc.SetKeyboardFocus();
             }
             else
             {
-                var rtb = Items.Cast<object>().Skip(index + 1).OfType<IExtendedTextBoxControl>().FirstOrDefault();
+                var etbc = Items.Cast<object>().Skip(index + 1).OfType<IExtendedTextBoxControl>().FirstOrDefault();
 
-                if (rtb != null)
-                    rtb.SetKeyboardFocus();
+                if (etbc != null)
+                    etbc.SetKeyboardFocus();
             }
         }
     }

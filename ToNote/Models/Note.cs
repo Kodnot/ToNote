@@ -59,6 +59,22 @@
             }
         }
 
+        private List<Todo> _Todos;
+
+        public List<Todo> Todos
+        {
+            get => _Todos ?? (_Todos = new List<Todo>());
+            set
+            {
+                if (_Todos != value)
+                {
+                    _Todos = value;
+
+                    RaisePropertyChanged(nameof(Todos));
+                }
+            }
+        }
+
         public void DeleteFile(string file)
         {
             if (File.Exists(file))
@@ -66,6 +82,15 @@
 
             if (this.FileNames.Contains(file))
                 this.FileNames.Remove(file);
+        }
+
+        public void RemoveTodo(Todo todo)
+        {
+            if (File.Exists(todo.FileName))
+                File.Delete(todo.FileName);
+
+            if (this.Todos.Contains(todo))
+                this.Todos.Remove(todo);
         }
     }
 }
