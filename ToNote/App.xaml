@@ -27,7 +27,6 @@
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/RichTextBoxStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ButtonStyles.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/WindowStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

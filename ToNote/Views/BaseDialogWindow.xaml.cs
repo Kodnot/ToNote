@@ -12,13 +12,11 @@
         {
             InitializeComponent();
 
+            btn_CloseWindow.Click += (s, e) =>
+            {
+                if (e.Source != null)
+                    this.Close();
+            };
         }
-
-        protected void Close_Window(object sender, RoutedEventArgs e)
-        {
-            if (e.Source != null)
-                this.Close();
-        }
-
     }
 }

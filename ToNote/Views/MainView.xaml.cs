@@ -1,5 +1,6 @@
 ﻿namespace ToNote
 {
+    using System;
     using System.Windows;
 
     /// <summary>
@@ -10,24 +11,33 @@
         public MainView()
         {
             InitializeComponent();
-        }
 
-        protected void Minimize_Window(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Minimized;
-        }
+            //Prevents the maximize button from covering taskbar. Doesn't work well if multiple monitors of different resolutions are used.
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
-        protected void Maximize_Window(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Maximized;
-        }
+            btn_MinimizeWindow.Click += (s, e) =>
+            {
+                if (this.WindowState != WindowState.Minimized)
+                    this.WindowState = WindowState.Minimized;
+            };
 
-        protected void Close_Window(object sender, RoutedEventArgs e)
-        {
-            if (e.Source != null)
-                this.Close();
+            btn_MaximizeWindow.Click += (s, e) =>
+            {
+                if (this.WindowState != WindowState.Maximized)
+                {
+                    this.WindowState = WindowState.Maximized;
+                    return;
+                }
+
+                if (this.WindowState == WindowState.Maximized)
+                    this.WindowState = WindowState.Normal;
+            };
+
+            btn_CloseWindow.Click += (s, e) =>
+            {
+                if (e.Source != null)
+                    Environment.Exit(0);
+            };
         }
     }
 }

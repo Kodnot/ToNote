@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToNote"
         xmlns:Models="clr-namespace:ToNote.Models"
+        xmlns:Controls="clr-namespace:ToNote.Controls"
         xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
         mc:Ignorable="d"
         Title="ToNote" Height="450" Width="800"
@@ -16,28 +17,34 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" />
     </WindowChrome.WindowChrome>
-    <Grid>
+    <Grid Background="{StaticResource DefaultWindowBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DockPanel VerticalAlignment="Center" Grid.Row="0">
-            <TextBox Text="ToNote" Height="30"  HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Foreground="#eeeeee"/>
+            <TextBox Text="ToNote" FontSize="18" Margin="10, 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" BorderThickness="0" Background="Transparent" Foreground="#eeeeee"/>
             <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Click="Minimize_Window" Style="{StaticResource EmptyButtonStyle}">
+                <Button Width="24" Height="24" x:Name="btn_MinimizeWindow" Style="{StaticResource PathButton}">
                     <Button.Content>
-                        <Image Source="https://i.imgur.com/SOg0urb.png" />
+                        <Path Data="M 4 18 L 20 18" Style="{StaticResource ButtonPathStyle}"/>
                     </Button.Content>
                 </Button>
-                <Button Click="Maximize_Window" Style="{StaticResource EmptyButtonStyle}">
+                <Button Width="24" Height="24" x:Name="btn_MaximizeWindow" Style="{StaticResource PathButton}">
                     <Button.Content>
-                        <Image Source="https://i.imgur.com/IMNLXKP.png?1" />
+                        <Grid>
+                            <Path Data="M 4 6 L 20 6" Style="{StaticResource ButtonPathStyle}" StrokeThickness="4"/>
+                            <Path Data="M 5 7 L 5 19 L 19 19 L 19 7" Style="{StaticResource ButtonPathStyle}"/>
+                        </Grid>
                     </Button.Content>
                 </Button>
-                <Button Click="Close_Window"  Style="{StaticResource EmptyButtonStyle}">
+                <Button Width="24" Height="24" x:Name="btn_CloseWindow" Style="{StaticResource PathButton}">
                     <Button.Content>
-                        <Image Source="https://i.imgur.com/I11UYRS.png?1" />
+                        <Grid>
+                            <Path Data="M 5 5 L 19 19" Style="{StaticResource ButtonPathStyle}"/>
+                            <Path Data="M 19 5 L 5 19" Style="{StaticResource ButtonPathStyle}"/>
+                        </Grid>
                     </Button.Content>
                 </Button>
             </StackPanel>

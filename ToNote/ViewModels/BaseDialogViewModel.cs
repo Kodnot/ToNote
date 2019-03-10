@@ -7,6 +7,8 @@
     {
         public T DialogResult { get; set; }
 
+        public string Title { get; set; }
+
         public void CloseDialogWithResult(IDialogWindow dialog, T result)
         {
             DialogResult = result;
