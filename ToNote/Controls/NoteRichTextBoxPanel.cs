@@ -1,6 +1,7 @@
 ﻿namespace ToNote.Controls
 {
     using Newtonsoft.Json;
+    using System;
     using System.Collections.Specialized;
     using System.IO;
     using System.Linq;
@@ -146,6 +147,15 @@
 
                 Note?.DeleteFile(rtb.CurrentFile);
             };
+
+            //Insertion of a new ExtendedRichBox at the end with a /note command
+            rtb.TrackKeyword("note", () => {
+
+                this.AddRichTextBoxCommand.Execute(this);
+
+                //Focus has to be changed asynchronously, else an exception is thrown.
+                Dispatcher.BeginInvoke((Action)(() => { Keyboard.Focus((ExtendedRichTextBox)this.Items[this.Items.Count - 1]); }));
+            });
         }
 
         /// <summary>
