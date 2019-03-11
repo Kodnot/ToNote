@@ -25,4 +25,13 @@
 
     <Color x:Key="DefaultPathHoverColor">#262228</Color>
     <SolidColorBrush x:Key="DefaultPathHoverBrush" Color="{StaticResource DefaultPathHoverColor}"/>
+
+    <Color x:Key="DefaultTextBoxBackgroundColor">#0E0B16</Color>
+    <SolidColorBrush x:Key="DefaultTextBoxBackgroundBrush" Color="{StaticResource DefaultTextBoxBackgroundColor}"/>
+
+    <Color x:Key="DefaultTextBoxForegroundColor">#E7DFDD</Color>
+    <SolidColorBrush x:Key="DefaultTextBoxForegroundBrush" Color="{StaticResource DefaultTextBoxForegroundColor}"/>
+
+    <Color x:Key="DefaultTextBoxBorderColor">#E7DFDD</Color>
+    <SolidColorBrush x:Key="DefaultTextBoxBorderBrush" Color="{StaticResource DefaultTextBoxBorderColor}"/>
 </ResourceDictionary>
