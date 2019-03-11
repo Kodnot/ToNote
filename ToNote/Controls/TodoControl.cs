@@ -1,5 +1,6 @@
 ﻿namespace ToNote.Controls
 {
+    using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
@@ -72,6 +73,16 @@
             };
 
             return this;
+        }
+
+        public void TrackKeyword(string keyword, Action action)
+        {
+            if (!this.IsLoaded)
+            {
+                this.Loaded += (s, e) => extendedRTB?.TrackKeyword(keyword, action);
+            }
+            else
+                extendedRTB?.TrackKeyword(keyword, action);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 
@@ -14,5 +15,7 @@ namespace ToNote.Interfaces
 
         void SetKeyboardFocus();
         void ReadFromFile(string file);
+
+        void TrackKeyword(string keyword, Action action);
     }
 }

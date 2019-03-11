@@ -215,17 +215,20 @@
                 lastFocused = (IExtendedTextBoxControl)s;
             };
 
-            if (extendedTextBoxControl is ExtendedRichTextBox rtb)
+            //Insertion of a new ExtendedRichBox at the end with a /note command
+            extendedTextBoxControl.TrackKeyword("note", () => {
+
+                this.AddRichTextBoxCommand.Execute(this);
+
+                ((ExtendedRichTextBox)this.Items[this.Items.Count - 1]).SetKeyboardFocus();
+            });
+
+            extendedTextBoxControl.TrackKeyword("todo", () =>
             {
-                //Insertion of a new ExtendedRichBox at the end with a /note command
-                rtb.TrackKeyword("note", () => {
+                this.AddTodoControlCommand.Execute(this);
 
-                    this.AddRichTextBoxCommand.Execute(this);
-
-                    //Focus has to be changed asynchronously, else an exception is thrown.
-                    Dispatcher.BeginInvoke((Action)(() => { Keyboard.Focus((ExtendedRichTextBox)this.Items[this.Items.Count - 1]); }));
-                });
-            }
+                ((TodoControl)this.Items[this.Items.Count - 1]).SetKeyboardFocus();
+            });
         }
 
         /// <summary>
