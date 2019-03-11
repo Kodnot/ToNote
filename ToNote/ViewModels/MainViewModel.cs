@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace ToNote.ViewModels
+﻿namespace ToNote.ViewModels
 {
     using Newtonsoft.Json;
     using System.Collections.ObjectModel;
@@ -10,6 +8,7 @@ namespace ToNote.ViewModels
     using ToNote.Logic;
     using ToNote.Logic.Dialog;
     using ToNote.Models;
+    using System.Windows;
 
     public class MainViewModel : BaseModel
     {
