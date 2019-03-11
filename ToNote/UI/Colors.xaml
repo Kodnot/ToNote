@@ -32,7 +32,7 @@
     <Color x:Key="DefaultTextBoxForegroundColor">#E7DFDD</Color>
     <SolidColorBrush x:Key="DefaultTextBoxForegroundBrush" Color="{StaticResource DefaultTextBoxForegroundColor}"/>
 
-    <Color x:Key="DefaultTextBoxBorderColor">#E7DFDD</Color>
+    <Color x:Key="DefaultTextBoxBorderColor">#546175</Color>
     <SolidColorBrush x:Key="DefaultTextBoxBorderBrush" Color="{StaticResource DefaultTextBoxBorderColor}"/>
     
     <Color x:Key="DefaultRepeatButtonColor">#F4F4F4</Color>
