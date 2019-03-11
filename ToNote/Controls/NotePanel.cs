@@ -89,7 +89,7 @@
            {
                var rtb = new ExtendedRichTextBox() { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style };
                panel.Items.Add(rtb);
-               Keyboard.Focus(rtb);
+               rtb.SetKeyboardFocus();
            })));
 
         //Command to save each IExtendedTextBoxControl's contents to a respective .rtf file

@@ -102,7 +102,15 @@
 
         public void SetKeyboardFocus()
         {
-            Keyboard.Focus(this);
+            if (!this.IsLoaded)
+            {
+                this.Loaded += (s, e) =>
+                {
+                    Keyboard.Focus(this);
+                };
+            }
+            else
+                Keyboard.Focus(this);
         }
         
         public void TrackKeyword(string keyword, Action action)
