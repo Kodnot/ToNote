@@ -23,7 +23,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate DataType="{x:Type Models:Todo}">
-                            <Border x:Name="bd" Padding="4, 2" Margin="-5, 5" BorderBrush="{StaticResource DefaultTodoBorderBrush}" BorderThickness="0, 1">
+                            <Border x:Name="bd" Padding="4, 5" Margin="-5, 5" BorderBrush="{StaticResource DefaultTodoBorderBrush}" BorderThickness="0, 1">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
                                         <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
