@@ -1,4 +1,6 @@
-﻿namespace ToNote.ViewModels
+﻿using System.Windows;
+
+namespace ToNote.ViewModels
 {
     using Newtonsoft.Json;
     using System.Collections.ObjectModel;
@@ -71,6 +73,33 @@
                     dialog.Note = note;
 
                     DialogService.OpenDialog(dialog);
+                }));
+            }
+        }
+
+        private ICommand _RemoveNoteCommand;
+
+        public ICommand RemoveNoteCommand
+        {
+            get
+            {
+                return _RemoveNoteCommand ?? (_RemoveNoteCommand = new RelayCommand<Note>(note =>
+                {
+                    if (!Notes.Contains(note))
+                        return;
+
+                    if (MessageBox.Show("Are you sure?", "Remove Note Confirmation", button: MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                        return;
+
+                    Notes.Remove(note);
+
+                    // TODO: This should be handled by the IO handler class instead.
+                    while(note.FileNames.Any())
+                        note.DeleteFile(note.FileNames.First());
+
+                    var metadataFileName = note.Name + "Metadata.txt";
+                    if (File.Exists(metadataFileName))
+                        File.Delete(metadataFileName);
                 }));
             }
         }
