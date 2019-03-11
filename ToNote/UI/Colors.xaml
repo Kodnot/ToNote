@@ -25,4 +25,16 @@
 
     <Color x:Key="DefaultPathHoverColor">#262228</Color>
     <SolidColorBrush x:Key="DefaultPathHoverBrush" Color="{StaticResource DefaultPathHoverColor}"/>
+
+    <Color x:Key="DefaultRepeatButtonColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultRepeatButtonBrush" Color="{StaticResource DefaultRepeatButtonColor}"/>
+
+    <Color x:Key="DefaultClickedRepeatButtonColor">#616161</Color>
+    <SolidColorBrush x:Key="DefaultClickedRepeatButtonBrush" Color="{StaticResource DefaultClickedRepeatButtonColor}"/>
+
+    <Color x:Key="DefaultScrollBarColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultScrollBarBrush" Color="{StaticResource DefaultScrollBarColor}"/>
+
+    <Color x:Key="DefaultClickedScrollBarColor">#616161</Color>
+    <SolidColorBrush x:Key="DefaultClickedScrollBarBrush" Color="{StaticResource DefaultClickedScrollBarColor}"/>
 </ResourceDictionary>
