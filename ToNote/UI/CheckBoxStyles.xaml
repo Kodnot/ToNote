@@ -5,8 +5,8 @@
     <Style TargetType="{x:Type CheckBox}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
-        <Setter Property="Width" Value="25"/>
-        <Setter Property="Height" Value="25"/>
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="Height" Value="15"/>
         <Setter Property="Background" Value="{StaticResource DefaultCheckBoxBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource DefaultCheckBoxForegroundBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource DefaultCheckBoxBorderBrush}"/>
@@ -21,7 +21,7 @@
                                 <Setter Property="BorderBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type CheckBox}, Mode=FindAncestor}}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType={x:Type CheckBox}, Mode=FindAncestor}}" Value="True">
-                                        <Setter Property="Background" Value="#A4D555"/>
+                                        <Setter Property="Background" Value="{StaticResource DefaultCheckBoxCheckedBackgroundBrush}"/>
                                     </DataTrigger>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Cursor" Value="Hand"/>
@@ -39,7 +39,7 @@
                         </Border.Style>
                         <Grid Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
                             <ContentPresenter/>
-                            <Path SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="Center" StrokeThickness="1.5" VerticalAlignment="Center" Data="M -2 2 L 4 11 L 11 -2">
+                            <Path SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="Center" StrokeThickness="1.5" VerticalAlignment="Center" Data="M -2 2 L 1 6 L 5 -1">
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -50,7 +50,7 @@
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType={x:Type CheckBox}, Mode=FindAncestor}}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible"/>
-                                                <Setter Property="Stroke" Value="#0E0B16"/>
+                                                <Setter Property="Stroke" Value="{StaticResource DefaultCheckBoxCheckedPathBrush}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

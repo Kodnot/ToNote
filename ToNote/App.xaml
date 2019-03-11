@@ -23,7 +23,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate DataType="{x:Type Models:Todo}">
-                            <Border x:Name="bd" Padding="4" Margin="-5, 5" BorderBrush="{StaticResource DefaultTodoBorderBrush}" BorderThickness="0, 1">
+                            <Border x:Name="bd" Padding="4, 2" Margin="-5, 5" BorderBrush="{StaticResource DefaultTodoBorderBrush}" BorderThickness="0, 1">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
                                         <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
@@ -40,7 +40,7 @@
                                                         <Setter Property="Foreground" Value="{StaticResource DefaultTodoForegroundBrush}"/>
                                                     </Style>
                                                 </Style.Resources>
-                                                <Setter Property="Padding" Value="2"/>
+                                                <Setter Property="Padding" Value="2, 0"/>
                                             </Style>
                                         </Controls:ExtendedRichTextBox.Style>
                                     </Controls:ExtendedRichTextBox>
