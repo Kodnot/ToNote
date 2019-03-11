@@ -6,18 +6,19 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
+    using System.Windows.Input;
+    using ToNote.Interfaces;
 
-    public class ExtendedRichTextBox : RichTextBox
+    public class ExtendedRichTextBox : RichTextBox, IExtendedTextBoxControl
     {
         public ExtendedRichTextBox()
         {
-            var range = new TextRange(Document.ContentStart, Document.ContentEnd);
-
             // Checks if backspace was pressed when the textbox was empty and raises an event. Used for convenient empty textbox removal
             this.PreviewKeyDown += (s, e) =>
             {
-                if (e.Key == System.Windows.Input.Key.Back)
+                if (e.Key == Key.Back)
                 {
+                    var range = new TextRange(Document.ContentStart, Document.ContentEnd);
                     if (string.IsNullOrWhiteSpace(range.Text))
                         BackspacePressedWhileEmpty?.Invoke(this, new RoutedEventArgs());
                 }
@@ -25,6 +26,7 @@
 
             this.TextChanged += (s, e) =>
             {
+                var range = new TextRange(Document.ContentStart, Document.ContentEnd);
                 //Prevents start of tracking while initializing.
                 if (!this.IsLoaded) return;
 
@@ -72,7 +74,7 @@
             };
         }
 
-        public RoutedEventHandler BackspacePressedWhileEmpty;
+        public event RoutedEventHandler BackspacePressedWhileEmpty;
 
         private List<KeywordAction> _trackedKeywords { get; set; } = new List<KeywordAction>();
 
@@ -81,6 +83,8 @@
         private int _trackingCounter = 0;
 
         public string CurrentFile { get; private set; }
+
+        public TextRange TextRange => new TextRange(Document.ContentStart, Document.ContentEnd);
 
         public void ReadFromFile(string file)
         {
@@ -96,6 +100,19 @@
             CurrentFile = file;
         }
 
+        public void SetKeyboardFocus()
+        {
+            if (!this.IsLoaded)
+            {
+                this.Loaded += (s, e) =>
+                {
+                    Keyboard.Focus(this);
+                };
+            }
+            else
+                Keyboard.Focus(this);
+        }
+        
         public void TrackKeyword(string keyword, Action action)
         {
             var keywordAction = new KeywordAction() { Keyword = keyword, Action = action };

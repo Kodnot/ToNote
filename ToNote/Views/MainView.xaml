@@ -8,7 +8,7 @@
         xmlns:Controls="clr-namespace:ToNote.Controls"
         xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
         mc:Ignorable="d"
-        Title="ToNote" Height="450" Width="800"
+        Title="ToNote" Height="650" Width="1100"
         WindowStyle="None">
 
     <Window.DataContext>

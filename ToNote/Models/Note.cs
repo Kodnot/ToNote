@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows.Documents;
-using Newtonsoft.Json;
-
-namespace ToNote.Models
+﻿namespace ToNote.Models
 {
+    using System.Collections.Generic;
     using System.IO;
 
     public class Note : BaseModel
@@ -12,7 +9,6 @@ namespace ToNote.Models
         {
             Name = name;
             Description = description;
-            FileNames = new List<string>();
         }
 
         private string _Name;
@@ -51,7 +47,7 @@ namespace ToNote.Models
 
         public List<string> FileNames
         {
-            get => _FileNames;
+            get => _FileNames ?? (_FileNames = new List<string>());
             set
             {
                 if (_FileNames != value)
@@ -63,6 +59,22 @@ namespace ToNote.Models
             }
         }
 
+        private List<Todo> _Todos;
+
+        public List<Todo> Todos
+        {
+            get => _Todos ?? (_Todos = new List<Todo>());
+            set
+            {
+                if (_Todos != value)
+                {
+                    _Todos = value;
+
+                    RaisePropertyChanged(nameof(Todos));
+                }
+            }
+        }
+
         public void DeleteFile(string file)
         {
             if (File.Exists(file))
@@ -70,6 +82,15 @@ namespace ToNote.Models
 
             if (this.FileNames.Contains(file))
                 this.FileNames.Remove(file);
+        }
+
+        public void RemoveTodo(Todo todo)
+        {
+            if (File.Exists(todo.FileName))
+                File.Delete(todo.FileName);
+
+            if (this.Todos.Contains(todo))
+                this.Todos.Remove(todo);
         }
     }
 }

@@ -3,16 +3,15 @@
                     xmlns:Controls="clr-namespace:ToNote.Controls"
                     xmlns:local="clr-namespace:ToNote.UI">
 
+    <Style TargetType="Paragraph">
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultTextBoxForegroundBrush}"/>
+    </Style>
+
     <Style TargetType="{x:Type Controls:ExtendedRichTextBox}">
-        <Style.Resources>
-            <Style TargetType="Paragraph">
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="FontFamily" Value="Calibri"/>
-                <Setter Property="FontWeight" Value="Normal"/>
-                <Setter Property="Foreground" Value="{StaticResource DefaultTextBoxForegroundBrush}"/>
-            </Style>
-        </Style.Resources>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>

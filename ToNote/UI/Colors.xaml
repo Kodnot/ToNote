@@ -46,4 +46,34 @@
 
     <Color x:Key="DefaultClickedScrollBarColor">#616161</Color>
     <SolidColorBrush x:Key="DefaultClickedScrollBarBrush" Color="{StaticResource DefaultClickedScrollBarColor}"/>
+
+    <Color x:Key="DefaultCheckBoxBackgroundColor">#0E0B16</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxBackgroundBrush" Color="{StaticResource DefaultCheckBoxBackgroundColor}"/>
+
+    <Color x:Key="DefaultCheckBoxForegroundColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxForegroundBrush" Color="{StaticResource DefaultCheckBoxForegroundColor}"/>
+
+    <Color x:Key="DefaultCheckBoxBorderColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxBorderBrush" Color="{StaticResource DefaultCheckBoxBorderColor}"/>
+
+    <Color x:Key="DefaultCheckBoxCheckedBackgroundColor">#A4D555</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxCheckedBackgroundBrush" Color="{StaticResource DefaultCheckBoxCheckedBackgroundColor}"/>
+
+    <Color x:Key="DefaultCheckBoxCheckedPathColor">#0E0B16</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxCheckedPathBrush" Color="{StaticResource DefaultCheckBoxCheckedPathColor}"/>
+
+    <!-- adasdasd -->
+
+    <Color x:Key="DefaultTodoBorderColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultTodoBorderBrush" Color="{StaticResource DefaultTodoBorderColor}"/>
+
+    <Color x:Key="DefaultTodoForegroundColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultTodoForegroundBrush" Color="{StaticResource DefaultTodoForegroundColor}"/>
+
+    <Color x:Key="DefaultTodoUncheckedBackgroundColor">#E24E42</Color>
+    <SolidColorBrush x:Key="DefaultTodoUncheckedBackgroundBrush" Color="{StaticResource DefaultTodoUncheckedBackgroundColor}"/>
+
+    <Color x:Key="DefaultTodoCheckedBackgroundColor">#66AB8C</Color>
+    <SolidColorBrush x:Key="DefaultTodoCheckedBackgroundBrush" Color="{StaticResource DefaultTodoCheckedBackgroundColor}"/>
+
 </ResourceDictionary>

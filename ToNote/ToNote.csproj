@@ -57,7 +57,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\ExtendedRichTextBox.cs" />
-    <Compile Include="Controls\NoteRichTextBoxPanel.cs" />
+    <Compile Include="Controls\NotePanel.cs" />
+    <Compile Include="Controls\TodoControl.cs" />
+    <Compile Include="Interfaces\IExtendedTextBoxControl.cs" />
+    <Compile Include="Models\Todo.cs" />
     <Compile Include="ViewModels\AboutPageViewModel.cs" />
     <Compile Include="Views\AboutPageView.xaml.cs">
       <DependentUpon>AboutPageView.xaml</DependentUpon>
@@ -66,6 +69,10 @@
       <DependentUpon>NoteView.xaml</DependentUpon>
     </Compile>
     <Page Include="UI\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\CheckBoxStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:ToNote.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border BorderThickness="1" BorderBrush="Black" Padding="5" HorizontalAlignment="Stretch">
+    <Border BorderThickness="1" BorderBrush="#546175" Padding="5" Margin="0, 5" HorizontalAlignment="Stretch">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -17,14 +17,15 @@
             <DockPanel Grid.Row="0">
                 <TextBlock Text="{Binding Name}" Style="{StaticResource NoteNameStyle}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="button_addtodo" Command="{Binding ElementName=rtbpanel, Path=AddTodoControlCommand}" CommandParameter="{Binding ElementName=rtbpanel}" Content="Add TODO" />
                     <Button x:Name="button_addrtb" Command="{Binding ElementName=rtbpanel, Path=AddRichTextBoxCommand}" CommandParameter="{Binding ElementName=rtbpanel}" Content="Add RTB"/>
                     <Button x:Name="button_save" Command="{Binding ElementName=rtbpanel, Path=SaveContentsToFilesCommand}" CommandParameter="{Binding ElementName=rtbpanel}"  Content="Save"/>
                     <Button x:Name="button_remove" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.RemoveNoteCommand}" CommandParameter="{Binding}" Content="Remove"/>
                 </StackPanel>
             </DockPanel>
 
-            <Controls:NoteRichTextBoxPanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
-            </Controls:NoteRichTextBoxPanel>
+            <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
+            </Controls:NotePanel>
         </Grid>
     </Border>
 </UserControl>
