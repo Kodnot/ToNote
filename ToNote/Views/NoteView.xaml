@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:ToNote.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border BorderThickness="1" BorderBrush="Black" Padding="5" HorizontalAlignment="Stretch">
+    <Border BorderThickness="1" BorderBrush="#546175" Padding="5" Margin="0, 5" HorizontalAlignment="Stretch">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

@@ -5,6 +5,7 @@
     <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="NoteNameStyle">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="#F4F4F4"/>
     </Style>
     
 </ResourceDictionary>

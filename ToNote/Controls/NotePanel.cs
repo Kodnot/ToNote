@@ -58,8 +58,7 @@
 
                foreach (var file in (newNoteValue.FileNames))
                {
-                   var rtb = new ExtendedRichTextBox()
-                   { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style };
+                   var rtb = new ExtendedRichTextBox();
 
                    rtb.ReadFromFile(file);
 
@@ -87,7 +86,7 @@
         public static readonly DependencyProperty AddRichTextBoxCommandProperty = DependencyProperty.Register("AddRichTextBoxCommand",
            typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) => 
            {
-               var rtb = new ExtendedRichTextBox() { Style = App.Current.TryFindResource("NoteContentRichTextBoxStyle") as Style };
+               var rtb = new ExtendedRichTextBox();
                panel.Items.Add(rtb);
                rtb.SetKeyboardFocus();
            })));

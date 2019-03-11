@@ -3,19 +3,70 @@
                     xmlns:Controls="clr-namespace:ToNote.Controls"
                     xmlns:local="clr-namespace:ToNote.UI">
 
-    <Style TargetType="{x:Type Controls:ExtendedRichTextBox}" x:Key="NoteContentRichTextBoxStyle">
-        <Style.Resources>
-            <Style TargetType="Paragraph">
-                <Setter Property="Margin" Value="0"/>
-            </Style>
-        </Style.Resources>
+    <Style TargetType="Paragraph">
         <Setter Property="Margin" Value="0"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultTextBoxForegroundBrush}"/>
+    </Style>
+
+    <Style TargetType="{x:Type Controls:ExtendedRichTextBox}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="BorderBrush" Value="{StaticResource DefaultTextBoxBorderBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderThickness" Value="1"/>
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Padding" Value="5, 0"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{StaticResource DefaultTextBoxBackgroundBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Controls:ExtendedRichTextBox">
+                    <Border x:Name="bd" TextOptions.TextFormattingMode="Display" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Margin}" BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource DefaultButtonBackgroundColor}" Opacity="0"/>
+                        </Border.Background>
+                        <ScrollViewer  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost" TextOptions.TextFormattingMode="Display"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="sb">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Opacity)" To="1" Duration="0:0:.1"/>
+                                        <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" To="2" Duration="0:0:.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="sb"/>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="sb_mouse">
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" To="2" Duration="0:0:.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="sb_mouse"/>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>
