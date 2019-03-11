@@ -1,0 +1,109 @@
+﻿<Application x:Class="ToNote.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ToNote"
+             xmlns:Models="clr-namespace:ToNote.Models"
+             xmlns:Controls="clr-namespace:ToNote.Controls"
+             xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
+             xmlns:Views="clr-namespace:ToNote.Views"
+             StartupUri="Views/MainView.xaml">
+    <Application.Resources>
+
+        <ResourceDictionary>
+
+            <DataTemplate DataType="{x:Type ViewModels:AddNoteDialogViewModel}">
+                <Views:AddNoteDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type Models:Note}">
+                <Views:NoteView/>
+            </DataTemplate>
+
+            <Style TargetType="{x:Type Controls:TodoControl}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate DataType="{x:Type Models:Todo}">
+                            <Border x:Name="bd" Padding="4, 5" Margin="-5, 5" BorderBrush="{StaticResource DefaultTodoBorderBrush}" BorderThickness="0, 1">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                                        <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
+                                        <GradientStop Color="{StaticResource DefaultTodoUncheckedBackgroundColor}" Offset="0.0"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <DockPanel>
+                                    <CheckBox x:Name="checkBox" IsChecked="{Binding IsChecked, Mode=TwoWay}" DockPanel.Dock="Left" Margin="5, 0"/>
+                                    <Controls:ExtendedRichTextBox x:Name="rtb" DockPanel.Dock="Right">
+                                        <Controls:ExtendedRichTextBox.Style>
+                                            <Style BasedOn="{StaticResource {x:Type Controls:ExtendedRichTextBox}}" TargetType="Controls:ExtendedRichTextBox">
+                                                <Style.Resources>
+                                                    <Style TargetType="Paragraph" BasedOn="{StaticResource {x:Type Paragraph}}">
+                                                        <Setter Property="Foreground" Value="{StaticResource DefaultTodoForegroundBrush}"/>
+                                                    </Style>
+                                                </Style.Resources>
+                                                <Setter Property="Padding" Value="2, 0"/>
+                                            </Style>
+                                        </Controls:ExtendedRichTextBox.Style>
+                                    </Controls:ExtendedRichTextBox>
+                                </DockPanel>
+                            </Border>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=checkBox, Path=IsChecked}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard Storyboard.TargetName="bd">
+                                                <DoubleAnimation Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" To="1.0" Duration="0:0:.3">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <PowerEase EasingMode="EaseIn" Power="4"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" To="1.0" Duration="0:0:.3">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <PowerEase EasingMode="EaseIn" Power="4"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard Storyboard.TargetName="bd">
+                                                <DoubleAnimation Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" To="0.0" Duration="0:0:.3">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <PowerEase EasingMode="EaseOut" Power="4"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" To="0.0" Duration="0:0:.3">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <PowerEase EasingMode="EaseOut" Power="4"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+          
+            <DataTemplate DataType="{x:Type ViewModels:AboutPageViewModel}">
+                <Views:AboutPageView/>
+            </DataTemplate>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/Colors.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/RichTextBoxStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ScrollViewerStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/CheckBoxStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            
+
+        </ResourceDictionary>
+        
+        
+    </Application.Resources>
+</Application>

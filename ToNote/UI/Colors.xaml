@@ -1,0 +1,79 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ToNote.UI">
+
+    <Color x:Key="DefaultButtonBackgroundColor">#262228</Color>
+    <SolidColorBrush x:Key="DefaultButtonBackgroundBrush" Color="{StaticResource DefaultButtonBackgroundColor}"/>
+
+    <Color x:Key="DefaultButtonHoverBackgroundColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultButtonHoverBackgroundBrush" Color="{StaticResource DefaultButtonHoverBackgroundColor}"/>
+
+    <Color x:Key="DefaultButtonForegroundColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultButtonForegroundBrush" Color="{StaticResource DefaultButtonForegroundColor}"/>
+
+    <Color x:Key="DefaultButtonHoverForegroundColor">#262228</Color>
+    <SolidColorBrush x:Key="DefaultButtonHoverForegroundBrush" Color="{StaticResource DefaultButtonHoverForegroundColor}"/>
+
+    <Color x:Key="DefaultWindowBackgroundColor">#222831</Color>
+    <SolidColorBrush x:Key="DefaultWindowBackgroundBrush" Color="{StaticResource DefaultWindowBackgroundColor}"/>
+
+    <Color x:Key="DefaultWindowForegroundColor">#eeeeee</Color>
+    <SolidColorBrush x:Key="DefaultWindowForegroundBrush" Color="{StaticResource DefaultWindowForegroundColor}"/>
+
+    <Color x:Key="DefaultPathColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultPathBrush" Color="{StaticResource DefaultPathColor}"/>
+
+    <Color x:Key="DefaultPathHoverColor">#262228</Color>
+    <SolidColorBrush x:Key="DefaultPathHoverBrush" Color="{StaticResource DefaultPathHoverColor}"/>
+
+    <Color x:Key="DefaultTextBoxBackgroundColor">#0E0B16</Color>
+    <SolidColorBrush x:Key="DefaultTextBoxBackgroundBrush" Color="{StaticResource DefaultTextBoxBackgroundColor}"/>
+
+    <Color x:Key="DefaultTextBoxForegroundColor">#E7DFDD</Color>
+    <SolidColorBrush x:Key="DefaultTextBoxForegroundBrush" Color="{StaticResource DefaultTextBoxForegroundColor}"/>
+
+    <Color x:Key="DefaultTextBoxBorderColor">#546175</Color>
+    <SolidColorBrush x:Key="DefaultTextBoxBorderBrush" Color="{StaticResource DefaultTextBoxBorderColor}"/>
+    
+    <Color x:Key="DefaultRepeatButtonColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultRepeatButtonBrush" Color="{StaticResource DefaultRepeatButtonColor}"/>
+
+    <Color x:Key="DefaultClickedRepeatButtonColor">#616161</Color>
+    <SolidColorBrush x:Key="DefaultClickedRepeatButtonBrush" Color="{StaticResource DefaultClickedRepeatButtonColor}"/>
+
+    <Color x:Key="DefaultScrollBarColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultScrollBarBrush" Color="{StaticResource DefaultScrollBarColor}"/>
+
+    <Color x:Key="DefaultClickedScrollBarColor">#616161</Color>
+    <SolidColorBrush x:Key="DefaultClickedScrollBarBrush" Color="{StaticResource DefaultClickedScrollBarColor}"/>
+
+    <Color x:Key="DefaultCheckBoxBackgroundColor">#0E0B16</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxBackgroundBrush" Color="{StaticResource DefaultCheckBoxBackgroundColor}"/>
+
+    <Color x:Key="DefaultCheckBoxForegroundColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxForegroundBrush" Color="{StaticResource DefaultCheckBoxForegroundColor}"/>
+
+    <Color x:Key="DefaultCheckBoxBorderColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxBorderBrush" Color="{StaticResource DefaultCheckBoxBorderColor}"/>
+
+    <Color x:Key="DefaultCheckBoxCheckedBackgroundColor">#A4D555</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxCheckedBackgroundBrush" Color="{StaticResource DefaultCheckBoxCheckedBackgroundColor}"/>
+
+    <Color x:Key="DefaultCheckBoxCheckedPathColor">#0E0B16</Color>
+    <SolidColorBrush x:Key="DefaultCheckBoxCheckedPathBrush" Color="{StaticResource DefaultCheckBoxCheckedPathColor}"/>
+
+    <!-- adasdasd -->
+
+    <Color x:Key="DefaultTodoBorderColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultTodoBorderBrush" Color="{StaticResource DefaultTodoBorderColor}"/>
+
+    <Color x:Key="DefaultTodoForegroundColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultTodoForegroundBrush" Color="{StaticResource DefaultTodoForegroundColor}"/>
+
+    <Color x:Key="DefaultTodoUncheckedBackgroundColor">#E24E42</Color>
+    <SolidColorBrush x:Key="DefaultTodoUncheckedBackgroundBrush" Color="{StaticResource DefaultTodoUncheckedBackgroundColor}"/>
+
+    <Color x:Key="DefaultTodoCheckedBackgroundColor">#66AB8C</Color>
+    <SolidColorBrush x:Key="DefaultTodoCheckedBackgroundBrush" Color="{StaticResource DefaultTodoCheckedBackgroundColor}"/>
+
+</ResourceDictionary>

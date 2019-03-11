@@ -1,0 +1,67 @@
+﻿<Window x:Class="ToNote.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToNote"
+        xmlns:Models="clr-namespace:ToNote.Models"
+        xmlns:Controls="clr-namespace:ToNote.Controls"
+        xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
+        mc:Ignorable="d"
+        Title="ToNote" Height="650" Width="1100"
+        WindowStyle="None">
+
+    <Window.DataContext>
+        <ViewModels:MainViewModel/>
+    </Window.DataContext>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" />
+    </WindowChrome.WindowChrome>
+    <Grid Background="{StaticResource DefaultWindowBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel VerticalAlignment="Center" Grid.Row="0">
+            <TextBox Text="ToNote" FontSize="18" Margin="10, 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" BorderThickness="0" Background="Transparent" Foreground="#eeeeee"/>
+            <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Width="24" Height="24" x:Name="btn_MinimizeWindow" Style="{StaticResource PathButton}">
+                    <Button.Content>
+                        <Path Data="M 4 18 L 20 18" Style="{StaticResource ButtonPathStyle}"/>
+                    </Button.Content>
+                </Button>
+                <Button Width="24" Height="24" x:Name="btn_MaximizeWindow" Style="{StaticResource PathButton}">
+                    <Button.Content>
+                        <Grid>
+                            <Path Data="M 4 6 L 20 6" Style="{StaticResource ButtonPathStyle}" StrokeThickness="4"/>
+                            <Path Data="M 5 7 L 5 19 L 19 19 L 19 7" Style="{StaticResource ButtonPathStyle}"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Width="24" Height="24" x:Name="btn_CloseWindow" Style="{StaticResource PathButton}">
+                    <Button.Content>
+                        <Grid>
+                            <Path Data="M 5 5 L 19 19" Style="{StaticResource ButtonPathStyle}"/>
+                            <Path Data="M 19 5 L 5 19" Style="{StaticResource ButtonPathStyle}"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource RightScrollViewer}">
+            <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Button  Content="About" Command="{Binding OpenAboutPageCommand}"/>
+            <Button  Content="Add note" Command="{Binding AddNoteCommand}"/>
+        </StackPanel>
+        
+    </Grid>
+</Window>
