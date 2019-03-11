@@ -34,4 +34,16 @@
 
     <Color x:Key="DefaultTextBoxBorderColor">#E7DFDD</Color>
     <SolidColorBrush x:Key="DefaultTextBoxBorderBrush" Color="{StaticResource DefaultTextBoxBorderColor}"/>
+    
+    <Color x:Key="DefaultRepeatButtonColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultRepeatButtonBrush" Color="{StaticResource DefaultRepeatButtonColor}"/>
+
+    <Color x:Key="DefaultClickedRepeatButtonColor">#616161</Color>
+    <SolidColorBrush x:Key="DefaultClickedRepeatButtonBrush" Color="{StaticResource DefaultClickedRepeatButtonColor}"/>
+
+    <Color x:Key="DefaultScrollBarColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultScrollBarBrush" Color="{StaticResource DefaultScrollBarColor}"/>
+
+    <Color x:Key="DefaultClickedScrollBarColor">#616161</Color>
+    <SolidColorBrush x:Key="DefaultClickedScrollBarBrush" Color="{StaticResource DefaultClickedScrollBarColor}"/>
 </ResourceDictionary>
