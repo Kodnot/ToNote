@@ -2,11 +2,6 @@
 {
     public class Todo : BaseModel
     {
-        public Todo()
-        {
-            
-        }
-
         public string FileName { get; set; }
 
         private bool _IsChecked = false;
