@@ -2,20 +2,20 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ToNote.UI">
 
-
     <Style TargetType="TextBox">
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="Background" Value="{StaticResource DefaultTextBoxBackgroundBrush}"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Foreground" Value="{StaticResource DefaultTextBoxForegroundBrush}"/>
-        <Setter Property="Padding" Value="10, 0, 0, 0"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Padding" Value="10, 0"/>
+        <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="BorderBrush" Value="{StaticResource DefaultTextBoxBackgroundBrush}"/>
+        <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -23,14 +23,12 @@
                         <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                     
                         <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="#E24E42"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource DefaultTextBoxFocusedBorderBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
 </ResourceDictionary>
