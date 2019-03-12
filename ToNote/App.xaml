@@ -86,7 +86,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-          
+
             <DataTemplate DataType="{x:Type ViewModels:AboutPageViewModel}">
                 <Views:AboutPageView/>
             </DataTemplate>
@@ -98,12 +98,8 @@
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ScrollViewerStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/CheckBoxStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBoxStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
-            
-
         </ResourceDictionary>
-        
-        
     </Application.Resources>
 </Application>
