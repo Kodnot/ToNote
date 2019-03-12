@@ -87,7 +87,14 @@
            typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) => 
            {
                var rtb = new ExtendedRichTextBox();
-               panel.Items.Add(rtb);
+               if (panel.lastFocused != null)
+               {
+                   var index = panel.Items.IndexOf(panel.lastFocused) + 1;
+                   panel.Items.Insert(index, rtb);
+               }
+               else
+                   panel.Items.Add(rtb);
+
                rtb.SetKeyboardFocus();
            })));
 
@@ -220,14 +227,14 @@
 
                 this.AddRichTextBoxCommand.Execute(this);
 
-                ((ExtendedRichTextBox)this.Items[this.Items.Count - 1]).SetKeyboardFocus();
+                
             });
 
             extendedTextBoxControl.TrackKeyword("todo", () =>
             {
                 this.AddTodoControlCommand.Execute(this);
 
-                ((TodoControl)this.Items[this.Items.Count - 1]).SetKeyboardFocus();
+
             });
         }
 
