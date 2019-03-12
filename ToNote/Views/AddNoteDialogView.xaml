@@ -13,7 +13,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Name: " HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Foreground="White"/>
-        <TextBox Text="{Binding Name, Mode=TwoWay}" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="3" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay}"  Grid.Column="1" />
         <Button Command="{Binding AddNoteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Content="Add" Grid.Column="2"/>
     </Grid>
 </UserControl>
