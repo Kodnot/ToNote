@@ -222,7 +222,7 @@
             };
 
             //Insertion of a new ExtendedRichBox at the end with a /note command
-            extendedTextBoxControl.TrackKeyword("note", () => {
+            extendedTextBoxControl.TrackKeyword("n", () => {
 
                 this.AddRichTextBoxCommand.Execute(this);
 
@@ -230,8 +230,28 @@
 
             extendedTextBoxControl.TrackKeyword("todo", () =>
             {
-                this.AddTodoControlCommand.Execute(this);
+            var todoControl = new TodoControl(new Todo()).SetKeyboardFocusAfterLoaded();
 
+                var index = this.Items.IndexOf(extendedTextBoxControl) + 1;
+
+                if (extendedTextBoxControl is ExtendedRichTextBox rtb)
+                {
+                    var leftRange = new TextRange(rtb.Document.ContentStart, rtb.CommandExecutionPointer);
+
+                    var rightRange = new TextRange(rtb.CommandExecutionPointer, rtb.Document.ContentEnd);
+
+                    this.Items.Insert(index, todoControl);
+
+                    var newRtb = new ExtendedRichTextBox();
+                    newRtb.TextRange.Text = rightRange.Text;
+
+                    if (!String.IsNullOrWhiteSpace(newRtb.TextRange.Text))
+                        this.Items.Insert(index + 1, newRtb);
+
+                    rtb.TextRange.Text = leftRange.Text;
+                }
+                else
+                    this.Items.Insert(index, todoControl);
             });
         }
 
