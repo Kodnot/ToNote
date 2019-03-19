@@ -34,7 +34,10 @@
 
     <Color x:Key="DefaultTextBoxBorderColor">#546175</Color>
     <SolidColorBrush x:Key="DefaultTextBoxBorderBrush" Color="{StaticResource DefaultTextBoxBorderColor}"/>
-    
+
+    <Color x:Key="DefaultTextBoxFocusedBorderColor">#546175</Color>
+    <SolidColorBrush x:Key="DefaultTextBoxFocusedBorderBrush" Color="{StaticResource DefaultTextBoxFocusedBorderColor}"/>
+
     <Color x:Key="DefaultRepeatButtonColor">#F4F4F4</Color>
     <SolidColorBrush x:Key="DefaultRepeatButtonBrush" Color="{StaticResource DefaultRepeatButtonColor}"/>
 
