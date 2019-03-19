@@ -99,6 +99,22 @@
                     var metadataFileName = note.Name + "Metadata.txt";
                     if (File.Exists(metadataFileName))
                         File.Delete(metadataFileName);
+
+                    var todosFileName = "*_" + note.Name + "_TODO";
+
+                    try
+                    {
+                        string[] todoFiles = Directory.GetFiles("Data", todosFileName);
+
+                        foreach (string file in todoFiles)
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    catch (FileNotFoundException)
+                    {
+
+                    }
                 }));
             }
         }
