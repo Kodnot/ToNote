@@ -5,33 +5,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ToNote.Views"
              mc:Ignorable="d" 
-             Height="500" Width="400"
+             Height="400" Width="400"
              
              >
     <Grid Background="Transparent" Grid.Row="3">
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="0.25*"/>
         </Grid.RowDefinitions>
         
             
         
         <Grid Grid.Row="0">
-            <TextBlock Text="ToNote for Windows™" FontSize="40" MaxWidth="200" TextWrapping="Wrap" Margin="50,0,0,0"/>
+            <TextBlock Text="ToNote for Windows™" FontSize="43" MaxWidth="200" TextWrapping="Wrap" Margin="15,0,0,0"/>
         </Grid>
 
         <Grid Grid.Row="1">
-            <TextBlock Text="Version" FontSize="14" Margin="15,-40,0,0" Foreground="#606060"/>
-            <TextBlock Text="ToNote v1.0"  FontSize="16" />
-            <TextBlock Text="2019 TeamSugma." VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16"/>
+            <TextBlock Text="Version" FontSize="14" Margin="15,0,0,30" Foreground="#9099A2"/>
+            <TextBlock Text="ToNote v1.0"  FontSize="16" Margin="15,40,0,0"/>
+            
         </Grid>
 
 
         <Grid Grid.Row="2">
-            <TextBlock Text="Developers" Grid.Row="1" VerticalAlignment="Bottom" Margin="20,0,20,85" FontSize="14" Foreground="#606060" />
-            <TextBlock Text="Audrius Liuberskis, Rokas Gulbinas, Donatas Kuprys, Eligijus Jocius, Arijus Treinys." VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" Margin="35"/>
+            <TextBlock Text="Developers" Grid.Row="1" VerticalAlignment="Bottom" Margin="15,0,20,70" FontSize="14" Foreground="#9099A2" />
+            <TextBlock Text="Audrius Liuberskis, Rokas Gulbinas, Donatas Kuprys, Eligijus Jocius, Arijus Treinys." VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" Margin="15,0,0,10"/>
         </Grid>
+        <TextBlock Text="2019 © TeamSugma" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16" Grid.Row="4" Foreground="#9099A2" Margin="0,0,0,10"/> 
     </Grid>
 </UserControl>
