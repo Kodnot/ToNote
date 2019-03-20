@@ -9,6 +9,8 @@
 
         public string Title { get; set; }
 
+        public bool Resizeable { get; set; } = true;
+
         public void CloseDialogWithResult(IDialogWindow dialog, T result)
         {
             DialogResult = result;
