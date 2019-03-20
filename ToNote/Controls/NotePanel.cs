@@ -246,7 +246,12 @@
                     newRtb.TextRange.Text = rightRange.Text;
 
                     if (!String.IsNullOrWhiteSpace(newRtb.TextRange.Text))
+                    {
+                        if (newRtb.TextRange.Text[0] == '\r' && newRtb.TextRange.Text[1] == '\n')
+                            newRtb.TextRange.Text = newRtb.TextRange.Text.Remove(0, 2);
+
                         this.Items.Insert(index + 1, newRtb);
+                    }
 
                     rtb.TextRange.Text = leftRange.Text;
                 }

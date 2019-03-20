@@ -26,18 +26,17 @@
 
             this.TextChanged += (s, e) =>
             {
-                //var range = new TextRange(Document.ContentStart, Document.ContentEnd);
                 //Prevents start of tracking while initializing.
                 if (!this.IsLoaded) return;
 
-                var str = this.CaretPosition.GetTextInRun(LogicalDirection.Backward);
+                var str = new TextRange(this.Document.ContentStart, this.CaretPosition).Text;
 
                 if (!_tracking)
                 {
                     var lastChar = str.Length > 0 ? str[str.Length - 1] : ' ';
                     var secondToLastChar = str.Length > 1 ? str[str.Length - 2] : ' ';
 
-                    if (lastChar == '/' && secondToLastChar == ' ')
+                    if (lastChar == '/' && secondToLastChar == ' ' || secondToLastChar == '\n')
                     {
                         _tracking = true;
                         _slashIndex = str.Length - 1;
@@ -69,7 +68,7 @@
                         _tracking = false;
                         _trackingCounter = 0;
 
-                        var range = new TextRange(this.CaretPosition.Paragraph.ContentStart, this.CaretPosition);
+                        var range = new TextRange(this.Document.ContentStart, this.CaretPosition);
 
                         //Trims the '/' + keyword from the end of the text
                         range.Text = range.Text.Remove(_slashIndex > 0 ? _slashIndex - 1 : 0, _slashIndex > 0 ? range.Text.Length - _slashIndex + 1 : range.Text.Length);
