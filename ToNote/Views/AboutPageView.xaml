@@ -32,7 +32,7 @@
 
         <Grid Grid.Row="2">
             <TextBlock Text="Developers" Grid.Row="1" VerticalAlignment="Bottom" Margin="15,0,20,70" FontSize="14" Foreground="#9099A2" />
-            <TextBlock Text="Audrius Liuberskis, Rokas Gulbinas, Donatas Kuprys, Eligijus Jocius, Arijus Treinys." VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" Margin="15,0,0,10"/>
+            <TextBlock Text="Audrius Liuberskis, Rokas Gulbinas, Donatas Kuprys, Eligijus Jocius, Arijus Treinys." VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Margin="15,0,0,10"/>
         </Grid>
         <TextBlock Text="2019 © TeamSugma" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="16" Grid.Row="4" Foreground="#9099A2" Margin="0,0,0,10"/> 
     </Grid>
