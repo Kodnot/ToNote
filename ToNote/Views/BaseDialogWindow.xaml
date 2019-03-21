@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <DockPanel VerticalAlignment="Center" Grid.Row="0">
-                <TextBox Text="{Binding Title}" FontSize="18" Margin="10, 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" BorderThickness="0" Background="Transparent" Foreground="#eeeeee"/>
+                <TextBlock Text="{Binding Title}"/>
                 <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Width="24" Height="24" x:Name="btn_CloseWindow" Style="{StaticResource PathButton}">
                         <Button.Content>
