@@ -49,7 +49,7 @@
                 return _AddNoteCommand ?? (_AddNoteCommand = new RelayCommand(() => 
                 {
                     var dialog = new AddNoteDialogViewModel();
-
+                    dialog.Resizeable = false;
                     dialog.Title = "Add a note";
 
                     var result = DialogService.OpenDialog(dialog);
@@ -112,6 +112,7 @@
                 return _OpenAboutPageCommand ?? (_OpenAboutPageCommand = new RelayCommand(() =>
                 {
                     var dialog = new AboutPageViewModel();
+                    dialog.Resizeable = false;
 
                     dialog.Title = "About";
 

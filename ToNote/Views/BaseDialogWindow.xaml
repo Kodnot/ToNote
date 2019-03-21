@@ -7,7 +7,7 @@
         SizeToContent="WidthAndHeight"
         Title="{Binding Title}"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="{Binding Resizeable, Converter={StaticResource BoolToResizeModeConverter}}"
         >
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" />
