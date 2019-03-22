@@ -24,7 +24,7 @@
                 </StackPanel>
             </DockPanel>
 
-            <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
+            <Controls:NotePanel HorizontalContentAlignment="Stretch" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
             </Controls:NotePanel>
         </Grid>
     </Border>
