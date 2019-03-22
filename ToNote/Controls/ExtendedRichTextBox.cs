@@ -20,7 +20,10 @@
                 {
                     var range = new TextRange(Document.ContentStart, Document.ContentEnd);
                     if (string.IsNullOrWhiteSpace(range.Text))
+                    {
                         BackspacePressedWhileEmpty?.Invoke(this, new RoutedEventArgs());
+                        e.Handled = true;
+                    }
                 }
             };
 
