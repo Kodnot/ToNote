@@ -31,12 +31,13 @@
 
                 var str = new TextRange(this.Document.ContentStart, this.CaretPosition).Text;
 
-                if (!_tracking)
+                var lastChar = str.Length > 0 ? str[str.Length - 1] : ' ';
+
+                if (!_tracking || lastChar == '/')
                 {
-                    var lastChar = str.Length > 0 ? str[str.Length - 1] : ' ';
                     var secondToLastChar = str.Length > 1 ? str[str.Length - 2] : ' ';
 
-                    if (lastChar == '/' && secondToLastChar == ' ' || secondToLastChar == '\n')
+                    if (lastChar == '/' && (secondToLastChar == ' ' || secondToLastChar == '\n'))
                     {
                         _tracking = true;
                         _slashIndex = str.Length - 1;

@@ -222,7 +222,7 @@
             };
 
             //Insertion of a new ExtendedRichBox at the end with a /note command
-            extendedTextBoxControl.TrackKeyword("n", () => {
+            extendedTextBoxControl.TrackKeyword("note", () => {
 
                 this.AddRichTextBoxCommand.Execute(this);
 
