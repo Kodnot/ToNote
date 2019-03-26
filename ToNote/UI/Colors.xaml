@@ -79,4 +79,12 @@
     <Color x:Key="DefaultTodoCheckedBackgroundColor">#66AB8C</Color>
     <SolidColorBrush x:Key="DefaultTodoCheckedBackgroundBrush" Color="{StaticResource DefaultTodoCheckedBackgroundColor}"/>
 
+    <Color x:Key="DefaultTagForegroundColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultTagForegroundBrush" Color="{StaticResource DefaultTagForegroundColor}" />
+
+    <Color x:Key="DefaultBorderBackgroundColor">#262228</Color>
+    <SolidColorBrush x:Key="DefaultBorderBackgroundBrush" Color="{StaticResource DefaultBorderBackgroundColor}" />
+    
+    <Color x:Key="DefaultBorderBrushColor">#000000</Color>
+    <SolidColorBrush x:Key="DefaultBorderBrushBrush" Color="{StaticResource DefaultBorderBrushColor}" />
 </ResourceDictionary>

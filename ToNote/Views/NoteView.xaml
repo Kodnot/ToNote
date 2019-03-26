@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls="clr-namespace:ToNote.Controls"
              xmlns:local="clr-namespace:ToNote.Views"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderThickness="1" BorderBrush="#546175" Padding="5" Margin="0, 5" HorizontalAlignment="Stretch">
@@ -12,6 +13,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0">
@@ -23,9 +25,43 @@
                     <Button x:Name="button_remove" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.RemoveNoteCommand}" CommandParameter="{Binding}" Content="Remove"/>
                 </StackPanel>
             </DockPanel>
-
-            <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
-            </Controls:NotePanel>
+            <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1"/>
+            <Expander Name="TagExpander" IsExpanded="False" Grid.Row="2" >
+                <Expander.Header>
+                    <TextBlock Text="Tags" Style="{StaticResource NoteNameStyle}"/>
+                </Expander.Header>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <TextBlock Text="Tag: " HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Foreground="White"/>
+                        <TextBox Name ="TB" Text="{Binding TagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="500" Padding="3">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.AddTagCommand}" CommandParameter="{Binding}"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.AddTagCommand}" CommandParameter="{Binding}" Content="Add" Grid.Column="2"/>
+                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding Tags}" Grid.Row="1">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type System:String}">
+                                <Border Style="{StaticResource BorderStyle}">
+                                    <TextBlock Text="{Binding}" Style="{StaticResource TagTextBlockStyle}">
+                                    </TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" IsItemsHost="True"  Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Grid>
+               
+            </Expander>
         </Grid>
     </Border>
 </UserControl>

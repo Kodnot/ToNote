@@ -103,6 +103,23 @@
             }
         }
 
+        private ICommand _AddTagCommand;
+
+        public ICommand AddTagCommand
+        {
+            get
+            {
+                return _AddTagCommand ?? (_AddTagCommand = new RelayCommand<Note>(note =>
+                {
+                    if (!string.IsNullOrWhiteSpace(note.TagName) && !note.Tags.Contains(note.TagName))
+                    {
+                        note.Tags.Add(note.TagName);
+                        note.TagName = "";
+                    }
+                }));
+            }
+        }
+
         private ICommand _OpenAboutPageCommand;
 
         public ICommand OpenAboutPageCommand
