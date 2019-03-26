@@ -102,13 +102,13 @@
 
                     var todosFileName = "*_" + note.Name + "_TODO";
 
-                    if (Directory.Exists("Data"))
+                    if (!Directory.Exists("Data"))
+                        return;
+
+                    var todoFiles = Directory.GetFiles("Data", todosFileName);
+                    foreach (var file in todoFiles)
                     {
-                        var todoFiles = Directory.GetFiles("Data", todosFileName);
-                        foreach (var file in todoFiles)
-                        {
-                            if (File.Exists(file)) File.Delete(file);
-                        }
+                        if (File.Exists(file)) File.Delete(file);
                     }
                 }));
             }
