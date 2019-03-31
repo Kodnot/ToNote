@@ -56,8 +56,17 @@ namespace ToNote.Models
                     _SelectedDate = value;
 
                     RaisePropertyChanged(nameof(SelectedDate));
+                    RaisePropertyChanged(nameof(IsDatePast));
                 }
                 
+            }
+        }
+
+        public bool IsDatePast
+        {
+            get
+            {
+                return DateTime.Compare(_SelectedDate, DateTime.Today) > 0 ? true : false;
             }
         }
     }

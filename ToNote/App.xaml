@@ -24,16 +24,33 @@
                     <Setter.Value>
                         <DataTemplate DataType="{x:Type Models:Todo}">
                             <Border x:Name="bd" Padding="4, 5" Margin="-5, 5" BorderBrush="{StaticResource DefaultTodoBorderBrush}" BorderThickness="0, 1">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
-                                        <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
-                                        <GradientStop Color="{StaticResource DefaultTodoUncheckedBackgroundColor}" Offset="0.0"/>
-
-                                    </LinearGradientBrush>
-                                </Border.Background>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                                                    <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
+                                                    <GradientStop Color="{StaticResource DefaultTodoPastUncheckedBackgroundColor}" Offset="0.0"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsDatePast}" Value="True">
+                                                <Setter Property="Background">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                                                            <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
+                                                            <GradientStop Color="{StaticResource DefaultTodoDueUncheckedBackgroundColor}" Offset="0.0"/>
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <DockPanel LastChildFill="True">
                                     <CheckBox x:Name="checkBox" IsChecked="{Binding IsChecked, Mode=TwoWay}" DockPanel.Dock="Left" Margin="5, 0"/>
-                                    <DatePicker x:Name="datePicker" DockPanel.Dock="Right" CalendarStyle="{StaticResource DatePickerCalendar}" SelectedDate="{Binding SelectedDate}"></DatePicker>
+                                    <DatePicker x:Name="datePicker" DockPanel.Dock="Right" CalendarStyle="{StaticResource DatePickerCalendar}" SelectedDate="{Binding SelectedDate}" />
                                     <Controls:ExtendedRichTextBox x:Name="rtb" DockPanel.Dock="Left">
                                         <Controls:ExtendedRichTextBox.Style>
                                             <Style BasedOn="{StaticResource {x:Type Controls:ExtendedRichTextBox}}" TargetType="Controls:ExtendedRichTextBox">
