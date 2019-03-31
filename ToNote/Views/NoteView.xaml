@@ -30,7 +30,7 @@
                 <Expander.Header>
                     <TextBlock Text="Tags" Style="{StaticResource NoteNameStyle}"/>
                 </Expander.Header>
-                <Grid >
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50" />
                         <RowDefinition Height="Auto" />
@@ -60,7 +60,6 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </Grid>
-               
             </Expander>
         </Grid>
     </Border>

@@ -230,8 +230,33 @@
 
             extendedTextBoxControl.TrackKeyword("todo", () =>
             {
-                this.AddTodoControlCommand.Execute(this);
+            var todoControl = new TodoControl(new Todo()).SetKeyboardFocusAfterLoaded();
 
+                var index = this.Items.IndexOf(extendedTextBoxControl) + 1;
+
+                if (extendedTextBoxControl is ExtendedRichTextBox rtb)
+                {
+                    var leftRange = new TextRange(rtb.Document.ContentStart, rtb.CommandExecutionPointer);
+
+                    var rightRange = new TextRange(rtb.CommandExecutionPointer, rtb.Document.ContentEnd);
+
+                    this.Items.Insert(index, todoControl);
+
+                    var newRtb = new ExtendedRichTextBox();
+                    newRtb.TextRange.Text = rightRange.Text;
+
+                    if (!String.IsNullOrWhiteSpace(newRtb.TextRange.Text))
+                    {
+                        if (newRtb.TextRange.Text[0] == '\r' && newRtb.TextRange.Text[1] == '\n')
+                            newRtb.TextRange.Text = newRtb.TextRange.Text.Remove(0, 2);
+
+                        this.Items.Insert(index + 1, newRtb);
+                    }
+
+                    rtb.TextRange.Text = leftRange.Text;
+                }
+                else
+                    this.Items.Insert(index, todoControl);
             });
         }
 

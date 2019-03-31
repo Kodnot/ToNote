@@ -32,7 +32,11 @@
                         <ContentPresenter ContentSource="Content" x:Name="contentPresenter" TextElement.FontWeight="{TemplateBinding FontWeight}" TextElement.FontFamily="{TemplateBinding FontFamily}"
                                           TextElement.FontSize="{TemplateBinding FontSize}" TextElement.Foreground="{TemplateBinding Foreground}" 
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter.Resources>
+                                <Style TargetType="TextBlock"/>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

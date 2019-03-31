@@ -19,23 +19,16 @@
         <Setter Property="BorderBrush" Value="{StaticResource DefaultTextBoxBorderBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="5, 0"/>
-        <Setter Property="Width" Value="Auto"/>
-        <Setter Property="Height" Value="Auto"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Background" Value="{StaticResource DefaultTextBoxBackgroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:ExtendedRichTextBox">
                     <Border x:Name="bd" TextOptions.TextFormattingMode="Display" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Margin}" BorderBrush="{TemplateBinding BorderBrush}" 
-                            BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                            BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
                         <Border.Background>
                             <SolidColorBrush Color="{StaticResource DefaultButtonBackgroundColor}" Opacity="0"/>
                         </Border.Background>
-                        <ScrollViewer  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost" TextOptions.TextFormattingMode="Display"/>
+                        <ScrollViewer Width="{Binding ElementName=bd, Path=ActualWidth}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost" TextOptions.TextFormattingMode="Display"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="True">

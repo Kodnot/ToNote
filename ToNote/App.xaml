@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:ToNote"
              xmlns:Models="clr-namespace:ToNote.Models"
              xmlns:Controls="clr-namespace:ToNote.Controls"
+             xmlns:Converters="clr-namespace:ToNote.Converters"
              xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
              xmlns:Views="clr-namespace:ToNote.Views"
              StartupUri="Views/MainView.xaml">
@@ -91,6 +92,8 @@
                 <Views:AboutPageView/>
             </DataTemplate>
 
+            <Converters:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter"/>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/Colors.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextStyles.xaml"/>
@@ -100,6 +103,7 @@
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/CheckBoxStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TagStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBlockStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
