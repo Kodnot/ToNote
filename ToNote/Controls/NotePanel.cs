@@ -20,10 +20,10 @@
             // CTRL + Arrow Up or CTRL + Arrow Down navigates to an item that is above or below currently focused one, respectively.
             this.PreviewKeyDown += (s, e) =>
             {
-                if (e.Key == Key.Up && Keyboard.Modifiers == ModifierKeys.Control)
+                if ((e.Key == Key.Add || e.Key == Key.OemPlus ) && Keyboard.Modifiers == ModifierKeys.Control)
                     SwitchKeyboardFocusToNextETBC(this.Items.IndexOf(lastFocused));
 
-                if (e.Key == Key.Down && Keyboard.Modifiers == ModifierKeys.Control)
+                if ((e.Key == Key.Subtract || e.Key == Key.OemMinus) && Keyboard.Modifiers == ModifierKeys.Control)
                     SwitchKeyboardFocusToNextETBC(this.Items.IndexOf(lastFocused), false);
             };
 
