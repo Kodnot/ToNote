@@ -82,4 +82,9 @@
     <Color x:Key="DefaultTodoCheckedBackgroundColor">#66AB8C</Color>
     <SolidColorBrush x:Key="DefaultTodoCheckedBackgroundBrush" Color="{StaticResource DefaultTodoCheckedBackgroundColor}"/>
 
+    <Color x:Key="DefaultCalendarBackgroundColor">#000000</Color>
+    <SolidColorBrush x:Key="DefaultCalendarBackgroundBrush" Color="{StaticResource DefaultCalendarBackgroundColor}"/>
+    <Color x:Key="DefaultTodoDueBackgroundColor">#CCCC00</Color>
+    <SolidColorBrush x:Key="DefaultTodoDueBackgroundBrush" Color="{StaticResource DefaultTodoDueBackgroundColor}"/>
+
 </ResourceDictionary>

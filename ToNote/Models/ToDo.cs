@@ -1,7 +1,15 @@
-﻿namespace ToNote.Models
+﻿using System;
+
+namespace ToNote.Models
 {
     public class Todo : BaseModel
     {
+
+        public Todo()
+        {
+            SelectedDate = DateTime.Today;
+        }
+
         public string FileName { get; set; }
 
         private bool _IsChecked = false;
@@ -33,6 +41,23 @@
 
                     RaisePropertyChanged(nameof(Index));
                 }
+            }
+        }
+
+        private DateTime _SelectedDate;
+
+        public DateTime SelectedDate
+        {
+            get => _SelectedDate;
+            set
+            {
+                if (_SelectedDate != value)
+                {
+                    _SelectedDate = value;
+
+                    RaisePropertyChanged(nameof(SelectedDate));
+                }
+                
             }
         }
     }

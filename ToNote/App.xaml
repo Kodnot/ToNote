@@ -19,7 +19,6 @@
             <DataTemplate DataType="{x:Type Models:Note}">
                 <Views:NoteView/>
             </DataTemplate>
-
             <Style TargetType="{x:Type Controls:TodoControl}">
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
@@ -29,11 +28,13 @@
                                     <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
                                         <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
                                         <GradientStop Color="{StaticResource DefaultTodoUncheckedBackgroundColor}" Offset="0.0"/>
+
                                     </LinearGradientBrush>
                                 </Border.Background>
-                                <DockPanel>
+                                <DockPanel LastChildFill="True">
                                     <CheckBox x:Name="checkBox" IsChecked="{Binding IsChecked, Mode=TwoWay}" DockPanel.Dock="Left" Margin="5, 0"/>
-                                    <Controls:ExtendedRichTextBox x:Name="rtb" DockPanel.Dock="Right">
+                                    <DatePicker x:Name="datePicker" DockPanel.Dock="Right" CalendarStyle="{StaticResource DatePickerCalendar}" SelectedDate="{Binding SelectedDate}"></DatePicker>
+                                    <Controls:ExtendedRichTextBox x:Name="rtb" DockPanel.Dock="Left">
                                         <Controls:ExtendedRichTextBox.Style>
                                             <Style BasedOn="{StaticResource {x:Type Controls:ExtendedRichTextBox}}" TargetType="Controls:ExtendedRichTextBox">
                                                 <Style.Resources>
@@ -94,6 +95,7 @@
 
             <Converters:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter"/>
 
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/Colors.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextStyles.xaml"/>
@@ -103,6 +105,7 @@
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/CheckBoxStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBlockStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/DatePickerStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
