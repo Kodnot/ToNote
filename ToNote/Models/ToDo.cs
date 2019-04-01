@@ -7,7 +7,7 @@ namespace ToNote.Models
 
         public Todo()
         {
-            SelectedDate = DateTime.Today;
+            SelectedDate = null;
         }
 
         public string FileName { get; set; }
@@ -44,9 +44,9 @@ namespace ToNote.Models
             }
         }
 
-        private DateTime _SelectedDate;
+        private DateTime? _SelectedDate;
 
-        public DateTime SelectedDate
+        public DateTime? SelectedDate
         {
             get => _SelectedDate;
             set
@@ -66,7 +66,9 @@ namespace ToNote.Models
         {
             get
             {
-                return DateTime.Compare(_SelectedDate, DateTime.Today) > 0 ? true : false;
+                if (_SelectedDate != null)
+                    return DateTime.Compare((DateTime)_SelectedDate, DateTime.Today) > 0 ? true : false;
+                return true;
             }
         }
     }

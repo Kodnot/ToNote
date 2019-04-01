@@ -50,7 +50,24 @@
                                 </Border.Style>
                                 <DockPanel LastChildFill="True">
                                     <CheckBox x:Name="checkBox" IsChecked="{Binding IsChecked, Mode=TwoWay}" DockPanel.Dock="Left" Margin="5, 0"/>
-                                    <DatePicker x:Name="datePicker" DockPanel.Dock="Right" CalendarStyle="{StaticResource DatePickerCalendar}" SelectedDate="{Binding SelectedDate}" />
+                                    <DockPanel x:Name="datePanel" DockPanel.Dock="Right" Background="Transparent">
+                                        <DatePicker x:Name="datePicker" CalendarStyle="{StaticResource DatePickerCalendar}" SelectedDate="{Binding SelectedDate}">
+                                            <DatePicker.Style>
+                                                <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource {x:Type DatePicker}}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding SelectedDate}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Hidden" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=datePanel}" Value="True">
+                                                            <Setter Property="BorderThickness" Value="5"/>
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <Setter Property="IsEnabled" Value="True"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DatePicker.Style>
+                                        </DatePicker>
+                                    </DockPanel>
                                     <Controls:ExtendedRichTextBox x:Name="rtb" DockPanel.Dock="Left">
                                         <Controls:ExtendedRichTextBox.Style>
                                             <Style BasedOn="{StaticResource {x:Type Controls:ExtendedRichTextBox}}" TargetType="Controls:ExtendedRichTextBox">
