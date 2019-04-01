@@ -74,12 +74,12 @@
                                     <Controls:ExtendedRichTextBox x:Name="rtb" DockPanel.Dock="Left">
                                         <Controls:ExtendedRichTextBox.Style>
                                             <Style BasedOn="{StaticResource {x:Type Controls:ExtendedRichTextBox}}" TargetType="Controls:ExtendedRichTextBox">
+                                                <Setter Property="Padding" Value="2, 0"/>
                                                 <Style.Resources>
                                                     <Style TargetType="Paragraph" BasedOn="{StaticResource {x:Type Paragraph}}">
                                                         <Setter Property="Foreground" Value="{StaticResource DefaultTodoForegroundBrush}"/>
                                                     </Style>
                                                 </Style.Resources>
-                                                <Setter Property="Padding" Value="2, 0"/>
                                             </Style>
                                         </Controls:ExtendedRichTextBox.Style>
                                     </Controls:ExtendedRichTextBox>

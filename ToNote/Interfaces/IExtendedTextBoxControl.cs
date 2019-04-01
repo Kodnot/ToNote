@@ -11,6 +11,7 @@ namespace ToNote.Interfaces
         event RoutedEventHandler BackspacePressedWithAltShiftModifiers;
         event KeyboardFocusChangedEventHandler GotKeyboardFocus;
         event TextChangedEventHandler TextChanged;
+        event DragEventHandler Drop;
 
         TextRange TextRange { get; }
         string CurrentFile { get; }
