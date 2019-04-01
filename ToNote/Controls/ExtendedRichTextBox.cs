@@ -84,19 +84,23 @@
 
         public TextPointer CommandExecutionPointer;
 
+        public bool? Initializing { get; private set; } = false;
+
         private List<KeywordAction> _trackedKeywords { get; set; } = new List<KeywordAction>();
 
         private bool _tracking = false;
         private int _slashIndex = 0;
         private int _trackingCounter = 0;
 
-        public string CurrentFile { get; private set; }
+        public string CurrentFile { get; set; }
 
         public TextRange TextRange => new TextRange(Document.ContentStart, Document.ContentEnd);
 
         public void ReadFromFile(string file)
         {
             if (!File.Exists(file)) return;
+
+            Initializing = true;
 
             var text = new TextRange(this.Document.ContentStart, this.Document.ContentEnd);
 
@@ -106,6 +110,8 @@
             }
 
             CurrentFile = file;
+
+            Initializing = false;
         }
 
         public void SetKeyboardFocus()

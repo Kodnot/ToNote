@@ -9,6 +9,7 @@
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Input;
+    using System.Windows.Threading;
     using ToNote.Interfaces;
     using ToNote.Logic;
     using ToNote.Models;
@@ -36,14 +37,44 @@
                     ConfigureExtendedTextBoxControlEvents(item);
 
             };
+
+            Status = "No changes.";
+
+            dt = new DispatcherTimer();
+
+            dt.Tick += (o, a) =>
+            {
+                if (_unsavedChanges)
+                {
+                    SaveContentsToFilesCommand.Execute(this);
+                    Status = "Last autosaved at " + DateTime.Now.ToString("HH:mm:ss");
+                }
+
+                dt.Stop();
+            };
+            dt.Interval = new TimeSpan(0, 0, 5);
+            dt.Start();
         }
 
         private IExtendedTextBoxControl lastFocused;
-            
+
+        private DispatcherTimer dt;
+
+        private bool _unsavedChanges = false;
+
         public Note Note
         {
             get => (Note)GetValue(NoteProperty);
             set => SetValue(NoteProperty, value);
+        }
+
+        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status",
+           typeof(string), typeof(NotePanel), new FrameworkPropertyMetadata(null));
+
+        public string Status
+        {
+            get { return (string)GetValue(StatusProperty); }
+            set { SetValue(StatusProperty, value); }
         }
 
         // On a new value bound to Note, generates textboxes for each file or Todo the note has and fills them with their respective contents.
@@ -114,10 +145,19 @@
                var todoIndex = 0;
                var fileIndex = 0;
 
-               var directory = ".\\Data";
+               var directory = $".\\Data\\{note.Name}";
+
+               directory = Path.Combine(Path.GetDirectoryName(directory), Path.GetFileName(directory).Trim(Path.GetInvalidFileNameChars()));
 
                if (!Directory.Exists(directory))
                    Directory.CreateDirectory(directory);
+               else
+               {
+                   foreach (var file in Directory.GetFiles(directory))
+                   {
+                       File.Delete(file);
+                   }
+               }
 
                foreach (var child in panel.Items)
                {
@@ -170,6 +210,9 @@
                var serializedNote = JsonConvert.SerializeObject(note);
                var metadataFileName = $"{note.Name.ToLower()}Metadata.txt";
                File.WriteAllText(metadataFileName, serializedNote);
+
+               panel._unsavedChanges = false;
+               panel.Status = "Saved at " + DateTime.Now.ToString("HH:mm:ss");
            })));
 
         public ICommand AddTodoControlCommand
@@ -214,6 +257,8 @@
 
                 if (extendedTextBoxControl is TodoControl todoControl)
                     Note?.RemoveTodo(todoControl.Todo);
+
+                InitializeAutosaveDispatcher();
             };
 
             extendedTextBoxControl.GotKeyboardFocus += (s, e) =>
@@ -258,6 +303,25 @@
                 else
                     this.Items.Insert(index, todoControl);
             });
+
+            extendedTextBoxControl.TextChanged += (s, e) =>
+            {
+                if (extendedTextBoxControl.Initializing != true)
+                {
+                    InitializeAutosaveDispatcher();
+                }
+            };
+        }
+
+        private void InitializeAutosaveDispatcher()
+        {
+            Status = "Unsaved changes.";
+
+
+            _unsavedChanges = true;
+
+            if (!dt.IsEnabled)
+                dt.Start();
         }
 
         /// <summary>

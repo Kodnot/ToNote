@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
@@ -9,9 +10,12 @@ namespace ToNote.Interfaces
     {
         event RoutedEventHandler BackspacePressedWithAltShiftModifiers;
         event KeyboardFocusChangedEventHandler GotKeyboardFocus;
+        event TextChangedEventHandler TextChanged;
 
         TextRange TextRange { get; }
         string CurrentFile { get; }
+
+        bool? Initializing { get; }
 
         void SetKeyboardFocus();
         void ReadFromFile(string file);

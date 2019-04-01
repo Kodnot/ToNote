@@ -14,6 +14,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0">
@@ -61,6 +62,7 @@
                     </ItemsControl>
                 </Grid>
             </Expander>
+            <TextBlock Grid.Row="4" Text="{Binding ElementName=rtbpanel, Path=Status}" Style="{StaticResource NoteStatusStyle}"/>
         </Grid>
     </Border>
 </UserControl>

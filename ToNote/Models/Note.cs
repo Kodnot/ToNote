@@ -45,6 +45,22 @@
             }
         }
 
+        private string _Folder;
+
+        public string Folder
+        {
+            get => _Folder;
+            set
+            {
+                if (_Folder != value)
+                {
+                    _Folder = value;
+
+                    RaisePropertyChanged(nameof(Folder));
+                }
+            }
+        }
+
         private List<string> _FileNames;
 
         public List<string> FileNames
