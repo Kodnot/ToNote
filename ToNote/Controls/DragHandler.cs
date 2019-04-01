@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-
-namespace ToNote.Controls
+﻿namespace ToNote.Controls
 {
+    using System.Collections.ObjectModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using ToNote.Models;
+    using ToNote.Views;
+
     public static class DragHandler
     {
         public static void HandleMouseLeftButtonDown(object sender, MouseButtonEventArgs args)
@@ -37,21 +33,41 @@ namespace ToNote.Controls
             var source = args.Data.GetData("Source") as DependencyObject;
             if (source != null)
             {
-                var panel = FindAncestorOfType<ItemsControl>(sender as DependencyObject) as ItemsControl;
-
-                var newIndex = 0;
-
-                foreach (var item in panel.Items)
+                if (sender is NoteView noteView)
                 {
-                    if (item == sender)
-                    {
-                        newIndex = panel.Items.IndexOf(item);
-                    }
+                    var panel = (FindAncestorOfType<ItemsControl>(sender as DependencyObject) as ItemsControl).ItemsSource as ObservableCollection<Note>;
+
+                    var newIndex = panel.IndexOf(noteView.DataContext as Note);
+
+                    var note = (source as NoteView).DataContext as Note;
+
+                    panel.RemoveAt(panel.IndexOf(note));
+
+                    panel.Insert(newIndex, note);
+
+                    args.Handled = true;
                 }
 
-                panel.Items.RemoveAt(panel.Items.IndexOf(source));
-                panel.Items.Insert(newIndex, source);
-                args.Handled = true;
+                else
+                {
+                    var panel = FindAncestorOfType<ItemsControl>(sender as DependencyObject) as ItemsControl;
+
+                    var todoControl = FindAncestorOfType<TodoControl>((DependencyObject)sender);
+
+                    int newIndex;
+
+                    if (todoControl != null)
+                        newIndex = panel.Items.IndexOf(todoControl);
+                    else
+                        newIndex = panel.Items.IndexOf(sender);
+
+                    if (panel.Items.IndexOf(source) != -1)
+                    {
+                        panel.Items.RemoveAt(panel.Items.IndexOf(source));
+                        panel.Items.Insert(newIndex, source);
+                        args.Handled = true;
+                    }
+                }
             }
         }
 
