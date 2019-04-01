@@ -8,7 +8,6 @@
              Width="400" Height="60"
              FocusManager.FocusedElement="{Binding ElementName=NoteNameBox, Mode=OneTime}">
 
-
     <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
