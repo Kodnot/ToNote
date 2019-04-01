@@ -62,14 +62,6 @@ namespace ToNote.Models
             }
         }
 
-        public bool IsDatePast
-        {
-            get
-            {
-                if (_SelectedDate != null)
-                    return DateTime.Compare((DateTime)_SelectedDate, DateTime.Today) > 0 ? true : false;
-                return true;
-            }
-        }
+        public bool IsDatePast => _SelectedDate != null ? DateTime.Compare((DateTime)_SelectedDate, DateTime.Today) > 0 ? true : false : false;
     }
 }
