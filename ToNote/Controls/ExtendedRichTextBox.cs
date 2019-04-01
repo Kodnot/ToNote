@@ -15,17 +15,12 @@
     {
         public ExtendedRichTextBox()
         {
-            // Checks if backspace was pressed when the textbox was empty and raises an event. Used for convenient empty textbox removal
             this.PreviewKeyDown += (s, e) =>
             {
-                if (e.Key == Key.Back)
+                if ((e.Key == Key.System ? e.SystemKey : e.Key) == Key.Back && Keyboard.Modifiers == (ModifierKeys.Alt | ModifierKeys.Shift))
                 {
-                    var range = new TextRange(Document.ContentStart, Document.ContentEnd);
-                    if (string.IsNullOrWhiteSpace(range.Text))
-                    {
-                        BackspacePressedWhileEmpty?.Invoke(this, new RoutedEventArgs());
-                        e.Handled = true;
-                    }
+                    BackspacePressedWithAltShiftModifiers?.Invoke(this, new RoutedEventArgs());
+                    e.Handled = true;
                 }
             };
 
@@ -116,9 +111,11 @@
             };
         }
 
-        public event RoutedEventHandler BackspacePressedWhileEmpty;
+        public event RoutedEventHandler BackspacePressedWithAltShiftModifiers;
 
         public TextPointer CommandExecutionPointer;
+
+        public bool? Initializing { get; private set; } = false;
 
         private List<KeywordAction> _trackedKeywords { get; set; } = new List<KeywordAction>();
 
@@ -126,13 +123,15 @@
         private int _slashIndex = 0;
         private int _trackingCounter = 0;
 
-        public string CurrentFile { get; private set; }
+        public string CurrentFile { get; set; }
 
         public TextRange TextRange => new TextRange(Document.ContentStart, Document.ContentEnd);
 
         public void ReadFromFile(string file)
         {
             if (!File.Exists(file)) return;
+
+            Initializing = true;
 
             var text = new TextRange(this.Document.ContentStart, this.Document.ContentEnd);
 
@@ -142,6 +141,8 @@
             }
 
             CurrentFile = file;
+
+            Initializing = false;
         }
 
         public void SetKeyboardFocus()
