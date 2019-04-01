@@ -113,10 +113,7 @@
         public string _TagName;
         public string TagName
         {
-            get
-            {
-                return _TagName;
-            }
+            get => _TagName;
             set
             {
                 _TagName = value;
