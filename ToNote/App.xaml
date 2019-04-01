@@ -138,6 +138,7 @@
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ScrollViewerStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/CheckBoxStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TagStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBlockStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/DatePickerStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
