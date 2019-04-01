@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:Controls="clr-namespace:ToNote.Controls"
              xmlns:local="clr-namespace:ToNote.Views"
              mc:Ignorable="d" 
@@ -25,7 +24,7 @@
                 </StackPanel>
             </DockPanel>
 
-            <Controls:NotePanel dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" dd:DragDrop.UseDefaultDragAdorner="True" HorizontalContentAlignment="Stretch" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
+            <Controls:NotePanel HorizontalContentAlignment="Stretch" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1">
             </Controls:NotePanel>
         </Grid>
     </Border>

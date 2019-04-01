@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
@@ -82,6 +84,33 @@
                         keywordAction.Action.Invoke();
                     }
                 }
+            };
+
+            this.AllowDrop = true;
+
+            this.PreviewMouseMove += (s, e) =>
+            {
+                var point = e.GetPosition(this);
+
+                if (point.X <= 5)
+                    Mouse.OverrideCursor = Cursors.SizeAll;
+                else
+                    Mouse.OverrideCursor = null;
+            };
+
+            this.PreviewMouseLeftButtonDown += (s, e) =>
+            {
+                var point = e.GetPosition(this);
+
+                if (point.X <= 5)
+                    DragHandler.HandleMouseLeftButtonDown(s, e);
+            };
+
+            this.Drop += DragHandler.HandleDrop;
+
+            this.PreviewDragOver += (s, e) =>
+            {
+                e.Handled = true;
             };
         }
 
