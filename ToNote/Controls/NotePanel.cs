@@ -200,7 +200,7 @@
         /// <param name="extendedTextBoxControl"></param>
         private void ConfigureExtendedTextBoxControlEvents(IExtendedTextBoxControl extendedTextBoxControl)
         {
-            extendedTextBoxControl.BackspacePressedWhileEmpty += (s, e) =>
+            extendedTextBoxControl.BackspacePressedWithAltShiftModifiers += (s, e) =>
             {
                 var index = this.Items.IndexOf(lastFocused);
 

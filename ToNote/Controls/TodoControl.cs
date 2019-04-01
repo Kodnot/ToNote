@@ -31,16 +31,16 @@
                 extendedRTB = rtb;
 
                 //If an ExtendedRichTextBox is found, hooks to the BackspacePressedWhileEmpty event.
-                rtb.BackspacePressedWhileEmpty += (o, a) =>
+                rtb.BackspacePressedWithAltShiftModifiers += (o, a) =>
                 {
-                    this.BackspacePressedWhileEmpty?.Invoke(this, new RoutedEventArgs());
+                    this.BackspacePressedWithAltShiftModifiers?.Invoke(this, new RoutedEventArgs());
                 };
             };
         }
 
         public Todo Todo { get; private set; }
 
-        public event RoutedEventHandler BackspacePressedWhileEmpty;
+        public event RoutedEventHandler BackspacePressedWithAltShiftModifiers;
 
         private ExtendedRichTextBox extendedRTB;
 
