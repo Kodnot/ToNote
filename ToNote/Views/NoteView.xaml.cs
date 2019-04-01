@@ -20,10 +20,7 @@
             {
                 var point = e.GetPosition(this);
 
-                if (point.X <= 25 && point.Y <= 25)
-                    Mouse.OverrideCursor = Cursors.SizeAll;
-                else
-                    Mouse.OverrideCursor = null;
+                Mouse.OverrideCursor = point.X <= 25 && point.Y <= 25 ? Cursors.SizeAll : null;
             };
 
             this.MouseLeave += (s, e) =>
