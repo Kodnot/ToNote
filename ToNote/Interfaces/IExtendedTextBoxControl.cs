@@ -7,7 +7,7 @@ namespace ToNote.Interfaces
 {
     public interface IExtendedTextBoxControl
     {
-        event RoutedEventHandler BackspacePressedWhileEmpty;
+        event RoutedEventHandler BackspacePressedWithAltShiftModifiers;
         event KeyboardFocusChangedEventHandler GotKeyboardFocus;
 
         TextRange TextRange { get; }
