@@ -17,9 +17,9 @@ namespace ToNote.Models
                 {
                     _IsChecked = value;
 
-                    if (_IsChecked == true)
+                    if (_IsChecked)
                     {
-                        _LastDone = SelectedDate;
+                        LastDone = SelectedDate;
                         _SelectedDate = null;
                     }
 
@@ -53,24 +53,16 @@ namespace ToNote.Models
             get => _SelectedDate;
             set
             {
-                if (_SelectedDate != value)
-                {
-                    _SelectedDate = value;
+                if (_SelectedDate == value) return;
+                _SelectedDate = value;
 
-                    RaisePropertyChanged(nameof(SelectedDate));
-                    RaisePropertyChanged(nameof(IsDatePast));
-                }
-                
+                RaisePropertyChanged(nameof(SelectedDate));
+                RaisePropertyChanged(nameof(IsDatePast));                
             }
         }
 
-        private DateTime? _LastDone;
+        public DateTime? LastDone { get; private set; }
 
-        public DateTime? LastDone
-        {
-            get => _LastDone;
-        }
-
-        public bool IsDatePast => _SelectedDate != null ? DateTime.Compare((DateTime)_SelectedDate, DateTime.Today) > 0 ? true : false : false;
+        public bool IsDatePast => _SelectedDate.HasValue ? (DateTime.Compare((DateTime)_SelectedDate, DateTime.Today) >= 0) : false;
     }
 }
