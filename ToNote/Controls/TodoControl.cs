@@ -40,6 +40,11 @@
                 {
                     TextChanged?.Invoke(o, a);
                 };
+
+                rtb.Drop += (o, a) =>
+                {
+                    Drop?.Invoke(o, a);
+                };
             };
 
             this.AllowDrop = true;
@@ -50,6 +55,8 @@
         public event RoutedEventHandler BackspacePressedWithAltShiftModifiers;
 
         public event TextChangedEventHandler TextChanged;
+
+        public new event DragEventHandler Drop;
 
         public bool? Initializing => extendedRTB?.Initializing;
 

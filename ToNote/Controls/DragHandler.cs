@@ -41,8 +41,6 @@
                 panel.RemoveAt(panel.IndexOf(note));
 
                 panel.Insert(newIndex, note);
-
-                args.Handled = true;
             }
 
             else
@@ -57,7 +55,6 @@
                 {
                     panel.Items.RemoveAt(panel.Items.IndexOf(source));
                     panel.Items.Insert(newIndex, source);
-                    args.Handled = true;
                 }
             }
         }

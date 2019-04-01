@@ -311,6 +311,11 @@
                     InitializeAutosaveDispatcher();
                 }
             };
+
+            extendedTextBoxControl.Drop += (s, e) =>
+            {
+                InitializeAutosaveDispatcher();
+            };
         }
 
         private void InitializeAutosaveDispatcher()
