@@ -49,7 +49,7 @@
 
         public event TextChangedEventHandler TextChanged;
 
-        public bool? Initializing { get { return extendedRTB?.Initializing; } }
+        public bool? Initializing => extendedRTB?.Initializing;
 
         private ExtendedRichTextBox extendedRTB;
 

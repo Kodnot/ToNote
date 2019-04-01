@@ -73,8 +73,8 @@
 
         public string Status
         {
-            get { return (string)GetValue(StatusProperty); }
-            set { SetValue(StatusProperty, value); }
+            get => (string)GetValue(StatusProperty);
+            set => SetValue(StatusProperty, value);
         }
 
         // On a new value bound to Note, generates textboxes for each file or Todo the note has and fills them with their respective contents.
