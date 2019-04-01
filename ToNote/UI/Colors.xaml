@@ -76,11 +76,17 @@
     <Color x:Key="DefaultTodoForegroundColor">#F4F4F4</Color>
     <SolidColorBrush x:Key="DefaultTodoForegroundBrush" Color="{StaticResource DefaultTodoForegroundColor}"/>
 
-    <Color x:Key="DefaultTodoUncheckedBackgroundColor">#E24E42</Color>
-    <SolidColorBrush x:Key="DefaultTodoUncheckedBackgroundBrush" Color="{StaticResource DefaultTodoUncheckedBackgroundColor}"/>
+    <Color x:Key="DefaultTodoPastUncheckedBackgroundColor">#E24E42</Color>
+    <SolidColorBrush x:Key="DefaultTodoPastUncheckedBackgroundBrush" Color="{StaticResource DefaultTodoPastUncheckedBackgroundColor}"/>
 
     <Color x:Key="DefaultTodoCheckedBackgroundColor">#66AB8C</Color>
     <SolidColorBrush x:Key="DefaultTodoCheckedBackgroundBrush" Color="{StaticResource DefaultTodoCheckedBackgroundColor}"/>
+   
+    <Color x:Key="DefaultCalendarBackgroundColor">#000000</Color>
+    <SolidColorBrush x:Key="DefaultCalendarBackgroundBrush" Color="{StaticResource DefaultCalendarBackgroundColor}"/>
+    
+    <Color x:Key="DefaultTodoDueUncheckedBackgroundColor">#CCCC00</Color>
+    <SolidColorBrush x:Key="DefaultTodoDueUncheckedBackgroundBrush" Color="{StaticResource DefaultTodoDueUncheckedBackgroundColor}"/>
 
     <Color x:Key="DefaultTagForegroundColor">#F4F4F4</Color>
     <SolidColorBrush x:Key="DefaultTagForegroundBrush" Color="{StaticResource DefaultTagForegroundColor}" />
