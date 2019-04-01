@@ -9,6 +9,7 @@
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Input;
+    using System.Windows.Threading;
     using ToNote.Interfaces;
     using ToNote.Logic;
     using ToNote.Models;
@@ -17,13 +18,13 @@
     {
         public NotePanel()
         {
-            // CTRL + Arrow Up or CTRL + Arrow Down navigates to an item that is above or below currently focused one, respectively.
+            // CTRL + Plus or CTRL + Minus Down navigates to an item that is above or below currently focused one, respectively.
             this.PreviewKeyDown += (s, e) =>
             {
-                if (e.Key == Key.Up && Keyboard.Modifiers == ModifierKeys.Control)
+                if ((e.Key == Key.Subtract || e.Key == Key.OemMinus) && Keyboard.Modifiers == ModifierKeys.Control)
                     SwitchKeyboardFocusToNextETBC(this.Items.IndexOf(lastFocused));
 
-                if (e.Key == Key.Down && Keyboard.Modifiers == ModifierKeys.Control)
+                if ((e.Key == Key.Add || e.Key == Key.OemPlus ) && Keyboard.Modifiers == ModifierKeys.Control)
                     SwitchKeyboardFocusToNextETBC(this.Items.IndexOf(lastFocused), false);
             };
 
@@ -36,14 +37,44 @@
                     ConfigureExtendedTextBoxControlEvents(item);
 
             };
+
+            Status = "No changes.";
+
+            dt = new DispatcherTimer();
+
+            dt.Tick += (o, a) =>
+            {
+                if (_unsavedChanges)
+                {
+                    SaveContentsToFilesCommand.Execute(this);
+                    Status = "Last autosaved at " + DateTime.Now.ToString("HH:mm:ss");
+                }
+
+                dt.Stop();
+            };
+            dt.Interval = new TimeSpan(0, 0, 5);
+            dt.Start();
         }
 
         private IExtendedTextBoxControl lastFocused;
-            
+
+        private DispatcherTimer dt;
+
+        private bool _unsavedChanges = false;
+
         public Note Note
         {
             get => (Note)GetValue(NoteProperty);
             set => SetValue(NoteProperty, value);
+        }
+
+        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status",
+           typeof(string), typeof(NotePanel), new FrameworkPropertyMetadata(null));
+
+        public string Status
+        {
+            get => (string)GetValue(StatusProperty);
+            set => SetValue(StatusProperty, value);
         }
 
         // On a new value bound to Note, generates textboxes for each file or Todo the note has and fills them with their respective contents.
@@ -87,7 +118,13 @@
            typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) => 
            {
                var rtb = new ExtendedRichTextBox();
-               panel.Items.Add(rtb);
+               if (panel.lastFocused != null)
+               {
+                   var index = panel.Items.IndexOf(panel.lastFocused) + 1;
+                   panel.Items.Insert(index, rtb);
+               }
+               else
+                   panel.Items.Add(rtb);
                rtb.SetKeyboardFocus();
            })));
 
@@ -108,10 +145,19 @@
                var todoIndex = 0;
                var fileIndex = 0;
 
-               var directory = ".\\Data";
+               var directory = $".\\Data\\{note.Name}";
+
+               directory = Path.Combine(Path.GetDirectoryName(directory), Path.GetFileName(directory).Trim(Path.GetInvalidFileNameChars()));
 
                if (!Directory.Exists(directory))
                    Directory.CreateDirectory(directory);
+               else
+               {
+                   foreach (var file in Directory.GetFiles(directory))
+                   {
+                       File.Delete(file);
+                   }
+               }
 
                foreach (var child in panel.Items)
                {
@@ -164,6 +210,9 @@
                var serializedNote = JsonConvert.SerializeObject(note);
                var metadataFileName = $"{note.Name.ToLower()}Metadata.txt";
                File.WriteAllText(metadataFileName, serializedNote);
+
+               panel._unsavedChanges = false;
+               panel.Status = "Saved at " + DateTime.Now.ToString("HH:mm:ss");
            })));
 
         public ICommand AddTodoControlCommand
@@ -194,7 +243,7 @@
         /// <param name="extendedTextBoxControl"></param>
         private void ConfigureExtendedTextBoxControlEvents(IExtendedTextBoxControl extendedTextBoxControl)
         {
-            extendedTextBoxControl.BackspacePressedWhileEmpty += (s, e) =>
+            extendedTextBoxControl.BackspacePressedWithAltShiftModifiers += (s, e) =>
             {
                 var index = this.Items.IndexOf(lastFocused);
 
@@ -208,6 +257,8 @@
 
                 if (extendedTextBoxControl is TodoControl todoControl)
                     Note?.RemoveTodo(todoControl.Todo);
+
+                InitializeAutosaveDispatcher();
             };
 
             extendedTextBoxControl.GotKeyboardFocus += (s, e) =>
@@ -220,15 +271,62 @@
 
                 this.AddRichTextBoxCommand.Execute(this);
 
-                ((ExtendedRichTextBox)this.Items[this.Items.Count - 1]).SetKeyboardFocus();
             });
 
             extendedTextBoxControl.TrackKeyword("todo", () =>
             {
-                this.AddTodoControlCommand.Execute(this);
+            var todoControl = new TodoControl(new Todo()).SetKeyboardFocusAfterLoaded();
 
-                ((TodoControl)this.Items[this.Items.Count - 1]).SetKeyboardFocus();
+                var index = this.Items.IndexOf(extendedTextBoxControl) + 1;
+
+                if (extendedTextBoxControl is ExtendedRichTextBox rtb)
+                {
+                    var leftRange = new TextRange(rtb.Document.ContentStart, rtb.CommandExecutionPointer);
+
+                    var rightRange = new TextRange(rtb.CommandExecutionPointer, rtb.Document.ContentEnd);
+
+                    this.Items.Insert(index, todoControl);
+
+                    var newRtb = new ExtendedRichTextBox();
+                    newRtb.TextRange.Text = rightRange.Text;
+
+                    if (!String.IsNullOrWhiteSpace(newRtb.TextRange.Text))
+                    {
+                        if (newRtb.TextRange.Text[0] == '\r' && newRtb.TextRange.Text[1] == '\n')
+                            newRtb.TextRange.Text = newRtb.TextRange.Text.Remove(0, 2);
+
+                        this.Items.Insert(index + 1, newRtb);
+                    }
+
+                    rtb.TextRange.Text = leftRange.Text;
+                }
+                else
+                    this.Items.Insert(index, todoControl);
             });
+
+            extendedTextBoxControl.TextChanged += (s, e) =>
+            {
+                if (extendedTextBoxControl.Initializing != true)
+                {
+                    InitializeAutosaveDispatcher();
+                }
+            };
+
+            extendedTextBoxControl.Drop += (s, e) =>
+            {
+                InitializeAutosaveDispatcher();
+            };
+        }
+
+        private void InitializeAutosaveDispatcher()
+        {
+            Status = "Unsaved changes.";
+
+
+            _unsavedChanges = true;
+
+            if (!dt.IsEnabled)
+                dt.Start();
         }
 
         /// <summary>

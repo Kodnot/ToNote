@@ -2,18 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ToNote.UI">
 
-    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="NoteNameStyle">
+    <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Foreground" Value="{StaticResource DefaultTextBlockBrush}"/>
-    </Style>
-
-    <Style TargetType="TextBlock" x:Key="NoteStatusStyle">
+        <Setter Property="Margin" Value="15, 0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Right"/>
-        <Setter Property="Foreground" Value="{StaticResource DefaultNoteStatusForegroundBrush}"/>
-        <Setter Property="FontSize" Value="12"/>
-
+        <Setter Property="Background" Value="Transparent"/>
     </Style>
-           
 </ResourceDictionary>

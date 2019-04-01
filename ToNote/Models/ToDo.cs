@@ -1,4 +1,6 @@
-﻿namespace ToNote.Models
+﻿using System;
+
+namespace ToNote.Models
 {
     public class Todo : BaseModel
     {
@@ -15,6 +17,14 @@
                 {
                     _IsChecked = value;
 
+                    if (_IsChecked)
+                    {
+                        LastDone = SelectedDate;
+                        _SelectedDate = null;
+                    }
+
+                    RaisePropertyChanged(nameof(SelectedDate));
+                    RaisePropertyChanged(nameof(IsDatePast));
                     RaisePropertyChanged(nameof(IsChecked));
                 }
             }
@@ -35,5 +45,24 @@
                 }
             }
         }
+
+        private DateTime? _SelectedDate;
+
+        public DateTime? SelectedDate
+        {
+            get => _SelectedDate;
+            set
+            {
+                if (_SelectedDate == value) return;
+                _SelectedDate = value;
+
+                RaisePropertyChanged(nameof(SelectedDate));
+                RaisePropertyChanged(nameof(IsDatePast));                
+            }
+        }
+
+        public DateTime? LastDone { get; private set; }
+
+        public bool IsDatePast => _SelectedDate.HasValue ? (DateTime.Compare((DateTime)_SelectedDate, DateTime.Today) >= 0) : false;
     }
 }

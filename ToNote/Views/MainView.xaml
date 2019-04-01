@@ -8,7 +8,7 @@
         xmlns:Controls="clr-namespace:ToNote.Controls"
         xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
         mc:Ignorable="d"
-        Title="ToNote" Height="650" Width="1100"
+        Title="ToNote" Height="650" Width="1100" MinWidth="400" MinHeight="350"
         WindowStyle="None">
 
     <Window.DataContext>
@@ -24,7 +24,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DockPanel VerticalAlignment="Center" Grid.Row="0">
-            <TextBox Text="ToNote" FontSize="18" Margin="10, 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" BorderThickness="0" Background="Transparent" Foreground="#eeeeee"/>
+            <TextBlock Text="ToNote" FontSize="20"/>
             <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Width="24" Height="24" x:Name="btn_MinimizeWindow" Style="{StaticResource PathButton}">
                     <Button.Content>

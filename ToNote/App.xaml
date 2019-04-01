@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:ToNote"
              xmlns:Models="clr-namespace:ToNote.Models"
              xmlns:Controls="clr-namespace:ToNote.Controls"
+             xmlns:Converters="clr-namespace:ToNote.Converters"
              xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
              xmlns:Views="clr-namespace:ToNote.Views"
              StartupUri="Views/MainView.xaml">
@@ -18,29 +19,67 @@
             <DataTemplate DataType="{x:Type Models:Note}">
                 <Views:NoteView/>
             </DataTemplate>
-
             <Style TargetType="{x:Type Controls:TodoControl}">
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate DataType="{x:Type Models:Todo}">
                             <Border x:Name="bd" Padding="4, 5" Margin="-5, 5" BorderBrush="{StaticResource DefaultTodoBorderBrush}" BorderThickness="0, 1">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
-                                        <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
-                                        <GradientStop Color="{StaticResource DefaultTodoUncheckedBackgroundColor}" Offset="0.0"/>
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                <DockPanel>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                                                    <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
+                                                    <GradientStop Color="{StaticResource DefaultTodoPastUncheckedBackgroundColor}" Offset="0.0"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsDatePast}" Value="True">
+                                                <Setter Property="Background">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                                                            <GradientStop Color="{StaticResource DefaultTodoCheckedBackgroundColor}" Offset="0.0"/>
+                                                            <GradientStop Color="{StaticResource DefaultTodoDueUncheckedBackgroundColor}" Offset="0.0"/>
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <DockPanel LastChildFill="True">
                                     <CheckBox x:Name="checkBox" IsChecked="{Binding IsChecked, Mode=TwoWay}" DockPanel.Dock="Left" Margin="5, 0"/>
-                                    <Controls:ExtendedRichTextBox x:Name="rtb" DockPanel.Dock="Right">
+                                    <DockPanel x:Name="datePanel" DockPanel.Dock="Right" Background="Transparent">
+                                        <DatePicker x:Name="datePicker" CalendarStyle="{StaticResource DatePickerCalendar}" SelectedDate="{Binding SelectedDate}">
+                                            <DatePicker.Style>
+                                                <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource {x:Type DatePicker}}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding SelectedDate}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Hidden" />
+                                                        </DataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding IsMouseOver, ElementName=datePanel}" Value="True"/>
+                                                                <Condition Binding="{Binding IsChecked}" Value="False"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <Setter Property="IsEnabled" Value="True"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DatePicker.Style>
+                                        </DatePicker>
+                                    </DockPanel>
+                                    <Controls:ExtendedRichTextBox x:Name="rtb" DockPanel.Dock="Left">
                                         <Controls:ExtendedRichTextBox.Style>
                                             <Style BasedOn="{StaticResource {x:Type Controls:ExtendedRichTextBox}}" TargetType="Controls:ExtendedRichTextBox">
+                                                <Setter Property="Padding" Value="2, 0"/>
                                                 <Style.Resources>
                                                     <Style TargetType="Paragraph" BasedOn="{StaticResource {x:Type Paragraph}}">
                                                         <Setter Property="Foreground" Value="{StaticResource DefaultTodoForegroundBrush}"/>
                                                     </Style>
                                                 </Style.Resources>
-                                                <Setter Property="Padding" Value="2, 0"/>
                                             </Style>
                                         </Controls:ExtendedRichTextBox.Style>
                                     </Controls:ExtendedRichTextBox>
@@ -86,10 +125,13 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-          
+
             <DataTemplate DataType="{x:Type ViewModels:AboutPageViewModel}">
                 <Views:AboutPageView/>
             </DataTemplate>
+
+            <Converters:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter"/>
+
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/Colors.xaml"/>
@@ -98,12 +140,11 @@
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ScrollViewerStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/CheckBoxStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TagStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBlockStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/DatePickerStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
-            
-
         </ResourceDictionary>
-        
-        
     </Application.Resources>
 </Application>

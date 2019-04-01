@@ -26,6 +26,9 @@
     <Color x:Key="DefaultPathHoverColor">#262228</Color>
     <SolidColorBrush x:Key="DefaultPathHoverBrush" Color="{StaticResource DefaultPathHoverColor}"/>
 
+    <Color x:Key="DefaultTextBlockColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultTextBlockBrush" Color="{StaticResource DefaultTextBlockColor}"/>
+    
     <Color x:Key="DefaultTextBoxBackgroundColor">#0E0B16</Color>
     <SolidColorBrush x:Key="DefaultTextBoxBackgroundBrush" Color="{StaticResource DefaultTextBoxBackgroundColor}"/>
 
@@ -34,7 +37,10 @@
 
     <Color x:Key="DefaultTextBoxBorderColor">#546175</Color>
     <SolidColorBrush x:Key="DefaultTextBoxBorderBrush" Color="{StaticResource DefaultTextBoxBorderColor}"/>
-    
+
+    <Color x:Key="DefaultTextBoxFocusedBorderColor">#546175</Color>
+    <SolidColorBrush x:Key="DefaultTextBoxFocusedBorderBrush" Color="{StaticResource DefaultTextBoxFocusedBorderColor}"/>
+
     <Color x:Key="DefaultRepeatButtonColor">#F4F4F4</Color>
     <SolidColorBrush x:Key="DefaultRepeatButtonBrush" Color="{StaticResource DefaultRepeatButtonColor}"/>
 
@@ -62,18 +68,34 @@
     <Color x:Key="DefaultCheckBoxCheckedPathColor">#0E0B16</Color>
     <SolidColorBrush x:Key="DefaultCheckBoxCheckedPathBrush" Color="{StaticResource DefaultCheckBoxCheckedPathColor}"/>
 
-    <!-- adasdasd -->
-
     <Color x:Key="DefaultTodoBorderColor">#F4F4F4</Color>
     <SolidColorBrush x:Key="DefaultTodoBorderBrush" Color="{StaticResource DefaultTodoBorderColor}"/>
 
     <Color x:Key="DefaultTodoForegroundColor">#F4F4F4</Color>
     <SolidColorBrush x:Key="DefaultTodoForegroundBrush" Color="{StaticResource DefaultTodoForegroundColor}"/>
 
-    <Color x:Key="DefaultTodoUncheckedBackgroundColor">#E24E42</Color>
-    <SolidColorBrush x:Key="DefaultTodoUncheckedBackgroundBrush" Color="{StaticResource DefaultTodoUncheckedBackgroundColor}"/>
+    <Color x:Key="DefaultTodoPastUncheckedBackgroundColor">#E24E42</Color>
+    <SolidColorBrush x:Key="DefaultTodoPastUncheckedBackgroundBrush" Color="{StaticResource DefaultTodoPastUncheckedBackgroundColor}"/>
 
     <Color x:Key="DefaultTodoCheckedBackgroundColor">#66AB8C</Color>
     <SolidColorBrush x:Key="DefaultTodoCheckedBackgroundBrush" Color="{StaticResource DefaultTodoCheckedBackgroundColor}"/>
+   
+    <Color x:Key="DefaultCalendarBackgroundColor">#000000</Color>
+    <SolidColorBrush x:Key="DefaultCalendarBackgroundBrush" Color="{StaticResource DefaultCalendarBackgroundColor}"/>
+    
+    <Color x:Key="DefaultTodoDueUncheckedBackgroundColor">#CCCC00</Color>
+    <SolidColorBrush x:Key="DefaultTodoDueUncheckedBackgroundBrush" Color="{StaticResource DefaultTodoDueUncheckedBackgroundColor}"/>
 
+    <Color x:Key="DefaultTagForegroundColor">#F4F4F4</Color>
+    <SolidColorBrush x:Key="DefaultTagForegroundBrush" Color="{StaticResource DefaultTagForegroundColor}" />
+
+    <Color x:Key="DefaultBorderBackgroundColor">#262228</Color>
+    <SolidColorBrush x:Key="DefaultBorderBackgroundBrush" Color="{StaticResource DefaultBorderBackgroundColor}" />
+    
+    <Color x:Key="DefaultBorderBrushColor">#000000</Color>
+    <SolidColorBrush x:Key="DefaultBorderBrushBrush" Color="{StaticResource DefaultBorderBrushColor}" />
+
+    <Color x:Key="DefaultNoteStatusForegroundColor">#DFDCE3</Color>
+    <SolidColorBrush x:Key="DefaultNoteStatusForegroundBrush" Color="{StaticResource DefaultNoteStatusForegroundColor}"/>
+    
 </ResourceDictionary>

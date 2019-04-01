@@ -49,7 +49,7 @@
                 return _AddNoteCommand ?? (_AddNoteCommand = new RelayCommand(() => 
                 {
                     var dialog = new AddNoteDialogViewModel();
-
+                    dialog.Resizeable = false;
                     dialog.Title = "Add a note";
 
                     var result = DialogService.OpenDialog(dialog);
@@ -99,6 +99,34 @@
                     var metadataFileName = note.Name + "Metadata.txt";
                     if (File.Exists(metadataFileName))
                         File.Delete(metadataFileName);
+
+                    var todosFileName = "*_" + note.Name + "_TODO";
+
+                    if (!Directory.Exists("Data"))
+                        return;
+
+                    var todoFiles = Directory.GetFiles("Data", todosFileName);
+                    foreach (var file in todoFiles)
+                    {
+                        if (File.Exists(file)) File.Delete(file);
+                    }
+                }));
+            }
+        }
+
+        private ICommand _AddTagCommand;
+
+        public ICommand AddTagCommand
+        {
+            get
+            {
+                return _AddTagCommand ?? (_AddTagCommand = new RelayCommand<Note>(note =>
+                {
+                    if (!string.IsNullOrWhiteSpace(note.TagName) && !note.Tags.Contains(note.TagName))
+                    {
+                        note.Tags.Add(note.TagName);
+                        note.TagName = "";
+                    }
                 }));
             }
         }
@@ -112,6 +140,7 @@
                 return _OpenAboutPageCommand ?? (_OpenAboutPageCommand = new RelayCommand(() =>
                 {
                     var dialog = new AboutPageViewModel();
+                    dialog.Resizeable = false;
 
                     dialog.Title = "About";
 

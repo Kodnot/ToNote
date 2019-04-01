@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ToNote.Views"
              mc:Ignorable="d" 
-             Width="400" Height="60">
-    
-    
+             Width="400" Height="60"
+             FocusManager.FocusedElement="{Binding ElementName=NoteNameBox, Mode=OneTime}">
+
     <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -15,7 +15,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Name: " HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Foreground="White"/>
-        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="3" Grid.Column="1" Margin="5">
+        <TextBox Name="NoteNameBox" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="3" Grid.Column="1" Margin="5">
             <TextBox.InputBindings>
                 <KeyBinding Key="Enter" Command="{Binding AddNoteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"/>
             </TextBox.InputBindings>
