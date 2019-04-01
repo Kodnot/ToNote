@@ -1,6 +1,7 @@
 ﻿namespace ToNote.Models
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.IO;
 
     public class Note : BaseModel
@@ -9,6 +10,7 @@
         {
             Name = name;
             Description = description;
+            Tags = new ObservableCollection<string>();
         }
 
         private string _Name;
@@ -91,6 +93,32 @@
 
             if (this.Todos.Contains(todo))
                 this.Todos.Remove(todo);
+        }
+
+        private ObservableCollection<string> _Tags;
+        public  ObservableCollection<string> Tags
+        {
+            get => _Tags ?? (_Tags = new ObservableCollection<string>());
+            set
+            {
+                if (_Tags != value)
+                {
+                    _Tags = value;
+
+                    RaisePropertyChanged(nameof(Tags));
+                }
+            }
+        }
+
+        public string _TagName;
+        public string TagName
+        {
+            get => _TagName;
+            set
+            {
+                _TagName = value;
+                RaisePropertyChanged(nameof(TagName));
+            }
         }
     }
 }
