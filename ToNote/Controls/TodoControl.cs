@@ -35,12 +35,21 @@
                 {
                     this.BackspacePressedWithAltShiftModifiers?.Invoke(this, new RoutedEventArgs());
                 };
+
+                rtb.TextChanged += (o, a) =>
+                {
+                    TextChanged?.Invoke(o, a);
+                };
             };
         }
 
         public Todo Todo { get; private set; }
 
         public event RoutedEventHandler BackspacePressedWithAltShiftModifiers;
+
+        public event TextChangedEventHandler TextChanged;
+
+        public bool? Initializing => extendedRTB?.Initializing;
 
         private ExtendedRichTextBox extendedRTB;
 

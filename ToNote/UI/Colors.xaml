@@ -68,8 +68,6 @@
     <Color x:Key="DefaultCheckBoxCheckedPathColor">#0E0B16</Color>
     <SolidColorBrush x:Key="DefaultCheckBoxCheckedPathBrush" Color="{StaticResource DefaultCheckBoxCheckedPathColor}"/>
 
-    <!-- adasdasd -->
-
     <Color x:Key="DefaultTodoBorderColor">#F4F4F4</Color>
     <SolidColorBrush x:Key="DefaultTodoBorderBrush" Color="{StaticResource DefaultTodoBorderColor}"/>
 
@@ -96,4 +94,8 @@
     
     <Color x:Key="DefaultBorderBrushColor">#000000</Color>
     <SolidColorBrush x:Key="DefaultBorderBrushBrush" Color="{StaticResource DefaultBorderBrushColor}" />
+
+    <Color x:Key="DefaultNoteStatusForegroundColor">#DFDCE3</Color>
+    <SolidColorBrush x:Key="DefaultNoteStatusForegroundBrush" Color="{StaticResource DefaultNoteStatusForegroundColor}"/>
+    
 </ResourceDictionary>

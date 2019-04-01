@@ -7,5 +7,13 @@
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Foreground" Value="{StaticResource DefaultTextBlockBrush}"/>
     </Style>
-    
+
+    <Style TargetType="TextBlock" x:Key="NoteStatusStyle">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultNoteStatusForegroundBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+
+    </Style>
+           
 </ResourceDictionary>
