@@ -61,7 +61,7 @@
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding IsMouseOver, ElementName=datePanel}" Value="True"/>
-                                                                <Condition Binding="{Binding IsChecked}" Value="True"/>
+                                                                <Condition Binding="{Binding IsChecked}" Value="False"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                             <Setter Property="IsEnabled" Value="True"/>
