@@ -119,13 +119,20 @@
             {
                 this.Loaded += (s, e) =>
                 {
+                    this.Selection.Select(this.Selection.Start, this.Document.ContentEnd);
+                    this.CaretPosition = this.Selection.End;
                     Keyboard.Focus(this);
                 };
             }
             else
+            {
+                this.Selection.Select(this.Selection.Start, this.Document.ContentEnd);
+                this.CaretPosition = this.Selection.End;
                 Keyboard.Focus(this);
+            }
+
         }
-        
+
         public void TrackKeyword(string keyword, Action action)
         {
             var keywordAction = new KeywordAction() { Keyword = keyword, Action = action };

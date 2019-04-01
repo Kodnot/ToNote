@@ -20,7 +20,7 @@ to delete a created note.
 
 Key features of the app
 
--Use ctrl + up/down arrows to easily navigate between textboxes and todos.
+-Use ctrl + Plus/Minus to easily navigate between textboxes and todos.
 -Backspace can also be used on an emtpy note or todo to remove it.
 -You can also create a note or todo without even moving your mouse! Simply
 type /note or /todo into text box and newly created entry will appear.
