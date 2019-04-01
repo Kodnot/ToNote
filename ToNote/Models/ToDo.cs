@@ -4,12 +4,6 @@ namespace ToNote.Models
 {
     public class Todo : BaseModel
     {
-
-        public Todo()
-        {
-            SelectedDate = null;
-        }
-
         public string FileName { get; set; }
 
         private bool _IsChecked = false;
@@ -23,6 +17,14 @@ namespace ToNote.Models
                 {
                     _IsChecked = value;
 
+                    if (_IsChecked == true)
+                    {
+                        _LastDone = SelectedDate;
+                        _SelectedDate = null;
+                    }
+
+                    RaisePropertyChanged(nameof(SelectedDate));
+                    RaisePropertyChanged(nameof(IsDatePast));
                     RaisePropertyChanged(nameof(IsChecked));
                 }
             }
@@ -60,6 +62,13 @@ namespace ToNote.Models
                 }
                 
             }
+        }
+
+        private DateTime? _LastDone;
+
+        public DateTime? LastDone
+        {
+            get => _LastDone;
         }
 
         public bool IsDatePast => _SelectedDate != null ? DateTime.Compare((DateTime)_SelectedDate, DateTime.Today) > 0 ? true : false : false;

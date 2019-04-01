@@ -58,11 +58,14 @@
                                                         <DataTrigger Binding="{Binding SelectedDate}" Value="{x:Null}">
                                                             <Setter Property="Visibility" Value="Hidden" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=datePanel}" Value="True">
-                                                            <Setter Property="BorderThickness" Value="5"/>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding IsMouseOver, ElementName=datePanel}" Value="True"/>
+                                                                <Condition Binding="{Binding IsChecked}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                             <Setter Property="IsEnabled" Value="True"/>
-                                                        </DataTrigger>
+                                                        </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </DatePicker.Style>
