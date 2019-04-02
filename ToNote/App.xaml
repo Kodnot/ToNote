@@ -56,6 +56,9 @@
                                                 <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource {x:Type DatePicker}}">
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding SelectedDate}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Hidden"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsChecked}" Value="True">
                                                             <Setter Property="Visibility" Value="Hidden" />
                                                         </DataTrigger>
                                                         <MultiDataTrigger>

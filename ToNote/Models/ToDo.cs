@@ -17,14 +17,6 @@ namespace ToNote.Models
                 {
                     _IsChecked = value;
 
-                    if (_IsChecked)
-                    {
-                        LastDone = SelectedDate;
-                        _SelectedDate = null;
-                    }
-
-                    RaisePropertyChanged(nameof(SelectedDate));
-                    RaisePropertyChanged(nameof(IsDatePast));
                     RaisePropertyChanged(nameof(IsChecked));
                 }
             }
@@ -60,8 +52,6 @@ namespace ToNote.Models
                 RaisePropertyChanged(nameof(IsDatePast));                
             }
         }
-
-        public DateTime? LastDone { get; private set; }
 
         public bool IsDatePast => _SelectedDate.HasValue ? (DateTime.Compare((DateTime)_SelectedDate, DateTime.Today) >= 0) : false;
     }
