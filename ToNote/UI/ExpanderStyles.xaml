@@ -9,18 +9,16 @@
                     <Border Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent" SnapsToDevicePixels="False">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="20" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Path x:Name="arrow" RenderTransformOrigin="0.5,0.5" Data="M 1,1.5 L 4.5,5 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="{StaticResource DefaultToggleButtonForegroundBrush}" StrokeThickness="2" VerticalAlignment="Center" >
+                            <Path x:Name="arrow" RenderTransformOrigin="0.5,0.5" Data="M 1,1.5 L 4.5,5 8,1.5 M 1,6.5 L 4.5,10 L 8,6.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="{StaticResource DefaultToggleButtonForegroundBrush}" StrokeThickness="2" VerticalAlignment="Center" >
                                 <Path.RenderTransform>
                                     <RotateTransform Angle="0"/>
                                 </Path.RenderTransform>
                             </Path>
-                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
-                            <!--Make binding text for versatility-->
-                            <TextBlock x:Name="text" Text="Tags" Grid.Column="2" Foreground="{StaticResource DefaultToggleButtonForegroundBrush}" FontSize="12"/>
-                        </Grid>
+                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="-10,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
@@ -41,16 +39,14 @@
                         </Trigger>
                         <!--For future colour themes-->
                         <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Cursor" Value="Hand"/>
                             <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource DefaultExpanderMouseOverBrush}"/>
-                            <Setter Property="Foreground" TargetName="text" Value="{StaticResource DefaultExpanderMouseOverBrush}"/>
-                        </Trigger>
+                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource DefaultExpanderPressedBrush}"/>
-                            <Setter Property="Foreground" TargetName="text" Value="{StaticResource DefaultExpanderPressedBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource DefaultExpanderEnabledBrush}"/>
-                            <Setter Property="Foreground" TargetName="text" Value="{StaticResource DefaultExpanderEnabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

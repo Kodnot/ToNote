@@ -101,10 +101,10 @@
     <Color x:Key="DefaultToggleButtonForegroundColor">#F4F4F4</Color>
     <SolidColorBrush x:Key="DefaultToggleButtonForegroundBrush" Color="{StaticResource DefaultToggleButtonForegroundColor}" />
 
-    <Color x:Key="DefaultExpanderMouseOverColor">#000000</Color>
+    <Color x:Key="DefaultExpanderMouseOverColor">#707070</Color>
     <SolidColorBrush x:Key="DefaultExpanderMouseOverBrush" Color="{StaticResource DefaultExpanderMouseOverColor}"/>
 
-    <Color x:Key="DefaultExpanderPressedColor">#000000</Color>
+    <Color x:Key="DefaultExpanderPressedColor">#707070</Color>
     <SolidColorBrush x:Key="DefaultExpanderPressedBrush" Color="{StaticResource DefaultExpanderPressedColor}"/>
 
     <Color x:Key="DefaultExpanderEnabledColor">#000000</Color>
