@@ -28,9 +28,6 @@
             </DockPanel>
             <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1"/>
             <Expander Name="TagExpander" IsExpanded="False" Grid.Row="2" >
-                <Expander.Header>
-                    <TextBlock Text="Tags" Style="{StaticResource NoteNameStyle}"/>
-                </Expander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50" />
