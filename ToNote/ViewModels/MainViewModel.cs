@@ -100,16 +100,11 @@
                     if (File.Exists(metadataFileName))
                         File.Delete(metadataFileName);
 
-                    var todosFileName = "*_" + note.Name + "_TODO";
-
                     if (!Directory.Exists("Data"))
                         return;
 
-                    var todoFiles = Directory.GetFiles("Data", todosFileName);
-                    foreach (var file in todoFiles)
-                    {
-                        if (File.Exists(file)) File.Delete(file);
-                    }
+                    var directoryPath = "Data\\" + note.Name;
+                    Directory.Delete(directoryPath, true);
                 }));
             }
         }
