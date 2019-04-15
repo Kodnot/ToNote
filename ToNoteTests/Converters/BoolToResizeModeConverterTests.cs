@@ -41,8 +41,7 @@ namespace ToNoteTests.Converters
             var converter = new BoolToResizeModeConverter();
 
             //Act, Assert
-            // Intentionally failing test to test pipeline
-            Should.Throw<ArgumentNullException>(() => converter.ConvertBack(null, null, null, null));
+            Should.Throw<NotImplementedException>(() => converter.ConvertBack(null, null, null, null));
         }
     }
 }
