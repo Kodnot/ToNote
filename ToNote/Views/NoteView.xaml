@@ -29,7 +29,10 @@
             <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" Grid.Row="1"/>
             <Expander Name="TagExpander" IsExpanded="False" Grid.Row="2" >
                 <Expander.Header>
-                    <TextBlock Text="Tags" Style="{StaticResource NoteNameStyle}"/>
+                    <DockPanel >
+                        <TextBlock DockPanel.Dock="Left" Text="Tags"  FontSize="16" Foreground="{StaticResource DefaultTextBlockBrush}"/>
+                        <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="{Binding ElementName=rtbpanel, Path=Status}" Style="{StaticResource NoteStatusStyle}"/>
+                    </DockPanel>
                 </Expander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -62,7 +65,7 @@
                     </ItemsControl>
                 </Grid>
             </Expander>
-            <TextBlock Grid.Row="4" Text="{Binding ElementName=rtbpanel, Path=Status}" Style="{StaticResource NoteStatusStyle}"/>
+            
         </Grid>
     </Border>
 </UserControl>

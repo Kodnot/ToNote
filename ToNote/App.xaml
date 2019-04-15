@@ -144,6 +144,7 @@
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TagStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/TextBlockStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/DatePickerStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToNote;component/UI/ExpanderStyles.xaml"/>           
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
