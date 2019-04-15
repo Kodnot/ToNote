@@ -100,11 +100,10 @@
                     if (File.Exists(metadataFileName))
                         File.Delete(metadataFileName);
 
-                    if (!Directory.Exists("Data"))
-                        return;
+                    var directoryPath = Path.Combine("Data", note.Name);
 
-                    var directoryPath = "Data\\" + note.Name;
-                    Directory.Delete(directoryPath, true);
+                    if (Directory.Exists(directoryPath))
+                        Directory.Delete(directoryPath, true);
                 }));
             }
         }
