@@ -9,6 +9,9 @@
     using ToNote.Logic.Dialog;
     using ToNote.Models;
     using System.Windows;
+    using System.Collections;
+    using System.ComponentModel;
+    using System.Windows.Data;
 
     public class MainViewModel : BaseModel
     {
@@ -18,6 +21,14 @@
             {
                 using (var reader = new StreamReader(file))
                     Notes.Add(JsonConvert.DeserializeObject<Note>(reader.ReadToEnd()));
+
+                SelectedTags.CollectionChanged += (s, e) =>
+                {
+                    if (SelectedTags.Any())
+                        FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
+                    else
+                        FilteredNotes.Filter = null;
+                };
             }
         }
 
@@ -140,6 +151,78 @@
 
                     DialogService.OpenDialog(dialog);
                 }));
+            }
+        }
+
+        private ObservableCollection<string> _SelectedTags;
+
+        public ObservableCollection<string> SelectedTags
+        {
+            get => _SelectedTags ?? (_SelectedTags = new ObservableCollection<string>());
+            set
+            {
+                if (_SelectedTags != value)
+                {
+                    _SelectedTags = value;
+
+                    RaisePropertyChanged(nameof(SelectedTags));
+                }
+            }
+        }
+
+        public IEnumerable AllTags { get => Notes.SelectMany(x => x.Tags).Distinct(); }
+
+        private bool _IsGroupingPanelOpen;
+
+        public bool IsGroupingPanelOpen
+        {
+            get => _IsGroupingPanelOpen;
+            set
+            {
+                if (_IsGroupingPanelOpen != value)
+                {
+                    _IsGroupingPanelOpen = value;
+
+                    RaisePropertyChanged(nameof(IsGroupingPanelOpen));
+                }
+            }
+        }
+
+        private ICommand _ToggleGroupingPanelCommand;
+
+        public ICommand ToggleGroupingPanelCommand
+        {
+            get
+            {
+                return _ToggleGroupingPanelCommand ?? (_ToggleGroupingPanelCommand = new RelayCommand(() =>
+                {
+                    IsGroupingPanelOpen = !IsGroupingPanelOpen;
+                }));
+            }
+        }
+
+        private ICommand _ToggleTagSelectionCommand;
+
+        public ICommand ToggleTagSelectionCommand
+        {
+
+            get
+            {
+                return _ToggleTagSelectionCommand ?? (_ToggleTagSelectionCommand = new RelayCommand<string>(tag =>
+                {
+                    if (SelectedTags.Contains(tag))
+                        SelectedTags.Remove(tag);
+                    else
+                        SelectedTags.Add(tag);
+                }));
+            }
+        }
+
+        public ICollectionView FilteredNotes
+        {
+            get
+            {
+                return CollectionViewSource.GetDefaultView(Notes);
             }
         }
     }
