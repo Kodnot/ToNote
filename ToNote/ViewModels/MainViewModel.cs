@@ -132,6 +132,8 @@
                         note.Tags.Add(note.TagName);
                         note.TagName = "";
                     }
+
+                    RaisePropertyChanged(nameof(AllTags));
                 }));
             }
         }
