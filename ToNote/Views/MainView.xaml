@@ -21,7 +21,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DockPanel VerticalAlignment="Center" Grid.Row="0">
             <TextBlock Text="ToNote" FontSize="20"/>
@@ -49,19 +48,31 @@
                 </Button>
             </StackPanel>
         </DockPanel>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource RightScrollViewer}">
-            <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel IsItemsHost="True"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </ScrollViewer>
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <Button  Content="About" Command="{Binding OpenAboutPageCommand}"/>
-            <Button  Content="Add note" Command="{Binding AddNoteCommand}"/>
-        </StackPanel>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Notes">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="0" VerticalScrollBarVisibility="Auto" Style="{StaticResource RightScrollViewer}">
+                        <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <Button  Content="About" Command="{Binding OpenAboutPageCommand}"/>
+                        <Button  Content="Add note" Command="{Binding AddNoteCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TODOs (WIP)"/>
+        </TabControl>
         
     </Grid>
 </Window>
