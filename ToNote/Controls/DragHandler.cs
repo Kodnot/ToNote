@@ -33,7 +33,9 @@
 
             if (sender is NoteView noteView && source is NoteView sourceView)
             {
-                var panel = ((FindAncestorOfType<ItemsControl>(sender as DependencyObject) as ItemsControl).ItemsSource as ListCollectionView).SourceCollection as ObservableCollection<Note>;
+                //var panel = ((FindAncestorOfType<ItemsControl>(sender as DependencyObject) as ItemsControl).ItemsSource as ListCollectionView).SourceCollection as ObservableCollection<Note>;
+
+                var panel = (FindAncestorOfType<ItemsControl>(sender as DependencyObject) as ItemsControl).ItemsSource as ObservableCollection<Note>;
 
                 var newIndex = panel.IndexOf(noteView.DataContext as Note);
 
