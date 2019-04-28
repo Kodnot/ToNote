@@ -135,6 +135,23 @@
             }
         }
 
+        private ICommand _RemoveTagCommand;
+
+        public ICommand RemoveTagCommand
+        {
+            get
+            {
+                return _RemoveTagCommand ?? (_RemoveTagCommand = new RelayCommand<Note>(note =>
+                {
+                    if (!string.IsNullOrWhiteSpace(note.TagName) && note.Tags.Contains(note.TagName))
+                    {
+                        note.Tags.Remove(note.TagName);
+                        note.TagName = "";
+                    }
+                }));
+            }
+        }
+
         private ICommand _OpenAboutPageCommand;
 
         public ICommand OpenAboutPageCommand
