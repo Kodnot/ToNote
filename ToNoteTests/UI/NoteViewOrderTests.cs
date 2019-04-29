@@ -59,6 +59,8 @@ namespace ToNoteTests.UI
 
             (noteViewTest.DataContext as Note).Name.ShouldBe("Test2");
 
+            window.Close();
+
             app.Shutdown(0);
         }
     }
