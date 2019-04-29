@@ -55,15 +55,39 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="0" VerticalScrollBarVisibility="Auto" Style="{StaticResource RightScrollViewer}">
-                        <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel IsItemsHost="True"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Style="{StaticResource RightScrollViewer}">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                <Button Content="Select tags" Command="{Binding ToggleGroupingPanelCommand}"/>
+                                <Popup IsOpen="{Binding IsGroupingPanelOpen, Mode=TwoWay}" StaysOpen="False">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" Width="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="500" Style="{StaticResource RightScrollViewer}">
+                                        <ItemsControl ItemsSource="{Binding AllTags}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <CheckBox Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ToggleTagSelectionCommand}" CommandParameter="{Binding}"/>
+                                                        <TextBlock Text="{Binding}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel IsItemsHost="True"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Popup>
+                            </StackPanel>
+                            <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </DockPanel>
                     </ScrollViewer>
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
                         <Button  Content="About" Command="{Binding OpenAboutPageCommand}"/>
