@@ -48,7 +48,7 @@
                 </Button>
             </StackPanel>
         </DockPanel>
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Notes">
                 <Grid>
                     <Grid.RowDefinitions>

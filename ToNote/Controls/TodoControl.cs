@@ -1,14 +1,13 @@
 ﻿namespace ToNote.Controls
 {
     using System;
-    using System.Collections;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.Threading;
     using ToNote.Interfaces;
-    using ToNote.Logic;
     using ToNote.Models;
 
     public class TodoControl : ContentControl, IExtendedTextBoxControl
@@ -112,53 +111,56 @@
 
         public static readonly DependencyProperty ListTodosProperty = DependencyProperty.Register("ListTodo",
            typeof(Todo), typeof(TodoControl), new FrameworkPropertyMetadata(null)
-           {    PropertyChangedCallback = (s, e) =>
-               {
-                   var control = (TodoControl)s;
+           { PropertyChangedCallback = (s, e) =>
+            {
+                var control = (TodoControl)s;
 
-                   if (!(e.NewValue is Todo newTodoValue) || newTodoValue == null) return;
+                if (!(e.NewValue is Todo newTodoValue) || newTodoValue == null) return;
 
-                   control.Todo = newTodoValue;
-                   control.Content = newTodoValue;
-                   var rtbx = new ExtendedRichTextBox();
-                   rtbx.ReadFromFile(newTodoValue.FileName);
-                   control.extendedRTB = rtbx;
-                   //control.ReadFromFile(((Todo)control.DataContext).FileName);
+                control.Todo = newTodoValue;
+                control.Content = newTodoValue;
 
-                   
-                   control.Loaded += (sender, ev) =>
-                   {
+                var rtbx = new ExtendedRichTextBox();
+
+                rtbx.ReadFromFile(newTodoValue.FileName);
+                control.extendedRTB = rtbx;
+
+                control.Loaded += (sender, ev) =>
+                {
                        //Gets the DataTemplate defined for the Todo objects.
                        var template = control.ContentTemplate;
 
-                       if (template == null) return;
+                    if (template == null) return;
 
                        //Looks for an ExtendedRichTextBox with an x:Name="rtb" attribute from the logical children of the generated ContentPresenter which has the DataTemplate applied to it.
                        var rtb = (ExtendedRichTextBox)template.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(control, 0));
-                       control.ReadFromFile(((Todo)control.DataContext).FileName);
-                       if (rtb == null) return;
+                    control.ReadFromFile(((Todo)control.DataContext).FileName);
+                    if (rtb == null) return;
 
-                       control.extendedRTB = rtb;
+                    control.extendedRTB = rtb;
 
                        //If an ExtendedRichTextBox is found, hooks to the BackspacePressedWhileEmpty event.
                        rtb.BackspacePressedWithAltShiftModifiers += (o, a) =>
-                       {
-                           control.BackspacePressedWithAltShiftModifiers?.Invoke(control, new RoutedEventArgs());
-                       };
+                    {
+                        control.BackspacePressedWithAltShiftModifiers?.Invoke(control, new RoutedEventArgs());
+                    };
 
-                       rtb.TextChanged += (o, a) =>
-                       {
-                           control.TextChanged?.Invoke(o, a);
-                       };
+                    rtb.TextChanged += (o, a) =>
+                    {
+                        control.TextChanged?.Invoke(o, a);
+                    };
 
-                       rtb.Drop += (o, a) =>
-                       {
-                           control.Drop?.Invoke(o, a);
-                       };
-                   };
-                   control.InvalidateVisual();
-               }
+                    rtb.Drop += (o, a) =>
+                    {
+                        control.Drop?.Invoke(o, a);
+                    };
+                };
+                control.InvalidateVisual();
+
+            }
            });
+
+         
 
         public Todo ListTodo
         {
