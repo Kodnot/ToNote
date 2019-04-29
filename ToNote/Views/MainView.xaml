@@ -100,7 +100,24 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="TODOs"/>
+            <TabItem Header="TODOs" IsSelected="{Binding IsSelected}">
+                <Grid>
+                    <ScrollViewer>
+                        <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Views:TodoView />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
         </TabControl>
 
     </Grid>

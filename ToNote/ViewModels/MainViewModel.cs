@@ -218,5 +218,7 @@
         }
 
         public ICollectionView FilteredNotes =>  CollectionViewSource.GetDefaultView(Notes);
+
+        public IEnumerable AllTodos => Notes.SelectMany(x => x.Todos).Distinct();
     }
 }
