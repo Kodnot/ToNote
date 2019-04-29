@@ -58,6 +58,8 @@ namespace ToNoteTests.UI
             var noteViewTest = VisualTreeService.FindChild<NoteView>(window);
 
             (noteViewTest.DataContext as Note).Name.ShouldBe("Test2");
+
+            app.Shutdown(0);
         }
     }
 }
