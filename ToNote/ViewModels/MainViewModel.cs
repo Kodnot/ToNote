@@ -24,10 +24,7 @@
 
                 SelectedTags.CollectionChanged += (s, e) =>
                 {
-                    if (SelectedTags.Any())
-                        FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
-                    else
-                        FilteredNotes.Filter = null;
+                    FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
                 };
             }
         }
@@ -172,7 +169,7 @@
             }
         }
 
-        public IEnumerable AllTags { get => Notes.SelectMany(x => x.Tags).Distinct(); }
+        public IEnumerable AllTags => Notes.SelectMany(x => x.Tags).Distinct();
 
         private bool _IsGroupingPanelOpen;
 
@@ -220,12 +217,6 @@
             }
         }
 
-        public ICollectionView FilteredNotes
-        {
-            get
-            {
-                return CollectionViewSource.GetDefaultView(Notes);
-            }
-        }
+        public ICollectionView FilteredNotes =>  CollectionViewSource.GetDefaultView(Notes);
     }
 }

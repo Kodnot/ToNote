@@ -34,11 +34,9 @@ namespace ToNoteTests.Core
                 }
                 else if (predicate == null)
                 {
-                    {
-                        // child element found.
-                        foundChild = (T)child;
-                        break;
-                    }
+                    // child element found.
+                    foundChild = (T)child;
+                    break;
                 }
                 else if (predicate.Invoke((T)child))
                 {
@@ -46,8 +44,8 @@ namespace ToNoteTests.Core
                     foundChild = (T)child;
                     break;
                 }
-                
             }
+
             return foundChild;
         }
 
@@ -64,5 +62,5 @@ namespace ToNoteTests.Core
         }
     }
 
-    
+
 }
