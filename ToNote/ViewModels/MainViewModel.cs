@@ -219,6 +219,36 @@
 
         public ICollectionView FilteredNotes =>  CollectionViewSource.GetDefaultView(Notes);
 
-        public IEnumerable AllTodos => Notes.SelectMany(x => x.Todos).Distinct();
+        private IEnumerable _AllTodos;
+
+        public IEnumerable AllTodos
+        {
+            get => Notes.SelectMany(x => x.Todos).Distinct();
+            set
+            {
+                if (_AllTodos != value)
+                {
+                    _AllTodos = value;
+                    RaisePropertyChanged(nameof(AllTodos));
+                }
+            }
+        }
+
+
+        private bool _IsSelected;
+
+        public bool IsSelected
+        {
+            get => _IsSelected;
+            set
+            {
+                if (_IsSelected != value)
+                {
+                    _IsSelected = value;
+                    RaisePropertyChanged(nameof(IsSelected));
+                    AllTodos = Notes.SelectMany(x => x.Todos).Distinct();
+                }
+            }
+        }
     }
 }

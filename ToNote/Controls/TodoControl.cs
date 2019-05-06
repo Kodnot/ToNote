@@ -54,7 +54,38 @@
             this.AllowDrop = true;
         }
 
-        public TodoControl() { }
+        public TodoControl() {
+            this.Loaded += (s, e) =>
+            {
+                //Gets the DataTemplate defined for the Todo objects.
+                var template = this.ContentTemplate;
+
+                if (template == null) return;
+
+                //Looks for an ExtendedRichTextBox with an x:Name="rtb" attribute from the logical children of the generated ContentPresenter which has the DataTemplate applied to it.
+                var rtb = (ExtendedRichTextBox)template.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(this, 0));
+
+                if (rtb == null) return;
+
+                extendedRTB = rtb;
+
+                //If an ExtendedRichTextBox is found, hooks to the BackspacePressedWhileEmpty event.
+                rtb.BackspacePressedWithAltShiftModifiers += (o, a) =>
+                {
+                    this.BackspacePressedWithAltShiftModifiers?.Invoke(this, new RoutedEventArgs());
+                };
+
+                rtb.TextChanged += (o, a) =>
+                {
+                    TextChanged?.Invoke(o, a);
+                };
+
+                rtb.Drop += (o, a) =>
+                {
+                    Drop?.Invoke(o, a);
+                };
+            };
+        }
 
         public Todo Todo { get; set; }
 
@@ -120,27 +151,21 @@
                 control.Todo = newTodoValue;
                 control.Content = newTodoValue;
 
-                var rtbx = new ExtendedRichTextBox();
-
-                rtbx.ReadFromFile(newTodoValue.FileName);
-                control.extendedRTB = rtbx;
-
                 control.Loaded += (sender, ev) =>
                 {
-                       //Gets the DataTemplate defined for the Todo objects.
-                       var template = control.ContentTemplate;
+                    var template = control.ContentTemplate;
 
                     if (template == null) return;
 
-                       //Looks for an ExtendedRichTextBox with an x:Name="rtb" attribute from the logical children of the generated ContentPresenter which has the DataTemplate applied to it.
-                       var rtb = (ExtendedRichTextBox)template.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(control, 0));
+                    //Looks for an ExtendedRichTextBox with an x:Name="rtb" attribute from the logical children of the generated ContentPresenter which has the DataTemplate applied to it.
+                    var rtb = (ExtendedRichTextBox)template.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(control, 0));
                     control.ReadFromFile(((Todo)control.DataContext).FileName);
                     if (rtb == null) return;
 
                     control.extendedRTB = rtb;
 
-                       //If an ExtendedRichTextBox is found, hooks to the BackspacePressedWhileEmpty event.
-                       rtb.BackspacePressedWithAltShiftModifiers += (o, a) =>
+                    //If an ExtendedRichTextBox is found, hooks to the BackspacePressedWhileEmpty event.
+                    rtb.BackspacePressedWithAltShiftModifiers += (o, a) =>
                     {
                         control.BackspacePressedWithAltShiftModifiers?.Invoke(control, new RoutedEventArgs());
                     };
@@ -154,9 +179,9 @@
                     {
                         control.Drop?.Invoke(o, a);
                     };
-                };
-                control.InvalidateVisual();
 
+                };
+                
             }
            });
 

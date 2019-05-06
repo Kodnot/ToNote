@@ -48,7 +48,7 @@
                 </Button>
             </StackPanel>
         </DockPanel>
-        <TabControl Grid.Row="1" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl Grid.Row="1" Name="zaraza">
             <TabItem Header="Notes">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -115,7 +115,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                    </ScrollViewer>
+                        </ScrollViewer>
                 </Grid>
             </TabItem>
         </TabControl>
