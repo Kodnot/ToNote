@@ -58,28 +58,7 @@
 
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Style="{StaticResource RightScrollViewer}">
                         <DockPanel>
-                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                                <Button Content="Select tags" Command="{Binding ToggleGroupingPanelCommand}"/>
-                                <Popup IsOpen="{Binding IsGroupingPanelOpen, Mode=TwoWay}" StaysOpen="False">
-                                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" Width="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="500" Style="{StaticResource RightScrollViewer}">
-                                        <ItemsControl ItemsSource="{Binding AllTags}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <CheckBox Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ToggleTagSelectionCommand}" CommandParameter="{Binding}"/>
-                                                        <TextBlock Text="{Binding}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <StackPanel IsItemsHost="True"/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                        </ItemsControl>
-                                    </ScrollViewer>
-                                </Popup>
-                            </StackPanel>
+
                             <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -90,13 +69,39 @@
                         </DockPanel>
                     </ScrollViewer>
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <Button x:Name="button1" Content="Select tags" Command="{Binding ToggleGroupingPanelCommand}"/>
+                        <Popup IsOpen="{Binding IsGroupingPanelOpen, Mode=TwoWay}" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade" Placement="Top">
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden" Width="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="500" Style="{StaticResource RightScrollViewer}"   >
+                                <ItemsControl ItemsSource="{Binding AllTags}" Margin="{Binding ElementName=button1, Path=Margin}" BorderBrush="{StaticResource DefaultTextBoxBorderBrush}" BorderThickness="2" >
+                                    <ItemsControl.Background>
+                                        <SolidColorBrush Opacity="1" Color="{StaticResource DefaultButtonBackgroundColor}" />
+                                    </ItemsControl.Background>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Margin="5,3,0,3">
+                                                <CheckBox Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ToggleTagSelectionCommand}" CommandParameter="{Binding}"/>
+                                                <TextBlock Text="{Binding}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel IsItemsHost="True"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </ScrollViewer>
+
+                        </Popup>
+
                         <Button  Content="About" Command="{Binding OpenAboutPageCommand}"/>
                         <Button  Content="Add note" Command="{Binding AddNoteCommand}"/>
+
                     </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="TODOs (WIP)"/>
         </TabControl>
-        
+
     </Grid>
 </Window>
