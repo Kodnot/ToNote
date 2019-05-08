@@ -116,16 +116,19 @@
 
                        panel.Items.Add(rtb);
                    }
-
-                   foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
-                   {
-                       var todoControl = new TodoControl(todo);
-
-                       todoControl.ReadFromFile(todo.FileName);
-
-                       panel.Items.Insert(todo.Index, todoControl);
-                   }
                }
+               else
+                  panel.dt.Interval = new TimeSpan(0, 0, 0, 0, 500);
+
+               foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
+                {
+                    var todoControl = new TodoControl(todo);
+
+                    todoControl.ReadFromFile(todo.FileName);
+
+                    panel.Items.Insert(todo.Index, todoControl);
+                }
+               
            }
            });
 

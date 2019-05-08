@@ -116,7 +116,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                        </ScrollViewer>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
         </TabControl>
