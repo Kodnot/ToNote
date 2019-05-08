@@ -74,6 +74,9 @@
     <Compile Include="Views\NoteView.xaml.cs">
       <DependentUpon>NoteView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TodoView.xaml.cs">
+      <DependentUpon>TodoView.xaml</DependentUpon>
+    </Compile>
     <Page Include="UI\ButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -163,6 +166,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\NoteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TodoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

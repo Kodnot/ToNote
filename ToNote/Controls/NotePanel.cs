@@ -106,23 +106,25 @@
                var panel = (NotePanel)s;
 
                panel.Items.Clear();
-
-               foreach (var file in (newNoteValue.FileNames))
+               if (panel.ShowNotes)
                {
-                   var rtb = new ExtendedRichTextBox();
+                   foreach (var file in (newNoteValue.FileNames))
+                   {
+                       var rtb = new ExtendedRichTextBox();
 
-                   rtb.ReadFromFile(file);
+                       rtb.ReadFromFile(file);
 
-                   panel.Items.Add(rtb);
-               }
+                       panel.Items.Add(rtb);
+                   }
 
-               foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
-               {
-                   var todoControl = new TodoControl(todo);
+                   foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
+                   {
+                       var todoControl = new TodoControl(todo);
 
-                   todoControl.ReadFromFile(todo.FileName);
+                       todoControl.ReadFromFile(todo.FileName);
 
-                   panel.Items.Insert(todo.Index, todoControl);
+                       panel.Items.Insert(todo.Index, todoControl);
+                   }
                }
            }
            });
@@ -377,5 +379,14 @@
                     etbc.SetKeyboardFocus();
             }
         }
+
+        public bool ShowNotes
+        {
+            get => (bool)GetValue(ShowNotesProperty);
+            set => SetValue(ShowNotesProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowNotesProperty = DependencyProperty.Register("ShowNotes",
+            typeof(bool), typeof(NotePanel), new FrameworkPropertyMetadata(true));
     }
 }

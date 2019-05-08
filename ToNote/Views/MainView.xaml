@@ -7,6 +7,7 @@
         xmlns:Models="clr-namespace:ToNote.Models"
         xmlns:Controls="clr-namespace:ToNote.Controls"
         xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
+        xmlns:Views="clr-namespace:ToNote.Views"
         mc:Ignorable="d"
         Title="ToNote" Height="650" Width="1100" MinWidth="400" MinHeight="350"
         WindowStyle="None">
@@ -48,7 +49,7 @@
                 </Button>
             </StackPanel>
         </DockPanel>
-        <TabControl Grid.Row="1" Name="zaraza">
+        <TabControl Grid.Row="1">
             <TabItem Header="Notes">
                 <Grid>
                     <Grid.RowDefinitions>
