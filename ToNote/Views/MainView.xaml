@@ -100,7 +100,7 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="TODOs (WIP)"/>
+            <TabItem Header="TODOs"/>
         </TabControl>
 
     </Grid>
