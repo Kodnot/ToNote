@@ -134,6 +134,7 @@
             </DataTemplate>
 
             <Converters:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter"/>
+            <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
 
             <ResourceDictionary.MergedDictionaries>

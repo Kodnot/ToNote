@@ -119,17 +119,17 @@
                }
                else
                   panel.dt.Interval = new TimeSpan(0, 0, 0, 0, 500);
-
+                
                foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
                 {
-                    var todoControl = new TodoControl(todo);
+                       var todoControl = new TodoControl(todo);
 
-                    todoControl.ReadFromFile(todo.FileName);
+                       todoControl.ReadFromFile(todo.FileName);
 
-                    panel.Items.Insert(todo.Index, todoControl);
+                       panel.Items.Insert(todo.Index, todoControl);
+                   }
+
                 }
-               
-           }
            });
 
         //Command to add a new TextBox. Implemented so the command can be invoked from XAML instead of back-end;

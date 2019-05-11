@@ -30,7 +30,7 @@
         }
 
         private ObservableCollection<Note> _Notes;
-
+        
         public ObservableCollection<Note> Notes
         {
             get
@@ -219,22 +219,6 @@
 
         public ICollectionView FilteredNotes =>  CollectionViewSource.GetDefaultView(Notes);
 
-        private IEnumerable _AllTodos;
-
-        public IEnumerable AllTodos
-        {
-            get => Notes.SelectMany(x => x.Todos).Distinct();
-            set
-            {
-                if (_AllTodos != value)
-                {
-                    _AllTodos = value;
-                    RaisePropertyChanged(nameof(AllTodos));
-                }
-            }
-        }
-
-
         private bool _IsSelected;
 
         public bool IsSelected
@@ -246,7 +230,7 @@
                 {
                     _IsSelected = value;
                     RaisePropertyChanged(nameof(IsSelected));
-                    AllTodos = Notes.SelectMany(x => x.Todos).Distinct();
+                    
                 }
             }
         }
