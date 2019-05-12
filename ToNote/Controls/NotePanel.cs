@@ -119,18 +119,25 @@
                }
                else
                   panel.dt.Interval = new TimeSpan(0, 0, 0, 0, 500);
-                
+
+               int i = 0;
+
                foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
-                {
-                       var todoControl = new TodoControl(todo);
+               {
+                    var todoControl = new TodoControl(todo);
 
-                       todoControl.ReadFromFile(todo.FileName);
+                    todoControl.ReadFromFile(todo.FileName);
 
-                       panel.Items.Insert(todo.Index, todoControl);
+                   if (!panel.ShowNotes)
+                   {
+                       panel.Items.Insert(i++, todoControl);
                    }
+                   else
+                       panel.Items.Insert(todo.Index, todoControl);
+               }
 
-                }
-           });
+           }
+        });
 
         //Command to add a new TextBox. Implemented so the command can be invoked from XAML instead of back-end;
         public ICommand AddRichTextBoxCommand
