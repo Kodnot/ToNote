@@ -3,6 +3,7 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using ToNote.Controls;
+    using ToNote.Models;
 
     /// <summary>
     /// Interaction logic for NoteView.xaml
@@ -42,6 +43,17 @@
             {
                 e.Handled = true;
             };
+        }
+        private void Button1_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Note note = (Note)DataContext;
+
+            var tagName = ((Button)sender).DataContext.ToString();
+            if (!string.IsNullOrWhiteSpace(tagName) && note.Tags.Contains(tagName))
+            {
+                note.Tags.Remove(tagName);
+                note.TagName = "";
+            }
         }
     }
 }
