@@ -282,9 +282,7 @@
         {
             extendedTextBoxControl.BackspacePressedWithAltShiftModifiers += (s, e) =>
             {
-                var index = this.Items.IndexOf(lastFocused);
-
-                SwitchKeyboardFocusToNextETBC(index);
+                var index = this.Items.IndexOf(lastFocused);                
 
                 if (this.Items.Contains(extendedTextBoxControl))
                     this.Items.Remove(extendedTextBoxControl);
@@ -294,8 +292,8 @@
 
                 if (extendedTextBoxControl is TodoControl todoControl)
                     Note?.RemoveTodo(todoControl.Todo);
-
-                SaveContentsToFilesCommand.Execute(this);
+                SwitchKeyboardFocusToNextETBC(index);
+                 
             };
 
             extendedTextBoxControl.GotKeyboardFocus += (s, e) =>
