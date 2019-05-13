@@ -61,7 +61,7 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Style="{StaticResource RightScrollViewer}">
                         <DockPanel>
 
-                            <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}">
+                            <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}"  x:Name="NoteItemsControl">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel IsItemsHost="True"/>
@@ -79,7 +79,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <ScrollViewer Grid.Row="0">
-                        <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}">
+                        <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}" x:Name="TodoItemsControl">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Views:TodoView />

@@ -136,6 +136,11 @@
                        panel.Items.Insert(todo.Index, todoControl);
                }
 
+               panel.SaveNoteEvent += (se, ev) =>
+               {
+                   panel.SaveContentsToFilesCommand.Execute(panel);
+               };
+
            }
         });
 
@@ -290,7 +295,7 @@
                 if (extendedTextBoxControl is TodoControl todoControl)
                     Note?.RemoveTodo(todoControl.Todo);
 
-                InitializeAutosaveDispatcher();
+                SaveContentsToFilesCommand.Execute(this);
             };
 
             extendedTextBoxControl.GotKeyboardFocus += (s, e) =>
@@ -354,6 +359,12 @@
             {
                 InitializeAutosaveDispatcher();
             };
+
+            extendedTextBoxControl.LostKeyboardFocus += (s, e) =>
+            {
+                SaveContentsToFilesCommand.Execute(this);
+            };
+            
         }
 
         private void InitializeAutosaveDispatcher()
@@ -398,5 +409,7 @@
 
         public static readonly DependencyProperty ShowNotesProperty = DependencyProperty.Register("ShowNotes",
             typeof(bool), typeof(NotePanel), new FrameworkPropertyMetadata(true));
+
+        public RoutedEventHandler SaveNoteEvent;
     }
 }

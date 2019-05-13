@@ -230,6 +230,7 @@
                 {
                     _IsSelected = value;
                     RaisePropertyChanged(nameof(IsSelected));
+                    FilteredNotes.Refresh();
                     
                 }
             }
