@@ -5,7 +5,6 @@
     using System.Collections.Specialized;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
@@ -284,7 +283,7 @@
                 {
                     var leftRange = new TextRange(rtb.Document.ContentStart, rtb.CommandExecutionPointer);
                     var rightRange = new TextRange(rtb.CommandExecutionPointer, rtb.Document.ContentEnd);
-      
+
                     this.Items.Insert(index, todoControl);
 
                     if (rightRange.Text?.Length >= 2 && rightRange.Text[0] == '\r' && rightRange.Text[1] == '\n')
