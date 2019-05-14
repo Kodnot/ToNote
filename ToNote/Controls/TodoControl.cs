@@ -11,7 +11,7 @@
 
     public class TodoControl : ContentControl, IExtendedTextBoxControl
     {
-        public TodoControl(Todo todo, bool IsDragEnabled)
+        public TodoControl(Todo todo, bool isDragEnabled)
         {
             this.Todo = todo;
             this.Content = todo;
@@ -21,13 +21,11 @@
                 //Gets the DataTemplate defined for the Todo objects.
                 var template = this.ContentTemplate;
 
-                if (template == null) return;
-
                 //Looks for an ExtendedRichTextBox with an x:Name="rtb" attribute from the logical children of the generated ContentPresenter which has the DataTemplate applied to it.
                 if (VisualTreeHelper.GetChildrenCount(this) == 0)
                     return;
 
-                var rtb = (ExtendedRichTextBox)template.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(this, 0));
+                var rtb = (ExtendedRichTextBox)template?.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(this, 0));
 
                 if (rtb == null) return;
 
@@ -50,6 +48,7 @@
                 };
             };
 
+<<<<<<< HEAD
                 extendedRTB = rtb;
 
                 //If an ExtendedRichTextBox is found, hooks to the BackspacePressedWhileEmpty event.
@@ -73,6 +72,9 @@
                 this.IsDragEnabled = true;
             else
                 this.IsDragEnabled = false;
+=======
+            this.IsDragEnabled = isDragEnabled;
+>>>>>>> Minor fixes
         }
 
         public Todo Todo { get; set; }
@@ -135,10 +137,11 @@
                 //Gets the DataTemplate defined for the Todo objects.
                 var template = control.ContentTemplate;
 
-                if (template == null) return;
+                if (VisualTreeHelper.GetChildrenCount(this) == 0)
+                    return;
 
                 //Looks for an ExtendedRichTextBox with an x:Name="rtb" attribute from the logical children of the generated ContentPresenter which has the DataTemplate applied to it.
-                var rtb = (ExtendedRichTextBox)template.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(control, 0));
+                var rtb = (ExtendedRichTextBox) template?.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(control, 0));
 
                 if (rtb == null) return;
 
@@ -168,7 +171,7 @@
             set => SetValue(IsDragEnabledProperty, value);
         }
 
-        public static readonly DependencyProperty IsDragEnabledProperty = DependencyProperty.Register("IsDragEnabled",
+        public static readonly DependencyProperty IsDragEnabledProperty = DependencyProperty.Register("isDragEnabled",
             typeof(bool), typeof(NotePanel), new FrameworkPropertyMetadata(true));
     }
 }

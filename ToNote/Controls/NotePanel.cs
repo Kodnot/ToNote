@@ -120,7 +120,7 @@
                        }
                    }
                    else
-                       panel.dt.Interval = new TimeSpan(0, 0, 0, 0, 500);
+                       panel.dt.Interval = TimeSpan.FromMilliseconds(500);
 
                    int i = 0;
 

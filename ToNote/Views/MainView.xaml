@@ -76,7 +76,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <ScrollViewer Grid.Row="0">
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
                         <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}" x:Name="TodoItemsControl">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
