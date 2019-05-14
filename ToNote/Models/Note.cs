@@ -81,6 +81,9 @@
             }
         }
 
+        [JsonIgnore]
+        public bool TagsExpanded { get; set; }
+
         private List<Todo> _Todos;
 
         public List<Todo> Todos

@@ -47,16 +47,5 @@
             }
 
         }
-        private void Button1_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Note note = (Note)DataContext;
-
-            var tagName = ((Button)sender).DataContext.ToString();
-            if (!string.IsNullOrWhiteSpace(tagName) && note.Tags.Contains(tagName))
-            {
-                note.Tags.Remove(tagName);
-                note.TagName = "";
-            }
-        }
     }
 }

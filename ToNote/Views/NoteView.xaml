@@ -33,7 +33,7 @@
                 </StackPanel>
             </DockPanel>
             <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" MainWindow="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Grid.Row="1"/>
-            <Expander Name="TagExpander" IsExpanded="False" Grid.Row="2" >
+            <Expander Name="TagExpander" IsExpanded="{Binding TagsExpanded, Mode=TwoWay}" Grid.Row="2">
                 <Expander.Header>
                     <DockPanel >
                         <TextBlock DockPanel.Dock="Left" Text="Tags"  FontSize="16" Foreground="{StaticResource DefaultTextBlockBrush}"/>
