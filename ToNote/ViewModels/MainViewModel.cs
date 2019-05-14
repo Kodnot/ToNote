@@ -153,6 +153,24 @@
             }
         }
 
+        private ICommand _DeleteTagCommand;
+
+        public ICommand DeleteTagCommand
+        {
+            get => _DeleteTagCommand ?? (_DeleteTagCommand = new RelayCommand<object[]>(values =>
+            {
+                var note = values[0] as Note;
+                var tag = values[1] as string;
+
+                if (note.Tags.Contains(tag))
+                {
+                    note.Tags.Remove(tag);
+
+                    FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
+                }
+            }));
+        }
+
         private ObservableCollection<string> _SelectedTags;
 
         public ObservableCollection<string> SelectedTags
@@ -196,6 +214,7 @@
                 return _ToggleGroupingPanelCommand ?? (_ToggleGroupingPanelCommand = new RelayCommand(() =>
                 {
                     IsGroupingPanelOpen = !IsGroupingPanelOpen;
+                    RaisePropertyChanged(nameof(AllTags));
                 }));
             }
         }
