@@ -11,7 +11,7 @@
 
     public class TodoControl : ContentControl, IExtendedTextBoxControl
     {
-        public TodoControl(Todo todo)
+        public TodoControl(Todo todo, bool IsDragEnabled)
         {
             this.Todo = todo;
             this.Content = todo;
@@ -50,9 +50,31 @@
                 };
             };
 
-            this.AllowDrop = true;
+                extendedRTB = rtb;
+
+                //If an ExtendedRichTextBox is found, hooks to the BackspacePressedWhileEmpty event.
+                rtb.BackspacePressedWithAltShiftModifiers += (o, a) =>
+                {
+                    this.BackspacePressedWithAltShiftModifiers?.Invoke(this, new RoutedEventArgs());
+                };
+
+                rtb.TextChanged += (o, a) =>
+                {
+                    TextChanged?.Invoke(o, a);
+                };
+
+                rtb.Drop += (o, a) =>
+                {
+                    Drop?.Invoke(o, a);
+                };
+            };
+
+            if (IsDragEnabled)
+                this.IsDragEnabled = true;
+            else
+                this.IsDragEnabled = false;
         }
- 
+
         public Todo Todo { get; set; }
 
         public event RoutedEventHandler BackspacePressedWithAltShiftModifiers;
@@ -139,5 +161,14 @@
                 };
             };
         }
+
+        public bool IsDragEnabled
+        {
+            get => (bool)GetValue(IsDragEnabledProperty);
+            set => SetValue(IsDragEnabledProperty, value);
+        }
+
+        public static readonly DependencyProperty IsDragEnabledProperty = DependencyProperty.Register("IsDragEnabled",
+            typeof(bool), typeof(NotePanel), new FrameworkPropertyMetadata(true));
     }
 }

@@ -126,7 +126,7 @@
 
                    foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
                    {
-                       var todoControl = new TodoControl(todo);
+                       TodoControl todoControl = new TodoControl(todo, panel.ShowNotes);
 
                        todoControl.ReadFromFile(todo.FileName);
 
@@ -262,7 +262,7 @@
         public static readonly DependencyProperty AddTodoControlCommandProperty = DependencyProperty.Register("AddTodoControlCommand",
            typeof(ICommand), typeof(NotePanel), new FrameworkPropertyMetadata(new RelayCommand<NotePanel>((panel) =>
            {
-               var todoControl = new TodoControl(new Todo()).SetKeyboardFocusAfterLoaded();
+               var todoControl = new TodoControl(new Todo(), true).SetKeyboardFocusAfterLoaded();
 
                if (panel.lastFocused != null)
                {
@@ -312,7 +312,7 @@
 
             extendedTextBoxControl.TrackKeyword("todo", () =>
             {
-                var todoControl = new TodoControl(new Todo()).SetKeyboardFocusAfterLoaded();
+                var todoControl = new TodoControl(new Todo(), true).SetKeyboardFocusAfterLoaded();
 
                 var index = this.Items.IndexOf(extendedTextBoxControl) + 1;
 

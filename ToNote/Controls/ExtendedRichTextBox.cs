@@ -83,8 +83,6 @@
                 }
             };
 
-            this.AllowDrop = true;
-
             this.PreviewMouseMove += (s, e) =>
             {
                 var point = e.GetPosition(this);
