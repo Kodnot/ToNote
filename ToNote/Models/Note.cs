@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Windows.Input;
+    using ToNote.Logic;
 
     public class Note : BaseModel
     {
@@ -59,6 +61,17 @@
                     RaisePropertyChanged(nameof(Folder));
                 }
             }
+        }
+
+        private ICommand _DeleteTagCommand;
+
+        public ICommand DeleteTagCommand
+        {
+            get => _DeleteTagCommand ?? (_DeleteTagCommand = new RelayCommand<string>(tag =>
+            {
+                if (Tags.Contains(tag))
+                    Tags.Remove(tag);
+            }));
         }
 
         private List<string> _FileNames;
