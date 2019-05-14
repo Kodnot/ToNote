@@ -80,6 +80,9 @@
            typeof(Window), typeof(NotePanel), new FrameworkPropertyMetadata(null) { PropertyChangedCallback = (s, e) =>
            {
                if (!(e.NewValue is Window window)) return;
+
+               var panel = (NotePanel)s;
+
                window.Closing += (o, a) =>
                {
                     panel.SaveContentsToFilesCommand.Execute(panel);
