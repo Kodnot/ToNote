@@ -12,12 +12,14 @@
     using System.Collections;
     using System.ComponentModel;
     using System.Windows.Data;
+    using System;
 
     public class MainViewModel : BaseModel
     {
         public MainViewModel()
         {
-            foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()).Where(x => Path.GetFileName(x).Contains("Metadata.txt")))
+            var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Sugma\\ToNote\\Data\\";
+            foreach (var file in Directory.GetFiles(directory).Where(x => Path.GetFileName(x).Contains("Metadata.txt")))
             {
                 using (var reader = new StreamReader(file))
                     Notes.Add(JsonConvert.DeserializeObject<Note>(reader.ReadToEnd()));
@@ -103,12 +105,12 @@
                     // TODO: This should be handled by the IO handler class instead.
                     while(note.FileNames.Any())
                         note.DeleteFile(note.FileNames.First());
-
-                    var metadataFileName = note.Name + "Metadata.txt";
+                    var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Sugma//ToNote//Data//";
+                    var metadataFileName = path + note.Name + "Metadata.txt";
                     if (File.Exists(metadataFileName))
                         File.Delete(metadataFileName);
 
-                    var directoryPath = Path.Combine("Data", note.Name);
+                    var directoryPath = path + note.Name;
 
                     if (Directory.Exists(directoryPath))
                         Directory.Delete(directoryPath, true);

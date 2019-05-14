@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <!-- Use * to generate product ID on every build -->
+  <Product Id="*"
+			 Name="ToNote"
+			 Language="1033"
+			 Version="1.0.0.0"
+			 Manufacturer="Sugma"
+			 UpgradeCode="58FB0E6C-94EF-4AFB-A067-A6DA6B17E10F">
+
+    <Package Compressed="yes"
+				 InstallScope="perMachine"
+				 Manufacturer="Sugma"
+				 Description="ToNote installer"
+				 Comments="(C) 2019 Sugma" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <MediaTemplate EmbedCab="yes" />
+    <Icon Id="ToNote.ico" SourceFile="../../images/ToNote.ico" />
+    <WixVariable Id="WixUILicenseRtf" Value="../../license.rtf" />
+    <WixVariable Id="WixUINewIco" Value="../../images/folder.ico"/>
+    <WixVariable Id="WixUIUpIco" Value="../../images/arrow.ico"/>
+    <WixVariable Id="WixUIBannerBmp" Value="../../images/BannerTop.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="../../images/Background.bmp" />
+    <Property Id="ARPPRODUCTICON" Value="ToNote.ico" />
+    <!--Directory structure-->
+    <Directory Id="TARGETDIR"
+				   Name="SourceDir">
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="CMP_ShortcutDesktop" Guid="*">
+          <Shortcut Id="ApplicationDesktopShortcut"
+              Name="ToNote"
+              Description="A note taking app for all your desires"
+              Target="[ToNoteFolder]ToNote.exe"
+              WorkingDirectory="ToNoteFolder"
+              Icon="ToNote.ico"/>
+          <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+          <RegistryValue
+              Root="HKCU"
+              Key="Software/Sugma/ToNote"
+              Name="installed"
+              Type="integer"
+              Value="1"
+              KeyPath="yes"/>
+        </Component>
+      </Directory>
+
+      <Directory Id="AppDataFolder">
+        <Directory Id="SugmaAppFolder" Name="Sugma">
+          <Directory Id="ToNoteDataFolder" Name="ToNote">
+            <Directory Id="DataFolder" Name="Data" />
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Sugma" >
+          <Directory Id="ToNoteFolder"
+                 Name="ToNote" />
+          <Directory Id="ProgramMenuFolder">
+            <Directory Id="DIR_Shortcuts"
+                   Name="ToNote" />
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+
+
+    <!--Components-->
+    <DirectoryRef Id="ToNoteFolder">
+      <Component Id="CMP_ToNoteExe"
+					   Guid="367D82BF-A960-4B09-9714-079C93B9E1FB">
+        <File Id="FILE_ToNoteExe"
+					  Source="..\ToNote\bin\Debug\ToNote.exe"
+					  KeyPath="yes"
+            />
+      </Component>
+      <Component Id="CMP_NewtonSoftDll" Guid="08c0983f-7995-43a1-b07e-1a8de405b448">
+        <File Id="FILE_NewtonSoft"
+      Source="..\ToNote\bin\Debug\Newtonsoft.Json.dll"
+      KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="DataFolder">
+      <Component Id="CMP_CreateDataFolder" Guid="d58585ce-c938-4815-a11e-fa754b509b1c">
+        <RegistryValue Root='HKCU' Key='Software\Sugma\ToNote'
+                Name='ToNoteInstallDataFolder'
+                Value='[INSTALLFOLDER]'
+                Type='string'
+                KeyPath='yes' />
+        <CreateFolder>
+          <util:PermissionEx CreateChild="yes" CreateFile="yes" Delete="yes" Read="yes" ReadAttributes="yes" ReadExtendedAttributes="yes" ReadPermission="yes" Traverse="yes" GenericRead="yes" GenericWrite="yes" User="Everyone" />
+        </CreateFolder>
+      </Component>
+    </DirectoryRef>
+
+    <!--Start Menu Shortcuts-->
+    <DirectoryRef Id="DIR_Shortcuts">
+      <Component Id="CMP_ReadFileShortcut"
+					   Guid="1AF06B42-CD42-4AED-959F-36DB5E512046">
+
+        <Shortcut Id="FileShortcut"
+						  Name="ToNote"
+						  Description="ToNote"
+						  Target="[ToNoteFolder]ToNote.exe"
+              Icon="ToNote.ico"/>
+
+        <Shortcut Id="UninstallShortcut"
+						  Name="Uninstall ToNote"
+						  Description="Uninstalls ToNote"
+						  Target="[System64Folder]msiexec.exe"
+						  Arguments="/x [ProductCode]" />
+
+        <RemoveFolder Id="RemoveDIR_Shortcuts"
+							  On="uninstall" />
+        <RemoveFolder Id="DataFolder" Directory="DataFolder" On="uninstall"/>
+        <RemoveFolder Id="ToNoteDataFolder" Directory="ToNoteDataFolder" On="uninstall"/>
+        <RemoveFolder Id="SugmaAppFolder" Directory="SugmaAppFolder" On="uninstall"/>
+
+        <RegistryValue Root="HKCU"
+							   Key="Software\SoftwareArchitects\ToNote"
+							   Name="installed"
+							   Type="integer"
+							   Value="1"
+							   KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!--Features-->
+    <Feature Id="FileToInstallFeature"
+				 Title="ToNote"
+				 Level="1">
+      <ComponentRef Id="CMP_ToNoteExe" />
+      <ComponentRef Id="CMP_ReadFileShortcut" />
+      <ComponentRef Id="CMP_NewtonSoftDll" />
+      <ComponentRef Id="CMP_CreateDataFolder" />
+      <ComponentRef Id="CMP_ShortcutDesktop"/>
+    </Feature>
+    <UIRef Id="WixUI_InstallDir"/>
+  </Product>
+</Wix>
