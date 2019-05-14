@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Threading;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
@@ -53,7 +51,7 @@
                         _trackingCounter = 0;
                     }
 
-                   if (_slashIndex + 1 > str.Length)
+                    if (_slashIndex + 1 > str.Length)
                     {
                         _tracking = false;
                         _trackingCounter = 0;
@@ -84,8 +82,6 @@
                     }
                 }
             };
-
-            this.AllowDrop = true;
 
             this.PreviewMouseMove += (s, e) =>
             {

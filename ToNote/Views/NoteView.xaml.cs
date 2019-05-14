@@ -14,35 +14,38 @@
         {
             InitializeComponent();
 
-
-            this.AllowDrop = true;
-
-            this.PreviewMouseMove += (s, e) =>
+            if (rtbpanel.ShowNotes)
             {
-                var point = e.GetPosition(this);
+                this.AllowDrop = true;
 
-                Mouse.OverrideCursor = point.X <= 25 && point.Y <= 25 ? Cursors.SizeAll : null;
-            };
+                this.PreviewMouseMove += (s, e) =>
+                {
+                    var point = e.GetPosition(this);
 
-            this.MouseLeave += (s, e) =>
-            {
-                Mouse.OverrideCursor = null;
-            };
+                    Mouse.OverrideCursor = point.X <= 25 && point.Y <= 25 ? Cursors.SizeAll : null;
+                };
 
-            this.PreviewMouseLeftButtonDown += (s, e) =>
-            {
-                var point = e.GetPosition(this);
+                this.MouseLeave += (s, e) =>
+                {
+                    Mouse.OverrideCursor = null;
+                };
 
-                if (point.X <= 25 && point.Y <= 25)
-                    DragHandler.HandleMouseLeftButtonDown(s, e);
-            };
+                this.PreviewMouseLeftButtonDown += (s, e) =>
+                {
+                    var point = e.GetPosition(this);
 
-            this.Drop += DragHandler.HandleDrop;
+                    if (point.X <= 25 && point.Y <= 25)
+                        DragHandler.HandleMouseLeftButtonDown(s, e);
+                };
 
-            this.PreviewDragOver += (s, e) =>
-            {
-                e.Handled = true;
-            };
+                this.Drop += DragHandler.HandleDrop;
+
+                this.PreviewDragOver += (s, e) =>
+                {
+                    e.Handled = true;
+                };
+            }
+
         }
         private void Button1_Click(object sender, System.Windows.RoutedEventArgs e)
         {

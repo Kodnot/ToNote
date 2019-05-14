@@ -116,7 +116,7 @@
         }
 
         private ObservableCollection<string> _Tags;
-        public  ObservableCollection<string> Tags
+        public ObservableCollection<string> Tags
         {
             get => _Tags ?? (_Tags = new ObservableCollection<string>());
             set

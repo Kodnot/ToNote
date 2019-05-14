@@ -36,7 +36,7 @@
             btn_CloseWindow.Click += (s, e) =>
             {
                 if (e.Source != null)
-                    Environment.Exit(0);
+                    this.Close();
             };
         }
     }

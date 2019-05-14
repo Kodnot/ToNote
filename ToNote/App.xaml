@@ -78,6 +78,7 @@
                                         <Controls:ExtendedRichTextBox.Style>
                                             <Style BasedOn="{StaticResource {x:Type Controls:ExtendedRichTextBox}}" TargetType="Controls:ExtendedRichTextBox">
                                                 <Setter Property="Padding" Value="2, 0"/>
+                                                <Setter Property="AllowDrop" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:TodoControl}}, Path=AllowDrop}" />
                                                 <Style.Resources>
                                                     <Style TargetType="Paragraph" BasedOn="{StaticResource {x:Type Paragraph}}">
                                                         <Setter Property="Foreground" Value="{StaticResource DefaultTodoForegroundBrush}"/>
@@ -134,6 +135,7 @@
             </DataTemplate>
 
             <Converters:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter"/>
+            <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
 
             <ResourceDictionary.MergedDictionaries>
