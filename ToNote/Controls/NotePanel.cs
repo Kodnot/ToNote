@@ -275,30 +275,36 @@
 
             extendedTextBoxControl.TrackKeyword("todo", () =>
             {
-            var todoControl = new TodoControl(new Todo()).SetKeyboardFocusAfterLoaded();
+                var todoControl = new TodoControl(new Todo()).SetKeyboardFocusAfterLoaded();
 
                 var index = this.Items.IndexOf(extendedTextBoxControl) + 1;
 
                 if (extendedTextBoxControl is ExtendedRichTextBox rtb)
                 {
                     var leftRange = new TextRange(rtb.Document.ContentStart, rtb.CommandExecutionPointer);
-
                     var rightRange = new TextRange(rtb.CommandExecutionPointer, rtb.Document.ContentEnd);
 
                     this.Items.Insert(index, todoControl);
 
-                    var newRtb = new ExtendedRichTextBox();
-                    newRtb.TextRange.Text = rightRange.Text;
-
-                    if (!String.IsNullOrWhiteSpace(newRtb.TextRange.Text))
+                    if (rightRange.Text?.Length >= 2 && rightRange.Text[0] == '\r' && rightRange.Text[1] == '\n')
                     {
-                        if (newRtb.TextRange.Text[0] == '\r' && newRtb.TextRange.Text[1] == '\n')
-                            newRtb.TextRange.Text = newRtb.TextRange.Text.Remove(0, 2);
-
-                        this.Items.Insert(index + 1, newRtb);
+                        rightRange = new TextRange(rtb.CommandExecutionPointer.GetNextContextPosition(LogicalDirection.Forward).GetNextContextPosition(LogicalDirection.Forward), rtb.Document.ContentEnd);
                     }
 
-                    rtb.TextRange.Text = leftRange.Text;
+                    var newRtb = new ExtendedRichTextBox();
+                    using (var stream = new MemoryStream())
+                    {
+                        if (!String.IsNullOrWhiteSpace(rightRange.Text))
+                        {
+                            rightRange.Save(stream, DataFormats.Rtf);
+                            newRtb.TextRange.Load(stream, DataFormats.Rtf);
+                            this.Items.Insert(index + 1, newRtb);
+                            stream.SetLength(0);
+                        }
+
+                        leftRange.Save(stream, DataFormats.Rtf);
+                        rtb.TextRange.Load(stream, DataFormats.Rtf);
+                    }
                 }
                 else
                     this.Items.Insert(index, todoControl);

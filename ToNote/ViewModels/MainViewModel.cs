@@ -9,6 +9,9 @@
     using ToNote.Logic.Dialog;
     using ToNote.Models;
     using System.Windows;
+    using System.Collections;
+    using System.ComponentModel;
+    using System.Windows.Data;
 
     public class MainViewModel : BaseModel
     {
@@ -18,6 +21,11 @@
             {
                 using (var reader = new StreamReader(file))
                     Notes.Add(JsonConvert.DeserializeObject<Note>(reader.ReadToEnd()));
+
+                SelectedTags.CollectionChanged += (s, e) =>
+                {
+                    FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
+                };
             }
         }
 
@@ -121,6 +129,8 @@
                         note.Tags.Add(note.TagName);
                         note.TagName = "";
                     }
+
+                    RaisePropertyChanged(nameof(AllTags));
                 }));
             }
         }
@@ -142,5 +152,90 @@
                 }));
             }
         }
+
+        private ICommand _DeleteTagCommand;
+
+        public ICommand DeleteTagCommand
+        {
+            get => _DeleteTagCommand ?? (_DeleteTagCommand = new RelayCommand<object[]>(values =>
+            {
+                var note = values[0] as Note;
+                var tag = values[1] as string;
+
+                if (note.Tags.Contains(tag))
+                {
+                    note.Tags.Remove(tag);
+
+                    FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
+                }
+            }));
+        }
+
+        private ObservableCollection<string> _SelectedTags;
+
+        public ObservableCollection<string> SelectedTags
+        {
+            get => _SelectedTags ?? (_SelectedTags = new ObservableCollection<string>());
+            set
+            {
+                if (_SelectedTags != value)
+                {
+                    _SelectedTags = value;
+
+                    RaisePropertyChanged(nameof(SelectedTags));
+                }
+            }
+        }
+
+        public IEnumerable AllTags => Notes.SelectMany(x => x.Tags).Distinct();
+
+        private bool _IsGroupingPanelOpen;
+
+        public bool IsGroupingPanelOpen
+        {
+            get => _IsGroupingPanelOpen;
+            set
+            {
+                if (_IsGroupingPanelOpen != value)
+                {
+                    _IsGroupingPanelOpen = value;
+
+                    RaisePropertyChanged(nameof(IsGroupingPanelOpen));
+                }
+            }
+        }
+
+        private ICommand _ToggleGroupingPanelCommand;
+
+        public ICommand ToggleGroupingPanelCommand
+        {
+            get
+            {
+                return _ToggleGroupingPanelCommand ?? (_ToggleGroupingPanelCommand = new RelayCommand(() =>
+                {
+                    IsGroupingPanelOpen = !IsGroupingPanelOpen;
+                    RaisePropertyChanged(nameof(AllTags));
+                }));
+            }
+        }
+
+        private ICommand _ToggleTagSelectionCommand;
+
+        public ICommand ToggleTagSelectionCommand
+        {
+
+            get
+            {
+                return _ToggleTagSelectionCommand ?? (_ToggleTagSelectionCommand = new RelayCommand<string>(tag =>
+                {
+                    if (SelectedTags.Contains(tag))
+                        SelectedTags.Remove(tag);
+                    else
+                        SelectedTags.Add(tag);
+                }));
+            }
+        }
+
+        public ICollectionView FilteredNotes =>  CollectionViewSource.GetDefaultView(Notes);
     }
 }

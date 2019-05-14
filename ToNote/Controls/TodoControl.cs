@@ -24,6 +24,9 @@
                 if (template == null) return;
 
                 //Looks for an ExtendedRichTextBox with an x:Name="rtb" attribute from the logical children of the generated ContentPresenter which has the DataTemplate applied to it.
+                if (VisualTreeHelper.GetChildrenCount(this) == 0)
+                    return;
+
                 var rtb = (ExtendedRichTextBox)template.FindName("rtb", (FrameworkElement)VisualTreeHelper.GetChild(this, 0));
 
                 if (rtb == null) return;
