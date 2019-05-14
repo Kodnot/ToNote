@@ -1,17 +1,17 @@
 ﻿namespace ToNote.ViewModels
 {
     using Newtonsoft.Json;
+    using System.Collections;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.IO;
     using System.Linq;
+    using System.Windows;
+    using System.Windows.Data;
     using System.Windows.Input;
     using ToNote.Logic;
     using ToNote.Logic.Dialog;
     using ToNote.Models;
-    using System.Windows;
-    using System.Collections;
-    using System.ComponentModel;
-    using System.Windows.Data;
 
     public class MainViewModel : BaseModel
     {
@@ -30,7 +30,7 @@
         }
 
         private ObservableCollection<Note> _Notes;
-        
+
         public ObservableCollection<Note> Notes
         {
             get
@@ -54,7 +54,7 @@
         {
             get
             {
-                return _AddNoteCommand ?? (_AddNoteCommand = new RelayCommand(() => 
+                return _AddNoteCommand ?? (_AddNoteCommand = new RelayCommand(() =>
                 {
                     var dialog = new AddNoteDialogViewModel();
                     dialog.Resizeable = false;
@@ -101,7 +101,7 @@
                     Notes.Remove(note);
 
                     // TODO: This should be handled by the IO handler class instead.
-                    while(note.FileNames.Any())
+                    while (note.FileNames.Any())
                         note.DeleteFile(note.FileNames.First());
 
                     var metadataFileName = note.Name + "Metadata.txt";
@@ -217,7 +217,7 @@
             }
         }
 
-        public ICollectionView FilteredNotes =>  CollectionViewSource.GetDefaultView(Notes);
+        public ICollectionView FilteredNotes => CollectionViewSource.GetDefaultView(Notes);
 
         private bool _IsSelected;
 
@@ -231,7 +231,6 @@
                     _IsSelected = value;
                     RaisePropertyChanged(nameof(IsSelected));
                     FilteredNotes.Refresh();
-                    
                 }
             }
         }
