@@ -220,5 +220,21 @@
         }
 
         public ICollectionView FilteredNotes => CollectionViewSource.GetDefaultView(Notes);
+        
+        private bool _IsSelected;
+
+        public bool IsSelected
+        {
+            get => _IsSelected;
+            set
+            {
+                if (_IsSelected != value)
+                {
+                    _IsSelected = value;
+                    RaisePropertyChanged(nameof(IsSelected));
+                    FilteredNotes.Refresh();
+                }
+            }
+        }
     }
 }

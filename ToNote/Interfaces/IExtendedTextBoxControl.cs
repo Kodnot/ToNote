@@ -12,6 +12,7 @@ namespace ToNote.Interfaces
         event KeyboardFocusChangedEventHandler GotKeyboardFocus;
         event TextChangedEventHandler TextChanged;
         event DragEventHandler Drop;
+        event KeyboardFocusChangedEventHandler LostKeyboardFocus;
 
         TextRange TextRange { get; }
         string CurrentFile { get; }
