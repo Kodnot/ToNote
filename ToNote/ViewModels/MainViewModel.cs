@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.IO;
@@ -166,7 +167,7 @@
                 {
                     note.Tags.Remove(tag);
 
-                    if (SelectedTags.Contains(tag))
+                    if (!AllTags.Contains(tag))
                         SelectedTags.Remove(tag);
 
                     FilteredNotes.Refresh();
@@ -190,7 +191,7 @@
             }
         }
 
-        public IEnumerable AllTags => Notes.SelectMany(x => x.Tags).Distinct();
+        public IEnumerable<string> AllTags => Notes.SelectMany(x => x.Tags).Distinct();
 
         private bool _IsGroupingPanelOpen;
 
