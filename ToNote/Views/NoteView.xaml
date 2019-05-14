@@ -51,9 +51,7 @@
                     <ItemsControl ItemsSource="{Binding Tags}" Grid.Row="1">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type System:String}">
-                                <Button Click="Button1_Click">
-                                    <TextBlock Text="{Binding}" Style="{StaticResource TagTextBlockStyle}">
-                                    </TextBlock>
+                                <Button Content="{Binding}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.DeleteTagCommand}" CommandParameter="{Binding}">
                                 </Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
