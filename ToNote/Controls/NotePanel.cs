@@ -77,6 +77,26 @@
             set => SetValue(StatusProperty, value);
         }
 
+        public static readonly DependencyProperty MainWindowProperty = DependencyProperty.Register("MainWindow",
+           typeof(Window), typeof(NotePanel), new FrameworkPropertyMetadata(null) { PropertyChangedCallback = (s, e) =>
+           {
+               if (!(e.NewValue is Window window)) return;
+
+               var panel = (NotePanel)s;
+
+               window.Closing += (o, a) =>
+               {
+                    panel.SaveContentsToFilesCommand.Execute(panel);
+               };
+           }
+           });
+
+        public Window MainWindow
+        {
+            get => (Window)GetValue(MainWindowProperty);
+            set => SetValue(MainWindowProperty, value);
+        }
+
         // On a new value bound to Note, generates textboxes for each file or Todo the note has and fills them with their respective contents.
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note",
            typeof(Note), typeof(NotePanel), new FrameworkPropertyMetadata(null) { PropertyChangedCallback = (s, e) =>
