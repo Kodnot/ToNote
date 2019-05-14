@@ -181,7 +181,14 @@
 
                var todoIndex = 0;
                var fileIndex = 0;
-               var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Sugma\\ToNote\\Data\\{note.Name}";
+
+
+            #if DEBUG
+                var directory = $".\\Data\\{note.Name}";
+            #else
+                var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Sugma\\ToNote\\Data\\{note.Name}";
+            #endif
+
 
                directory = Path.Combine(Path.GetDirectoryName(directory), Path.GetFileName(directory).Trim(Path.GetInvalidFileNameChars()));
 
@@ -244,7 +251,13 @@
                }
 
                var serializedNote = JsonConvert.SerializeObject(note);
+
+            #if DEBUG
+               var metadataFileName = $"{note.Name.ToLower()}Metadata.txt";
+            #else
                var metadataFileName = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Sugma\\ToNote\\Data\\{note.Name.ToLower()}Metadata.txt";
+            #endif
+
                File.WriteAllText(metadataFileName, serializedNote);
 
                panel._unsavedChanges = false;
