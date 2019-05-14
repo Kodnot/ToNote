@@ -37,7 +37,7 @@
         {
             get
             {
-                return _AddNoteCommand ?? (_AddNoteCommand = new RelayCommand<IDialogWindow>((window) => 
+                return _AddNoteCommand ?? (_AddNoteCommand = new RelayCommand<IDialogWindow>((window) =>
                 {
                     if (!string.IsNullOrWhiteSpace(Name))
                     {
