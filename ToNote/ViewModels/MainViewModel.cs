@@ -166,7 +166,10 @@
                 {
                     note.Tags.Remove(tag);
 
-                    FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
+                    if (SelectedTags.Contains(tag))
+                        SelectedTags.Remove(tag);
+
+                    FilteredNotes.Refresh();
                 }
             }));
         }

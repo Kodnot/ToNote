@@ -65,17 +65,6 @@
             }
         }
 
-        private ICommand _DeleteTagCommand;
-
-        public ICommand DeleteTagCommand
-        {
-            get => _DeleteTagCommand ?? (_DeleteTagCommand = new RelayCommand<string>(tag =>
-            {
-                if (Tags.Contains(tag))
-                    Tags.Remove(tag);
-            }));
-        }
-
         private List<string> _FileNames;
 
         public List<string> FileNames
