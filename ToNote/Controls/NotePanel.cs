@@ -82,31 +82,31 @@
            typeof(Note), typeof(NotePanel), new FrameworkPropertyMetadata(null)
            {
                PropertyChangedCallback = (s, e) =>
-{
-if (!(e.NewValue is Note newNoteValue) || newNoteValue == null) return;
+               {
+                   if (!(e.NewValue is Note newNoteValue) || newNoteValue == null) return;
 
-var panel = (NotePanel)s;
+                   var panel = (NotePanel)s;
 
-panel.Items.Clear();
+                   panel.Items.Clear();
 
-foreach (var file in (newNoteValue.FileNames))
-{
-var rtb = new ExtendedRichTextBox();
+                   foreach (var file in (newNoteValue.FileNames))
+                   {
+                       var rtb = new ExtendedRichTextBox();
 
-rtb.ReadFromFile(file);
+                       rtb.ReadFromFile(file);
 
-panel.Items.Add(rtb);
-}
+                       panel.Items.Add(rtb);
+                   }
 
-foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
-{
-var todoControl = new TodoControl(todo);
+                   foreach (var todo in newNoteValue.Todos.OrderBy(x => x.Index))
+                   {
+                       var todoControl = new TodoControl(todo);
 
-todoControl.ReadFromFile(todo.FileName);
+                       todoControl.ReadFromFile(todo.FileName);
 
-panel.Items.Insert(todo.Index, todoControl);
-}
-}
+                       panel.Items.Insert(todo.Index, todoControl);
+                   }
+               }
            });
 
         //Command to add a new TextBox. Implemented so the command can be invoked from XAML instead of back-end;
