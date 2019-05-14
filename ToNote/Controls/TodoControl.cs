@@ -48,33 +48,7 @@
                 };
             };
 
-<<<<<<< HEAD
-                extendedRTB = rtb;
-
-                //If an ExtendedRichTextBox is found, hooks to the BackspacePressedWhileEmpty event.
-                rtb.BackspacePressedWithAltShiftModifiers += (o, a) =>
-                {
-                    this.BackspacePressedWithAltShiftModifiers?.Invoke(this, new RoutedEventArgs());
-                };
-
-                rtb.TextChanged += (o, a) =>
-                {
-                    TextChanged?.Invoke(o, a);
-                };
-
-                rtb.Drop += (o, a) =>
-                {
-                    Drop?.Invoke(o, a);
-                };
-            };
-
-            if (IsDragEnabled)
-                this.IsDragEnabled = true;
-            else
-                this.IsDragEnabled = false;
-=======
             this.IsDragEnabled = isDragEnabled;
->>>>>>> Minor fixes
         }
 
         public Todo Todo { get; set; }
