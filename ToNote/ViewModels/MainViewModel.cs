@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.IO;
@@ -153,6 +154,27 @@
             }
         }
 
+        private ICommand _DeleteTagCommand;
+
+        public ICommand DeleteTagCommand
+        {
+            get => _DeleteTagCommand ?? (_DeleteTagCommand = new RelayCommand<object[]>(values =>
+            {
+                var note = values[0] as Note;
+                var tag = values[1] as string;
+
+                if (note.Tags.Contains(tag))
+                {
+                    note.Tags.Remove(tag);
+
+                    if (!AllTags.Contains(tag))
+                        SelectedTags.Remove(tag);
+
+                    FilteredNotes.Refresh();
+                }
+            }));
+        }
+
         private ObservableCollection<string> _SelectedTags;
 
         public ObservableCollection<string> SelectedTags
@@ -169,7 +191,7 @@
             }
         }
 
-        public IEnumerable AllTags => Notes.SelectMany(x => x.Tags).Distinct();
+        public IEnumerable<string> AllTags => Notes.SelectMany(x => x.Tags).Distinct();
 
         private bool _IsGroupingPanelOpen;
 
@@ -196,6 +218,7 @@
                 return _ToggleGroupingPanelCommand ?? (_ToggleGroupingPanelCommand = new RelayCommand(() =>
                 {
                     IsGroupingPanelOpen = !IsGroupingPanelOpen;
+                    RaisePropertyChanged(nameof(AllTags));
                 }));
             }
         }

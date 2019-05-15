@@ -5,9 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls="clr-namespace:ToNote.Controls"
              xmlns:local="clr-namespace:ToNote.Views"
+             xmlns:Models="clr-namespace:ToNote.Models"
+             xmlns:Converters="clr-namespace:ToNote.Converters"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Converters:NoteTagCommandParameterConverter  x:Key="NoteTagParameterConverter"/>
+    </UserControl.Resources>
     <Border BorderThickness="1" BorderBrush="#546175" Padding="5" Margin="0, 5" HorizontalAlignment="Stretch">
         <Grid>
             <Grid.RowDefinitions>
@@ -27,7 +33,7 @@
                 </StackPanel>
             </DockPanel>
             <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" MainWindow="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Grid.Row="1"/>
-            <Expander Name="TagExpander" IsExpanded="False" Grid.Row="2" >
+            <Expander Name="TagExpander" IsExpanded="{Binding TagsExpanded, Mode=TwoWay}" Grid.Row="2">
                 <Expander.Header>
                     <DockPanel >
                         <TextBlock DockPanel.Dock="Left" Text="Tags"  FontSize="16" Foreground="{StaticResource DefaultTextBlockBrush}"/>
@@ -48,13 +54,17 @@
                         </TextBox>
                         <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.AddTagCommand}" CommandParameter="{Binding}" Content="Add" Grid.Column="2"/>
                     </StackPanel>
-                    <ItemsControl ItemsSource="{Binding Tags}" Grid.Row="1">
+                    <ItemsControl x:Name="tagsControl" ItemsSource="{Binding Tags}" Grid.Row="1">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type System:String}">
-                                <Border Style="{StaticResource BorderStyle}">
-                                    <TextBlock Text="{Binding}" Style="{StaticResource TagTextBlockStyle}">
-                                    </TextBlock>
-                                </Border>
+                                <Button Content="{Binding}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.DeleteTagCommand}">
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource NoteTagParameterConverter}">
+                                            <Binding ElementName="tagsControl" Path="DataContext"/>
+                                            <Binding Path=""/>
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                </Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>

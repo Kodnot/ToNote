@@ -1,8 +1,12 @@
 ﻿namespace ToNote.Models
 {
+    using Newtonsoft.Json;
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Windows.Input;
+    using ToNote.Logic;
 
     public class Note : BaseModel
     {
@@ -76,6 +80,9 @@
                 }
             }
         }
+
+        [JsonIgnore]
+        public bool TagsExpanded { get; set; }
 
         private List<Todo> _Todos;
 
