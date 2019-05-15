@@ -1,6 +1,7 @@
 ﻿namespace ToNote
 {
     using System;
+    using System.IO;
     using System.Windows;
 
     /// <summary>
@@ -10,6 +11,9 @@
     {
         public MainView()
         {
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Sugma//ToNote//Data//";
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
             InitializeComponent();
 
             //Prevents the maximize button from covering taskbar. Doesn't work well if multiple monitors of different resolutions are used.
