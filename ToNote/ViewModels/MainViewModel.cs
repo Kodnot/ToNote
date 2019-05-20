@@ -69,7 +69,7 @@
 
                     var result = DialogService.OpenDialog(dialog);
 
-                    if (result != null)
+                    if (result != null && !Notes.Any(x => x.Name.Equals(result.Name)))
                         Notes.Add(result);
                 }));
             }

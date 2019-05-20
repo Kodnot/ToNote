@@ -13,6 +13,7 @@
     using ToNote.Interfaces;
     using ToNote.Logic;
     using ToNote.Models;
+    using ToNote.ViewModels;
 
     public class NotePanel : ItemsControl
     {
@@ -85,7 +86,8 @@
 
                window.Closing += (o, a) =>
                {
-                    panel.SaveContentsToFilesCommand.Execute(panel);
+                    if (((MainViewModel)window.DataContext).Notes.Contains(panel.Note))
+                        panel.SaveContentsToFilesCommand.Execute(panel);
                };
            }
            });
