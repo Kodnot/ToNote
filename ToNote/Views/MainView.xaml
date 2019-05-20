@@ -127,6 +127,8 @@
                 </ScrollViewer>
             </Popup>
             <Button  Content="Add note" Command="{Binding AddNoteCommand}" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Button  Content="Export" Command="{Binding ExportCommand}"/>
+            <Button  Content="Import" Command="{Binding ImportCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

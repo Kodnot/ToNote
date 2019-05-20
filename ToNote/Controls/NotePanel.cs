@@ -13,6 +13,7 @@
     using ToNote.Interfaces;
     using ToNote.Logic;
     using ToNote.Models;
+    using ToNote.ViewModels;
 
     public class NotePanel : ItemsControl
     {
@@ -85,7 +86,8 @@
 
                window.Closing += (o, a) =>
                {
-                    panel.SaveContentsToFilesCommand.Execute(panel);
+                   if (((MainViewModel)window.DataContext).Notes.Contains(panel.Note))
+                        panel.SaveContentsToFilesCommand.Execute(panel);
                };
            }
            });
@@ -179,86 +181,7 @@
 
                if (note == null) return;
 
-               var todoIndex = 0;
-               var fileIndex = 0;
-
-
-            #if DEBUG
-                var directory = $".\\Data\\{note.Name}";
-            #else
-                var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Sugma\\ToNote\\Data\\{note.Name}";
-            #endif
-
-
-               directory = Path.Combine(Path.GetDirectoryName(directory), Path.GetFileName(directory).Trim(Path.GetInvalidFileNameChars()));
-
-               if (!Directory.Exists(directory))
-                   Directory.CreateDirectory(directory);
-               else
-               {
-                   foreach (var file in Directory.GetFiles(directory))
-                   {
-                       File.Delete(file);
-                   }
-               }
-
-               foreach (var child in panel.Items)
-               {
-                   if (!(child is IExtendedTextBoxControl extendedTextBoxControl)) continue;
-
-                   string file = null;
-                   TextRange range = null;
-
-                   if (extendedTextBoxControl is TodoControl todoControl)
-                   {
-                       file = $"{directory}\\{todoIndex}_{note.Name.ToLower()}_TODO";
-
-                       todoControl.Todo.FileName = file;
-
-                       todoControl.Todo.Index = panel.Items.IndexOf(todoControl);
-
-                       if (!note.Todos.Contains(todoControl.Todo))
-                           note.Todos.Add(todoControl.Todo);
-
-                       range = todoControl.TextRange;
-
-                       todoIndex += 1;
-                   }
-
-                   if (extendedTextBoxControl is ExtendedRichTextBox rtb)
-                   {
-                       range = rtb.TextRange;
-                       bool newfile = false;
-
-                       if (note.FileNames.Count > fileIndex && note.FileNames[fileIndex] != null)
-                           file = note.FileNames[fileIndex];
-                       else
-                       {
-                           file = $"{directory}\\{fileIndex}_{note.Name.ToLower()}";
-                           newfile = true;
-                       }
-
-                       if (newfile)
-                           note.FileNames.Add(file);
-
-                       fileIndex += 1;
-                   }
-
-                   using (var stream = new FileStream(file, FileMode.OpenOrCreate))
-                   {
-                       range?.Save(stream, DataFormats.Rtf);
-                   }
-               }
-
-               var serializedNote = JsonConvert.SerializeObject(note);
-
-            #if DEBUG
-               var metadataFileName = $"{note.Name.ToLower()}Metadata.txt";
-            #else
-               var metadataFileName = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Sugma\\ToNote\\Data\\{note.Name.ToLower()}Metadata.txt";
-            #endif
-
-               File.WriteAllText(metadataFileName, serializedNote);
+               IOHandler.SerializeNote(panel);
 
                panel._unsavedChanges = false;
                panel.Status = "Saved at " + DateTime.Now.ToString("HH:mm:ss");
