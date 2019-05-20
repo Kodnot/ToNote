@@ -86,7 +86,7 @@
 
                window.Closing += (o, a) =>
                {
-                   if (((MainViewModel)window.DataContext).Notes.Contains(panel.Note))
+                    if (((MainViewModel)window.DataContext).Notes.Contains(panel.Note))
                         panel.SaveContentsToFilesCommand.Execute(panel);
                };
            }
