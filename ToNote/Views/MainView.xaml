@@ -126,6 +126,36 @@
                     </ItemsControl>
                 </ScrollViewer>
             </Popup>
+            <Button Content="Select names" Command="{Binding ToggleNotesPopupCommand}"/>
+            <Popup IsOpen="{Binding IsNotesPopupOpen, Mode=TwoWay}" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade" Placement="Top">
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" Width="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="500" Style="{StaticResource RightScrollViewer}"   >
+                    <ItemsControl x:Name="notesControl" ItemsSource="{Binding AllNotes}" Margin="{Binding ElementName=button1, Path=Margin}" BorderBrush="{StaticResource DefaultTextBoxBorderBrush}" BorderThickness="2" >
+                        <ItemsControl.Background>
+                            <SolidColorBrush Opacity="1" Color="{StaticResource DefaultButtonBackgroundColor}" />
+                        </ItemsControl.Background>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="5,3,0,3">
+                                    <CheckBox Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ToggleNoteSelectionCommand}" CommandParameter="{Binding}">
+                                        <CheckBox.IsChecked>
+                                            <MultiBinding Converter="{StaticResource TagInCollectionToBooleanConverter}">
+                                                <Binding Path="."/>
+                                                <Binding ElementName="notesControl" Path="DataContext.SelectedNotes"/>
+                                            </MultiBinding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                    <TextBlock Text="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Popup>
             <Button  Content="Add note" Command="{Binding AddNoteCommand}" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </StackPanel>
     </Grid>
