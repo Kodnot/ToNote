@@ -75,7 +75,6 @@
     <Compile Include="Interfaces\IExtendedTextBoxControl.cs" />
     <Compile Include="Logic\IOHandler.cs" />
     <Compile Include="Models\NoteDto.cs" />
-    <Compile Include="Models\NoteTagDto.cs" />
     <Compile Include="Models\NoteTextBoxDto.cs" />
     <Compile Include="Models\NoteTodoDto.cs" />
     <Compile Include="Models\Todo.cs" />
