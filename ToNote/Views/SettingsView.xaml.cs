@@ -3,11 +3,11 @@
 namespace ToNote.Views
 {
     /// <summary>
-    /// Interaction logic for AboutPageView.xaml
+    /// Interaction logic for SettingsView.xaml
     /// </summary>
-    public partial class AboutPageView : UserControl
+    public partial class SettingsView : UserControl
     {
-        public AboutPageView()
+        public SettingsView()
         {
             InitializeComponent();
         }

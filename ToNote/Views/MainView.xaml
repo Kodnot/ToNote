@@ -126,6 +126,7 @@
                     </ItemsControl>
                 </ScrollViewer>
             </Popup>
+			
             <Button Content="Select notes" Command="{Binding ToggleNotesPopupCommand}"/>
             <Popup IsOpen="{Binding IsNotesPopupOpen, Mode=TwoWay}" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade" Placement="Top">
                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" Width="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="500" Style="{StaticResource RightScrollViewer}"   >
@@ -156,9 +157,8 @@
                     </ItemsControl>
                 </ScrollViewer>
             </Popup>
-            <Button  Content="Export" Command="{Binding ExportCommand}"/>
-            <Button  Content="Import" Command="{Binding ImportCommand}"/>
-            <Button  Content="Add note" Command="{Binding AddNoteCommand}" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Button  Content="Add note" Command="{Binding AddNoteCommand}" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>          
         </StackPanel>
+        <Button  Style="{StaticResource SettingsButton}" Command="{Binding OpenSettingsCommand}" Grid.Row="2" HorizontalAlignment="Right"/>
     </Grid>
 </Window>

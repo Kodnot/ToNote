@@ -1,8 +1,6 @@
 ﻿namespace ToNote.Logic
 {
-    using Microsoft.Win32;
     using Newtonsoft.Json;
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -12,7 +10,7 @@
     using ToNote.Controls;
     using ToNote.Interfaces;
     using ToNote.Models;
-
+    using System;
 
     public static class IOHandler
     {

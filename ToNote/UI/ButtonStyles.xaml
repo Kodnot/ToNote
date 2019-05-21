@@ -123,4 +123,73 @@
         </Setter>
     </Style>
 
+    <Style x:Key="SettingsButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False" Margin="0,0,0,0">
+                            <Image  MaxHeight="40" MaxWidth="40" x:Name="settingsButton" RenderTransformOrigin="0.5,0.5">
+                                <Image.Source>
+                                    <BitmapImage UriSource="../Resources/SettingsButton.png"/>
+                                </Image.Source>
+                                <Image.RenderTransform>
+                                    <RotateTransform Angle="0"/>
+
+                                </Image.RenderTransform>
+                            </Image>
+                            <ContentPresenter Grid.Column="1" Margin="-10,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Trigger.EnterActions>
+                                <StopStoryboard BeginStoryboardName="MouseOverStoryboard"/>
+                                <StopStoryboard BeginStoryboardName="MouseOverExitStoryboard"/>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="180" Duration="0:0:0.5" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:0.5"/>
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand"/>
+
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Name="MouseOverStoryboard">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="60" Duration="0:0:0.3"/>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="-5" Duration="0:0:0.3"/>
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Name="MouseOverExitStoryboard">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="60" Duration="0:0:0.3"/>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="-5" Duration="0:0:0.3"/>
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
 </ResourceDictionary>

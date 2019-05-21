@@ -1,12 +1,8 @@
 ﻿namespace ToNote.ViewModels
 {
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Windows.Data;
@@ -28,6 +24,8 @@
             {
                 FilteredNotes.Filter = x => Filter((Note)x);
             };
+
+            
         }
 
         bool Filter(Note x) => SelectedTags.All(t => x.Tags.Contains(t)) && (SelectedNotes.Any() ? SelectedNotes.Any(n => n == x.Name) : true);
@@ -139,6 +137,26 @@
                     dialog.Resizeable = false;
 
                     dialog.Title = "About";
+
+                    DialogService.OpenDialog(dialog);
+                }));
+            }
+        }
+
+        private ICommand _OpenSettingsCommand;
+
+        public ICommand OpenSettingsCommand
+        {
+            get
+            {
+                return _OpenSettingsCommand ?? (_OpenSettingsCommand = new RelayCommand(() =>
+                {
+                    var dialog = new SettingsViewModel();
+                    dialog.ImportCommand = ImportCommand;
+                    dialog.ExportCommand = ExportCommand;
+                    dialog.Resizeable = false;
+
+                    dialog.Title = "Settings";
 
                     DialogService.OpenDialog(dialog);
                 }));
