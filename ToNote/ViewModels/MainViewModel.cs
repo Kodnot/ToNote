@@ -25,6 +25,8 @@
             {
                 FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
             };
+
+            
         }
 
         private ObservableCollection<Note> _Notes;
@@ -149,6 +151,8 @@
                 return _OpenSettingsCommand ?? (_OpenSettingsCommand = new RelayCommand(() =>
                 {
                     var dialog = new SettingsViewModel();
+                    dialog.ImportCommand = ImportCommand;
+                    dialog.ExportCommand = ExportCommand;
                     dialog.Resizeable = false;
 
                     dialog.Title = "Settings";
