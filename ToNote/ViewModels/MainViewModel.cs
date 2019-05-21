@@ -19,21 +19,11 @@
     {
         public MainViewModel()
         {
-#if DEBUG
-            foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()).Where(x => Path.GetFileName(x).Contains("Metadata.txt")))
-#else
-            var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Sugma\\ToNote\\Data\\";
-            foreach (var file in Directory.GetFiles(directory).Where(x => Path.GetFileName(x).Contains("Metadata.txt")))
-#endif
+            Notes = new ObservableCollection<Note>(IOHandler.DeserializeNotes());
+            SelectedTags.CollectionChanged += (s, e) =>
             {
-                using (var reader = new StreamReader(file))
-                    Notes.Add(JsonConvert.DeserializeObject<Note>(reader.ReadToEnd()));
-
-                SelectedTags.CollectionChanged += (s, e) =>
-                {
-                    FilteredNotes.Filter = x => SelectedTags.Any(t => ((Note)x).Tags.Contains(t));
-                };
-            }
+                FilteredNotes.Filter = x => SelectedTags.Any(t => ((Note)x).Tags.Contains(t));
+            };
             SelectedNotes.CollectionChanged += (s, e) =>
             {
                 FilteredNotes.Filter = x => SelectedNotes.Any(t => t == ((Note)x).Name);
@@ -109,28 +99,9 @@
                     if (MessageBox.Show("Are you sure?", "Remove Note Confirmation", button: MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                         return;
 
+                    IOHandler.RemoveNote(note);
+
                     Notes.Remove(note);
-
-                    // TODO: This should be handled by the IO handler class instead.
-                    while (note.FileNames.Any())
-                        note.DeleteFile(note.FileNames.First());
-
-#if DEBUG
-                    var metadataFileName = note.Name + "Metadata.txt";
-                    var directoryPath = Path.Combine("Data", note.Name);
-#else
-                    var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Sugma//ToNote//Data//";
-                    var metadataFileName = path + note.Name + "Metadata.txt";
-                    var directoryPath = path + note.Name;
-#endif
-
-                    if (File.Exists(metadataFileName))
-                        File.Delete(metadataFileName);
-
-                    
-
-                    if (Directory.Exists(directoryPath))
-                        Directory.Delete(directoryPath, true);
                 }));
             }
         }
@@ -190,6 +161,31 @@
 
                     FilteredNotes.Refresh();
                 }
+            }));
+        }
+
+        private ICommand _ExportCommand;
+
+        public ICommand ExportCommand
+        {
+            get => _ExportCommand ?? (_ExportCommand = new RelayCommand(() =>
+            {
+                IOHandler.ExportNotes(Notes);
+            }));
+        }
+
+        private ICommand _ImportCommand;
+
+        public ICommand ImportCommand
+        {
+            get => _ImportCommand ?? (_ImportCommand = new RelayCommand(() =>
+            {
+                var notes = IOHandler.ReadNotesFromFile();
+
+                if (notes != null)
+                    Notes = new ObservableCollection<Note>(notes);
+
+                RaisePropertyChanged(nameof(FilteredNotes));
             }));
         }
 
@@ -324,7 +320,7 @@
         }
 
         public ICollectionView FilteredNotes => CollectionViewSource.GetDefaultView(Notes);
-        
+
         private bool _IsSelected;
 
         public bool IsSelected
