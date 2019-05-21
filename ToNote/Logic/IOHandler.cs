@@ -64,8 +64,9 @@
             notePanel.Note.FileNames.Clear();
             notePanel.Note.Todos.Clear();
 
-            foreach (var item in notePanel.Items)
+            for (int i = 0; i < notePanel.Items.Count; i++)
             {
+                var item = notePanel.Items[i];
                 string path;
 
                 if (!(item is IExtendedTextBoxControl extendedTextBoxControl)) continue;
@@ -75,6 +76,7 @@
                     path = $"{sanitizedPath}\\{todoIndex}_{notePanel.Note.Name.ToLower()}{todoSuffix}";
 
                     notePanel.Note.Todos.Add(SerializeTodo(todoControl, path, todoIndex));
+                    notePanel.Note.Todos.Last().Index = i;
 
                     todoIndex++;
                 }
@@ -87,7 +89,7 @@
 
                     notePanel.Note.FileNames.Add(path);
 
-                    fileIndex += 1;
+                    fileIndex++;
                 }
             }
 
