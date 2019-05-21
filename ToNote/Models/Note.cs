@@ -1,5 +1,6 @@
 ﻿namespace ToNote.Models
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
@@ -77,6 +78,9 @@
             }
         }
 
+        [JsonIgnore]
+        public bool TagsExpanded { get; set; }
+
         private List<Todo> _Todos;
 
         public List<Todo> Todos
@@ -112,7 +116,7 @@
         }
 
         private ObservableCollection<string> _Tags;
-        public  ObservableCollection<string> Tags
+        public ObservableCollection<string> Tags
         {
             get => _Tags ?? (_Tags = new ObservableCollection<string>());
             set

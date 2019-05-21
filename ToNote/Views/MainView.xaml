@@ -6,11 +6,16 @@
         xmlns:local="clr-namespace:ToNote"
         xmlns:Models="clr-namespace:ToNote.Models"
         xmlns:Controls="clr-namespace:ToNote.Controls"
+        xmlns:Converters="clr-namespace:ToNote.Converters"
         xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
+        xmlns:Views="clr-namespace:ToNote.Views"
         mc:Ignorable="d"
         Title="ToNote" Height="650" Width="1100" MinWidth="400" MinHeight="350"
         WindowStyle="None">
 
+    <Window.Resources>
+        <Converters:TagInCollectionToBooleanConverter x:Key="TagInCollectionToBooleanConverter"/>
+    </Window.Resources>
     <Window.DataContext>
         <ViewModels:MainViewModel/>
     </Window.DataContext>
@@ -49,19 +54,111 @@
                 </Button>
             </StackPanel>
         </DockPanel>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1" Style="{StaticResource RightScrollViewer}">
-            <ItemsControl Margin="25" ItemsSource="{Binding Notes}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel IsItemsHost="True"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </ScrollViewer>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Notes" IsSelected="{Binding IsSelected}">
+                <Grid>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Style="{StaticResource RightScrollViewer}">
+                        <DockPanel>
+
+                            <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}"  x:Name="NoteItemsControl">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </DockPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TODOs">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl DockPanel.Dock="Bottom" Margin="25" ItemsSource="{Binding FilteredNotes}" x:Name="TodoItemsControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Views:TodoView />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button  Content="About" Command="{Binding OpenAboutPageCommand}"/>
-            <Button  Content="Add note" Command="{Binding AddNoteCommand}"/>
+            <Button Content="Select tags" Command="{Binding ToggleGroupingPanelCommand}"/>
+            <Popup IsOpen="{Binding IsGroupingPanelOpen, Mode=TwoWay}" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade" Placement="Top">
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" Width="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="500" Style="{StaticResource RightScrollViewer}"   >
+                    <ItemsControl x:Name="tagsControl" ItemsSource="{Binding AllTags}" Margin="{Binding ElementName=button1, Path=Margin}" BorderBrush="{StaticResource DefaultTextBoxBorderBrush}" BorderThickness="2" >
+                        <ItemsControl.Background>
+                            <SolidColorBrush Opacity="1" Color="{StaticResource DefaultButtonBackgroundColor}" />
+                        </ItemsControl.Background>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="5,3,0,3">
+                                    <CheckBox Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ToggleTagSelectionCommand}" CommandParameter="{Binding}">
+                                        <CheckBox.IsChecked>
+                                            <MultiBinding Converter="{StaticResource TagInCollectionToBooleanConverter}">
+                                                <Binding Path="."/>
+                                                <Binding ElementName="tagsControl" Path="DataContext.SelectedTags"/>
+                                            </MultiBinding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                    <TextBlock Text="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Popup>
+			
+            <Button Content="Select notes" Command="{Binding ToggleNotesPopupCommand}"/>
+            <Popup IsOpen="{Binding IsNotesPopupOpen, Mode=TwoWay}" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade" Placement="Top">
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" Width="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="500" Style="{StaticResource RightScrollViewer}"   >
+                    <ItemsControl x:Name="notesControl" ItemsSource="{Binding AllNotes}" Margin="{Binding ElementName=button1, Path=Margin}" BorderBrush="{StaticResource DefaultTextBoxBorderBrush}" BorderThickness="2" >
+                        <ItemsControl.Background>
+                            <SolidColorBrush Opacity="1" Color="{StaticResource DefaultButtonBackgroundColor}" />
+                        </ItemsControl.Background>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="5,3,0,3">
+                                    <CheckBox Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ToggleNoteSelectionCommand}" CommandParameter="{Binding}">
+                                        <CheckBox.IsChecked>
+                                            <MultiBinding Converter="{StaticResource TagInCollectionToBooleanConverter}">
+                                                <Binding Path="."/>
+                                                <Binding ElementName="notesControl" Path="DataContext.SelectedNotes"/>
+                                            </MultiBinding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                    <TextBlock Text="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Popup>
+            <Button  Content="Add note" Command="{Binding AddNoteCommand}" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>          
         </StackPanel>
-        
+        <Button  Style="{StaticResource SettingsButton}" Command="{Binding OpenSettingsCommand}" Grid.Row="2" HorizontalAlignment="Right"/>
     </Grid>
 </Window>

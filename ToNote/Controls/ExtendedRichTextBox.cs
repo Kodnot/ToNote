@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Threading;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
@@ -53,7 +51,7 @@
                         _trackingCounter = 0;
                     }
 
-                   if (_slashIndex + 1 > str.Length)
+                    if (_slashIndex + 1 > str.Length)
                     {
                         _tracking = false;
                         _trackingCounter = 0;
@@ -69,19 +67,21 @@
                         _tracking = false;
                         _trackingCounter = 0;
 
-                        var range = new TextRange(this.Document.ContentStart, this.CaretPosition);
-
-                        //Trims the '/' + keyword from the end of the text
-                        range.Text = range.Text.Remove(_slashIndex > 0 ? _slashIndex - 1 : 0, _slashIndex > 0 ? range.Text.Length - _slashIndex + 1 : range.Text.Length);
-
-                        CommandExecutionPointer = range.End;
+                        var leftPos = this.CaretPosition;
+                        for (int i = 0; i <= keyword.Length; ++i)
+                        {
+                            leftPos = leftPos.GetNextInsertionPosition(LogicalDirection.Backward) ?? leftPos;
+                        }
+                        // Delete the command from the textbox
+                        var commandRange = new TextRange(leftPos, this.CaretPosition);
+                        commandRange.Text = "";
+                        CommandExecutionPointer = this.CaretPosition;
 
                         keywordAction.Action.Invoke();
+                        break;
                     }
                 }
             };
-
-            this.AllowDrop = true;
 
             this.PreviewMouseMove += (s, e) =>
             {

@@ -13,6 +13,7 @@
 
     <Style TargetType="{x:Type Controls:ExtendedRichTextBox}">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="AcceptsTab" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Margin" Value="0"/>
