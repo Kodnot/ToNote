@@ -22,12 +22,21 @@
             Notes = new ObservableCollection<Note>(IOHandler.DeserializeNotes());
             SelectedTags.CollectionChanged += (s, e) =>
             {
-                FilteredNotes.Filter = x => SelectedTags.Any(t => ((Note)x).Tags.Contains(t));
+                FilteredNotes.Filter = x => Filter(x);
             };
             SelectedNotes.CollectionChanged += (s, e) =>
             {
-                FilteredNotes.Filter = x => SelectedNotes.Any(t => t == ((Note)x).Name);
+                FilteredNotes.Filter = x => Filter(x);
             };
+        }
+
+        bool Filter(object x)
+        {
+            if (SelectedTags.Count == 0 && SelectedNotes.Count == 0) return true;
+            var val = SelectedTags.All(t => ((Note)x).Tags.Contains(t));
+            if (!val) return false;
+            if (SelectedNotes.Count > 0) val = SelectedNotes.Any(t => t == ((Note)x).Name);
+            return val;
         }
 
         private ObservableCollection<Note> _Notes;
