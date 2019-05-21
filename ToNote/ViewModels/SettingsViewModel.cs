@@ -17,15 +17,10 @@ namespace ToNote.ViewModels
     {
         public ICommand ImportCommand { get; set;}
         public ICommand ExportCommand { get; set;}
-        
-        
-       
+
         public SettingsViewModel()
         {
-            //var settings = new SettingsViewModel();
-            //settings.Command = ;
-        }
 
-        
+        }
     }
 }

@@ -169,8 +169,8 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard Name="MouseOverStoryboard">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="10" Duration="0:0:0.2"/>
-                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="-10" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="60" Duration="0:0:0.3"/>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="-5" Duration="0:0:0.3"/>
 
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -178,8 +178,8 @@
                             <Trigger.ExitActions>
                                 <BeginStoryboard Name="MouseOverExitStoryboard">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="10" Duration="0:0:0.2"/>
-                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="-10" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="60" Duration="0:0:0.3"/>
+                                        <DoubleAnimation Storyboard.TargetName="settingsButton" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="-5" Duration="0:0:0.3"/>
 
                                     </Storyboard>
                                 </BeginStoryboard>

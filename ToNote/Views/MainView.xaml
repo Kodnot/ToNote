@@ -127,7 +127,8 @@
                 </ScrollViewer>
             </Popup>
             <Button  Content="Add note" Command="{Binding AddNoteCommand}" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <Button  Style="{StaticResource SettingsButton}" Command="{Binding OpenSettingsCommand}"/>
+            
         </StackPanel>
+        <Button  Style="{StaticResource SettingsButton}" Command="{Binding OpenSettingsCommand}" Grid.Row="2" HorizontalAlignment="Right"/>
     </Grid>
 </Window>
