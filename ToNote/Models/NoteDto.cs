@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ToNote.Models
 {
-    public class NoteTagDto
+    public class NoteDto
     {
         public Note Note { get; set; }
-
-        public string Tag { get; set; }
+        public List<NoteTextBoxDto> Files { get; set; }
+        public List<NoteTodoDto> Todos { get; set; }
     }
 }
