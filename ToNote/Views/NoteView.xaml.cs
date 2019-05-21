@@ -3,7 +3,6 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using ToNote.Controls;
-    using ToNote.Models;
 
     /// <summary>
     /// Interaction logic for NoteView.xaml
