@@ -126,7 +126,7 @@
                     </ItemsControl>
                 </ScrollViewer>
             </Popup>
-            <Button Content="Select names" Command="{Binding ToggleNotesPopupCommand}"/>
+            <Button Content="Select notes" Command="{Binding ToggleNotesPopupCommand}"/>
             <Popup IsOpen="{Binding IsNotesPopupOpen, Mode=TwoWay}" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade" Placement="Top">
                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" Width="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="500" Style="{StaticResource RightScrollViewer}"   >
                     <ItemsControl x:Name="notesControl" ItemsSource="{Binding AllNotes}" Margin="{Binding ElementName=button1, Path=Margin}" BorderBrush="{StaticResource DefaultTextBoxBorderBrush}" BorderThickness="2" >
