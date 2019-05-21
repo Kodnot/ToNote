@@ -140,6 +140,24 @@
             }
         }
 
+        private ICommand _OpenSettingsCommand;
+
+        public ICommand OpenSettingsCommand
+        {
+            get
+            {
+                return _OpenSettingsCommand ?? (_OpenSettingsCommand = new RelayCommand(() =>
+                {
+                    var dialog = new SettingsViewModel();
+                    dialog.Resizeable = false;
+
+                    dialog.Title = "Settings";
+
+                    DialogService.OpenDialog(dialog);
+                }));
+            }
+        }
+
         private ICommand _DeleteTagCommand;
 
         public ICommand DeleteTagCommand

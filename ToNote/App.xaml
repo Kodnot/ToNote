@@ -133,6 +133,10 @@
             <DataTemplate DataType="{x:Type ViewModels:AboutPageViewModel}">
                 <Views:AboutPageView/>
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type ViewModels:SettingsViewModel}">
+                <Views:SettingsView/>
+            </DataTemplate>
 
             <Converters:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter"/>
             <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
