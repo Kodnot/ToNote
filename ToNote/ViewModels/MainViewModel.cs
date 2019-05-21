@@ -20,14 +20,19 @@
         public MainViewModel()
         {
             Notes = new ObservableCollection<Note>(IOHandler.DeserializeNotes());
-            
             SelectedTags.CollectionChanged += (s, e) =>
             {
-                FilteredNotes.Filter = x => SelectedTags.All(t => ((Note)x).Tags.Contains(t));
+                FilteredNotes.Filter = x => Filter((Note)x);
+            };
+            SelectedNotes.CollectionChanged += (s, e) =>
+            {
+                FilteredNotes.Filter = x => Filter((Note)x);
             };
 
             
         }
+
+        bool Filter(Note x) => SelectedTags.All(t => x.Tags.Contains(t)) && (SelectedNotes.Any() ? SelectedNotes.Any(n => n == x.Name) : true);
 
         private ObservableCollection<Note> _Notes;
 
@@ -94,7 +99,7 @@
                 {
                     if (!Notes.Contains(note))
                         return;
-
+                    
                     if (MessageBox.Show("Are you sure?", "Remove Note Confirmation", button: MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                         return;
 
@@ -269,6 +274,71 @@
                         SelectedTags.Remove(tag);
                     else
                         SelectedTags.Add(tag);
+                }));
+            }
+        }
+
+        public IEnumerable<string> AllNotes => Notes.Select(x => x.Name);
+
+        private bool _IsNotesPopupOpen;
+
+        public bool IsNotesPopupOpen
+        {
+            get => _IsNotesPopupOpen;
+            set
+            {
+                if (_IsNotesPopupOpen != value)
+                {
+                    _IsNotesPopupOpen = value;
+
+                    RaisePropertyChanged(nameof(IsNotesPopupOpen));
+                }
+            }
+        }
+
+        private ICommand _ToggleNotesPopupCommand;
+
+        public ICommand ToggleNotesPopupCommand
+        {
+            get
+            {
+                return _ToggleNotesPopupCommand ?? (_ToggleNotesPopupCommand = new RelayCommand(() =>
+                {
+                    IsNotesPopupOpen = !IsNotesPopupOpen;
+                    RaisePropertyChanged(nameof(AllNotes));
+                }));
+            }
+        }
+
+        private ObservableCollection<string> _SelectedNotes;
+
+        public ObservableCollection<string> SelectedNotes
+        {
+            get => _SelectedNotes ?? (_SelectedNotes = new ObservableCollection<string>());
+            set
+            {
+                if (_SelectedNotes != value)
+                {
+                    _SelectedNotes = value;
+
+                    RaisePropertyChanged(nameof(SelectedNotes));
+                }
+            }
+        }
+
+        private ICommand _ToggleNoteSelectionCommand;
+
+        public ICommand ToggleNoteSelectionCommand
+        {
+
+            get
+            {
+                return _ToggleNoteSelectionCommand ?? (_ToggleNoteSelectionCommand = new RelayCommand<string>(note =>
+                {
+                    if (SelectedNotes.Contains(note))
+                        SelectedNotes.Remove(note);
+                    else
+                        SelectedNotes.Add(note);
                 }));
             }
         }
