@@ -24,4 +24,23 @@
             throw new NotImplementedException();
         }
     }
+    public class WidthConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            double result = 0;
+            
+            if (value != null)
+            {
+                result = (double)value - 60;
+            }
+
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

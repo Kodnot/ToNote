@@ -10,7 +10,7 @@
         xmlns:ViewModels="clr-namespace:ToNote.ViewModels"
         xmlns:Views="clr-namespace:ToNote.Views"
         mc:Ignorable="d"
-        Title="ToNote" Height="650" Width="1100" MinWidth="400" MinHeight="350"
+        Title="ToNote" Height="650" Width="1100" MinWidth="600" MinHeight="350"
         WindowStyle="None">
 
     <Window.Resources>
