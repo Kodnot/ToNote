@@ -85,6 +85,24 @@
             }
         }
 
+        private ICommand _OpenRemoveDialogCommand;
+
+        public ICommand OpenRemoveDialogCommand
+        {
+            get
+            {
+                return _OpenRemoveDialogCommand ?? (_OpenRemoveDialogCommand = new RelayCommand(() =>
+                {
+                    var dialog = new RemoveNoteDialogViewModel();
+                    dialog.Resizeable = false;
+
+                    dialog.Title = "Remove";
+
+                    DialogService.OpenDialog(dialog);
+                }));
+            }
+        }
+
         private ICommand _RemoveNoteCommand;
 
         public ICommand RemoveNoteCommand
@@ -95,9 +113,18 @@
                 {
                     if (!Notes.Contains(note))
                         return;
-                    
-                    if (MessageBox.Show("Are you sure?", "Remove Note Confirmation", button: MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                    var dialog = new RemoveNoteDialogViewModel();
+                    dialog.Resizeable = false;
+                    dialog.Title = "Confirm Delete";
+                    DialogService.OpenDialog(dialog);
+
+                    if (dialog.DialogResult == 0)
+                    {
                         return;
+                    }
+
+                    //if (MessageBox.Show("Are you sure?", "Remove Note Confirmation", button: MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                    //    return;
 
                     IOHandler.RemoveNote(note);
 
