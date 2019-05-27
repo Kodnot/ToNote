@@ -138,6 +138,10 @@
                 <Views:SettingsView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type ViewModels:RemoveNoteDialogViewModel}">
+                <Views:RemoveNoteDialogView/>
+            </DataTemplate>
+
             <Converters:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter"/>
             <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 

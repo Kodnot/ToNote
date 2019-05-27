@@ -95,12 +95,16 @@
                 {
                     if (!Notes.Contains(note))
                         return;
-                    
-                    if (MessageBox.Show("Are you sure?", "Remove Note Confirmation", button: MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                    var dialog = new RemoveNoteDialogViewModel();
+                    dialog.Resizeable = false;
+                    dialog.Title = "Confirm Delete";
+                    DialogService.OpenDialog(dialog);
+
+                    if (dialog.DialogResult == 0)
+                    {
                         return;
-
+                    }
                     IOHandler.RemoveNote(note);
-
                     Notes.Remove(note);
                 }));
             }
