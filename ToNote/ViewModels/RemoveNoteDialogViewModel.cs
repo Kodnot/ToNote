@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using ToNote.Interfaces;
 using ToNote.Logic;
 
@@ -11,9 +6,6 @@ namespace ToNote.ViewModels
 {
     class RemoveNoteDialogViewModel : BaseDialogViewModel<int>
     {
-        //public ICommand RemoveCommand { get; set; }
-       // public ICommand CancelCommand { get; set; }
-
         private ICommand _RemoveCommand;
 
         public ICommand RemoveCommand

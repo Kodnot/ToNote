@@ -29,11 +29,7 @@
                     <Button x:Name="button_addtodo" Command="{Binding ElementName=rtbpanel, Path=AddTodoControlCommand}" CommandParameter="{Binding ElementName=rtbpanel}" Content="Add TODO" />
                     <Button x:Name="button_addrtb" Command="{Binding ElementName=rtbpanel, Path=AddRichTextBoxCommand}" CommandParameter="{Binding ElementName=rtbpanel}" Content="Add RTB"/>
                     <Button x:Name="button_save" Command="{Binding ElementName=rtbpanel, Path=SaveContentsToFilesCommand}" CommandParameter="{Binding ElementName=rtbpanel}"  Content="Save"/>
-                    
-                    <!--<Button x:Name="button_remove" Content="Remove" Command="{Binding OpenRemoveDialogCommand}"/>-->
                     <Button x:Name="button_remove" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.RemoveNoteCommand}" CommandParameter="{Binding}" Content="Remove"/>
-
-                    <!--<Button x:Name="button_remove" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.RemoveNoteCommand}" CommandParameter="{Binding}" Content="Remove"/>-->
                 </StackPanel>
             </DockPanel>
             <Controls:NotePanel Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}" Note="{Binding}" x:Name="rtbpanel" MainWindow="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Grid.Row="1"/>
