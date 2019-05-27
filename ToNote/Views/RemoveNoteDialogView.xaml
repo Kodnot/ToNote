@@ -12,8 +12,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Are you sure you want to remove this note?" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10"/>
-        <Button Content="Delete" VerticalAlignment="Bottom" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,90,20" Command="{Binding RemoveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+        <TextBlock Text="Are you sure you want to delete this note?" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10"/>
+        <Button Content="Confirm" VerticalAlignment="Bottom" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,90,20" Command="{Binding RemoveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
         <Button Content="Cancel" VerticalAlignment="Bottom" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,20,20" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
 
     </Grid>
