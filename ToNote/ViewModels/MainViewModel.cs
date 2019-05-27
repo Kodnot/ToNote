@@ -63,8 +63,12 @@
 
                     var result = DialogService.OpenDialog(dialog);
 
-                    if (result != null && !Notes.Any(x => x.Name.Equals(result.Name)))
+                    var forbiddenChars = "\\/:?<>|".ToCharArray();
+
+                    if (result.Name.IndexOfAny(forbiddenChars) == -1 && result != null && !Notes.Any(x => x.Name.Equals(result.Name)))
                         Notes.Add(result);
+                    else if (result.Name.IndexOfAny(forbiddenChars) != -1)
+                        MessageBox.Show("Note name cannot contain any of \\ / : ? < > | characters");
                 }));
             }
         }
