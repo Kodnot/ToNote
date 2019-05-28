@@ -62,7 +62,7 @@
                 {
                     if (!string.IsNullOrWhiteSpace(Name))
                     {
-                        var forbiddenChars = "\\/:?<>|".ToCharArray();
+                        var forbiddenChars = "\\/:?<>|*\"".ToCharArray();
 
                         if (Notes.Any(x => x.Name.Equals(Name)))
                             MessageBox.Show("Name already taken.", "Name taken", MessageBoxButton.OK, MessageBoxImage.Exclamation);
