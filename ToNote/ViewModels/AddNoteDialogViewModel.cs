@@ -36,6 +36,22 @@
             }
         }
 
+        private string _ErrorMessage;
+
+        public string ErrorMessage
+        {
+            get => _ErrorMessage;
+            set
+            {
+                if (_ErrorMessage != value)
+                {
+                    _ErrorMessage = value;
+
+                    RaisePropertyChanged(nameof(ErrorMessage));
+                }
+            }
+        }
+
         private bool _ErrorVisible;
 
         public bool ErrorVisible
@@ -64,12 +80,20 @@
                     {
                         var forbiddenChars = "\\/:?<>|*\"".ToCharArray();
 
-                        if (Notes.Any(x => x.Name.Equals(Name)))
-                            MessageBox.Show("Name already taken.", "Name taken", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                        else if (Name.IndexOfAny(forbiddenChars) != -1)
+                        if (Notes.Any(x => x.Name.ToLower().Equals(Name.ToLower())))
+                        {
                             ErrorVisible = true;
+                            ErrorMessage = "Name already taken.";
+                        }
+                        else if (Name.IndexOfAny(forbiddenChars) != -1)
+                        {
+                            ErrorVisible = true;
+                            ErrorMessage = "Note name cannot contain any of \\ / : &lt; &gt; &#34; &#42; ? | characters";
+                        }
                         else
                             CloseDialogWithResult(window, new Note(Name));
+
+                        
                     }
                 }));
             }
