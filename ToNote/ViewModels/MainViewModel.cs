@@ -60,15 +60,12 @@
                     var dialog = new AddNoteDialogViewModel();
                     dialog.Resizeable = false;
                     dialog.Title = "Add a note";
+                    dialog.Notes = Notes;
 
                     var result = DialogService.OpenDialog(dialog);
 
-                    var forbiddenChars = "\\/:?<>|".ToCharArray();
-
-                    if (result.Name.IndexOfAny(forbiddenChars) == -1 && result != null && !Notes.Any(x => x.Name.Equals(result.Name)))
+                    if (result != null)
                         Notes.Add(result);
-                    else if (result.Name.IndexOfAny(forbiddenChars) != -1)
-                        MessageBox.Show("Note name cannot contain any of \\ / : ? < > | characters");
                 }));
             }
         }

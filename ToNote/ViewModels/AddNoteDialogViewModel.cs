@@ -1,5 +1,8 @@
 ﻿namespace ToNote.ViewModels
 {
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
     using ToNote.Interfaces;
     using ToNote.Logic;
@@ -11,6 +14,8 @@
         {
 
         }
+
+        public Collection<Note> Notes { get; set; } = new Collection<Note>();
 
         private string _Name;
 
@@ -31,6 +36,22 @@
             }
         }
 
+        private bool _ErrorVisible;
+
+        public bool ErrorVisible
+        {
+            get => _ErrorVisible;
+            set
+            {
+                if (_ErrorVisible != value)
+                {
+                    _ErrorVisible = value;
+
+                    RaisePropertyChanged(nameof(ErrorVisible));
+                }
+            }
+        }
+
         private ICommand _AddNoteCommand;
 
         public ICommand AddNoteCommand
@@ -41,7 +62,14 @@
                 {
                     if (!string.IsNullOrWhiteSpace(Name))
                     {
-                        CloseDialogWithResult(window, new Note(Name));
+                        var forbiddenChars = "\\/:?<>|".ToCharArray();
+
+                        if (Notes.Any(x => x.Name.Equals(Name)))
+                            MessageBox.Show("Name already taken.", "Name taken", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        else if (Name.IndexOfAny(forbiddenChars) != -1)
+                            ErrorVisible = true;
+                        else
+                            CloseDialogWithResult(window, new Note(Name));
                     }
                 }));
             }
