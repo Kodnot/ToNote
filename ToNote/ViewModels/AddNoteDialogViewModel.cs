@@ -88,7 +88,7 @@
                         else if (Name.IndexOfAny(forbiddenChars) != -1)
                         {
                             ErrorVisible = true;
-                            ErrorMessage = "Note name cannot contain any of \\ / : &lt; &gt; &#34; &#42; ? | characters";
+                            ErrorMessage = "Note name cannot contain any of \\ / : * \" < > ? | characters";
                         }
                         else
                             CloseDialogWithResult(window, new Note(Name));
