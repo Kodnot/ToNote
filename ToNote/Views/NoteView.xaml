@@ -13,8 +13,9 @@
 
     <UserControl.Resources>
         <Converters:NoteTagCommandParameterConverter  x:Key="NoteTagParameterConverter"/>
+        <Converters:WidthConverter x:Key="WidthConverter"/>
     </UserControl.Resources>
-    <Border BorderThickness="1" BorderBrush="#546175" Padding="5" Margin="0, 5" HorizontalAlignment="Stretch">
+    <Border BorderThickness="1" BorderBrush="#546175" Padding="5" Margin="0, 5" Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollContentPresenter}},Converter={StaticResource WidthConverter}}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

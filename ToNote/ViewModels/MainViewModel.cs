@@ -60,10 +60,11 @@
                     var dialog = new AddNoteDialogViewModel();
                     dialog.Resizeable = false;
                     dialog.Title = "Add a note";
+                    dialog.Notes = Notes;
 
                     var result = DialogService.OpenDialog(dialog);
 
-                    if (result != null && !Notes.Any(x => x.Name.Equals(result.Name)))
+                    if (result != null)
                         Notes.Add(result);
                 }));
             }
@@ -95,12 +96,16 @@
                 {
                     if (!Notes.Contains(note))
                         return;
-                    
-                    if (MessageBox.Show("Are you sure?", "Remove Note Confirmation", button: MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                    var dialog = new RemoveNoteDialogViewModel();
+                    dialog.Resizeable = false;
+                    dialog.Title = "Confirm Delete";
+                    DialogService.OpenDialog(dialog);
+
+                    if (dialog.DialogResult == 0)
+                    {
                         return;
-
+                    }
                     IOHandler.RemoveNote(note);
-
                     Notes.Remove(note);
                 }));
             }
