@@ -72,6 +72,7 @@
     <Compile Include="Converters\NoteTagCommandParameterConverter.cs" />
     <Compile Include="Converters\TagInCollectionToBooleanConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\WidthConverter.cs" />
     <Compile Include="Interfaces\IExtendedTextBoxControl.cs" />
     <Compile Include="Logic\IOHandler.cs" />
     <Compile Include="Models\NoteDto.cs" />
